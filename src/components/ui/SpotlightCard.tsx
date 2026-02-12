@@ -35,16 +35,16 @@ export function SpotlightCard({ className = '', children }: SpotlightCardProps) 
       onMouseLeave={handleMouseLeave}
       style={{
         background: isFocused
-          ? `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.1), transparent 40%)`
+          ? `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(16, 185, 129, 0.08), transparent 40%)`
           : 'transparent',
       }}
-      className={`group relative rounded-xl border border-light-border dark:border-dark-border bg-light-card/80 dark:bg-dark-card/80 p-6 backdrop-blur-sm transition-colors hover:border-light-accent-primary dark:hover:border-dark-accent-primary ${className}`}
+      className={`group relative rounded-xl border border-light-border dark:border-dark-border bg-light-card dark:bg-dark-card shadow-card dark:shadow-card-dark transition-all duration-300 hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:border-light-accent-primary dark:hover:border-dark-accent-primary ${className}`}
     >
       {isFocused && (
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100"
           style={{
-            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(59, 130, 246, 0.15), transparent 40%)`,
+            background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(16, 185, 129, 0.12), transparent 40%)`,
           }}
         />
       )}

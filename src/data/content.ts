@@ -97,10 +97,10 @@ export const content = {
           company: "ArkusNexus",
           period: "March 2023 - Present",
           description: [
-            "Developed and maintained microservices for Advanta Health using C# and ASP.NET Core",
-            "Built modern UI with Blazor and managed Windows Server infrastructure with SQL Server",
-            "Architected backend services for Wag Hotels using Python and Django on AWS",
-            "Designed ETL pipelines with Python and PySpark on AWS Glue for Mosaic.tech"
+            "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
+            "Modernize legacy infrastructure by migrating on-premise systems to cloud-native architectures, reducing maintenance costs and improving deployment velocity.",
+            "Engineer high-performance data pipelines for Mosaic.tech using AWS Glue and PySpark, optimizing ETL processes for large-scale datasets.",
+            "Drive technical decision-making for backend systems at Wag Hotels, implementing scalable Python/Django solutions on AWS infrastructure."
           ]
         },
         {
@@ -108,10 +108,10 @@ export const content = {
           company: "Adinfi",
           period: "April 2022 - March 2023",
           description: [
-            "Developed ADContent system using Django REST Framework",
-            "Integrated AWS-hosted databases (MySQL and SQL Server)",
-            "Implemented microservices with Flask and dockerized projects",
-            "Maintained and enhanced existing features with focus on reliability"
+            "Engineered the core backend for ADContent, a digital asset management system, utilizing Django REST Framework for robust API delivery.",
+            "Optimized database performance by implementing advanced indexing strategies and query tuning for high-traffic MySQL and SQL Server clusters.",
+            "Spearheaded the containerization initiative using Docker, standardizing development environments and streamlining CI/CD pipelines.",
+            "Enhanced system reliability by introducing comprehensive unit testing and automated quality assurance protocols."
           ]
         },
         {
@@ -119,10 +119,10 @@ export const content = {
           company: "mediQó",
           period: "December 2021 - May 2023",
           description: [
-            "Led development team for healthcare services platform",
-            "Built RESTful APIs using Django REST Framework with PostgreSQL and PostGIS",
-            "Performed requirements analysis and code profiling to optimize performance",
-            "Implemented geolocation features using PostGIS extensions"
+            "Directed the technical strategy and development lifecycle for a HealthTech platform, leading a team of developers to deliver critical features.",
+            "Implemented complex geospatial algorithms using PostGIS to optimize provider matching and location-based services.",
+            "Conducted rigorous code reviews and performance profiling to eliminate bottlenecks and ensure code quality standards.",
+            "Architected scalable RESTful APIs that supported rapid user growth and third-party integrations."
           ]
         },
         {
@@ -130,10 +130,10 @@ export const content = {
           company: "XID - Digital Services",
           period: "June 2021 - December 2021",
           description: [
-            "Participated in development of reservation engine for Palace Resorts",
-            "Implemented REST services with Flask and SQLAlchemy as ORM",
-            "Focused on improving usability and system stability",
-            "Collaborated on API design and integration testing"
+            "Contributed to the core booking engine for Palace Resorts, implementing high-availability REST services with Flask.",
+            "Refactored legacy codebases to improve maintainability and performance, reducing technical debt significantly.",
+            "Collaborated with cross-functional teams to design and integrate complex API endpoints for the reservation system.",
+            "Enhanced system stability through rigorous integration testing and error handling improvements."
           ]
         },
         {
@@ -141,10 +141,10 @@ export const content = {
           company: "Binary Systems",
           period: "August 2020 - July 2021",
           description: [
-            "Developed real estate CRM using Django and PostgreSQL",
-            "Debugged critical issues and implemented new features",
-            "Enhanced system reliability and user experience",
-            "Worked with Django ORM for complex database operations"
+            "Developed a custom CRM solution tailored for real estate operations using Django and PostgreSQL, automating key business processes.",
+            "Resolved critical production issues and implemented feature enhancements to improve user workflow and data accuracy.",
+            "Optimized ORM queries to handle complex data relationships efficiently, improving application response times.",
+            "Delivered robust software solutions by strictly adhering to agile methodologies and iterative development cycles."
           ]
         }
       ]
@@ -255,10 +255,10 @@ export const content = {
           company: "ArkusNexus",
           period: "Marzo 2023 - Presente",
           description: [
-            "Desarrollé y mantuve microservicios para Advanta Health usando C# y ASP.NET Core",
-            "Construí UI moderna con Blazor y gestioné infraestructura Windows Server con SQL Server",
-            "Arquitecté servicios backend para Wag Hotels usando Python y Django en AWS",
-            "Diseñé pipelines ETL con Python y PySpark en AWS Glue para Mosaic.tech"
+            "Lidero el diseño arquitectónico y desarrollo de microservicios distribuidos para Advanta Health, asegurando alta disponibilidad utilizando .NET Core.",
+            "Modernizo infraestructura heredada migrando sistemas on-premise a arquitecturas cloud-native, reduciendo costos operativos y tiempos de despliegue.",
+            "Ingeniero pipelines de datos de alto rendimiento para Mosaic.tech usando AWS Glue y PySpark, optimizando procesos ETL para datasets masivos.",
+            "Dirijo la toma de decisiones técnicas para los sistemas backend de Wag Hotels, implementando soluciones escalables en Python/Django sobre AWS."
           ]
         },
         {
@@ -266,10 +266,10 @@ export const content = {
           company: "Adinfi",
           period: "Abril 2022 - Marzo 2023",
           description: [
-            "Desarrollé sistema ADContent usando Django REST Framework",
-            "Integré bases de datos alojadas en AWS (MySQL y SQL Server)",
-            "Implementé microservicios con Flask y dockericé proyectos",
-            "Mantuve y mejoré funcionalidades existentes con enfoque en confiabilidad"
+            "Ingenié el backend principal para ADContent, un sistema de gestión de activos digitales, utilizando Django REST Framework para APIs robustas.",
+            "Optimicé el rendimiento de bases de datos implementando estrategias avanzadas de indexación en clústeres MySQL y SQL Server de alto tráfico.",
+            "Encabecé la iniciativa de contenerización usando Docker, estandarizando entornos de desarrollo y agilizando pipelines de CI/CD.",
+            "Mejoré la confiabilidad del sistema introduciendo pruebas unitarias exhaustivas y protocolos de control de calidad automatizados."
           ]
         },
         {
@@ -277,10 +277,10 @@ export const content = {
           company: "mediQó",
           period: "Diciembre 2021 - Mayo 2023",
           description: [
-            "Lideré el equipo de desarrollo para plataforma de servicios de salud",
-            "Construí APIs RESTful usando Django REST Framework con PostgreSQL y PostGIS",
-            "Realicé análisis de requisitos y perfilado de código para optimizar rendimiento",
-            "Implementé funcionalidades de geolocalización usando extensiones PostGIS"
+            "Dirigí la estrategia técnica y el ciclo de vida de desarrollo para una plataforma HealthTech, liderando al equipo para entregar funcionalidades críticas.",
+            "Implementé algoritmos geoespaciales complejos usando PostGIS para optimizar la asignación de proveedores y servicios basados en ubicación.",
+            "Realicé revisiones de código rigurosas y perfilado de rendimiento para eliminar cuellos de botella y asegurar estándares de calidad.",
+            "Arquitecté APIs RESTful escalables que soportaron un rápido crecimiento de usuarios e integraciones con terceros."
           ]
         },
         {
@@ -288,10 +288,10 @@ export const content = {
           company: "XID - Digital Services",
           period: "Junio 2021 - Diciembre 2021",
           description: [
-            "Participé en desarrollo del motor de reservas para Palace Resorts",
-            "Implementé servicios REST con Flask y SQLAlchemy como ORM",
-            "Me enfoqué en mejorar la usabilidad y estabilidad del sistema",
-            "Colaboré en diseño de API y pruebas de integración"
+            "Contribuí al motor de reservas central para Palace Resorts, implementando servicios REST de alta disponibilidad con Flask.",
+            "Refactoricé bases de código heredadas para mejorar la mantenibilidad y el rendimiento, reduciendo significativamente la deuda técnica.",
+            "Colaboré con equipos multifuncionales para diseñar e integrar endpoints de API complejos para el sistema de reservaciones.",
+            "Aumenté la estabilidad del sistema mediante pruebas de integración rigurosas y mejoras en el manejo de errores."
           ]
         },
         {
@@ -299,10 +299,10 @@ export const content = {
           company: "Binary Systems",
           period: "Agosto 2020 - Julio 2021",
           description: [
-            "Desarrollé CRM inmobiliario usando Django y PostgreSQL",
-            "Depuré problemas críticos e implementé nuevas funcionalidades",
-            "Mejoré la confiabilidad del sistema y experiencia de usuario",
-            "Trabajé con Django ORM para operaciones complejas de base de datos"
+            "Desarrollé una solución CRM personalizada para operaciones inmobiliarias usando Django y PostgreSQL, automatizando procesos clave de negocio.",
+            "Resolví incidencias críticas en producción e implementé mejoras funcionales para optimizar el flujo de trabajo de los usuarios.",
+            "Optimicé consultas ORM para manejar relaciones de datos complejas de manera eficiente, mejorando los tiempos de respuesta.",
+            "Entregué soluciones de software robustas adhiriéndome estrictamente a metodologías ágiles y ciclos de desarrollo iterativos."
           ]
         }
       ]

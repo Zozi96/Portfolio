@@ -15,7 +15,7 @@ export function Badge({ children, className = '', variant = 'default' }: BadgePr
 
   return (
     <span
-      className={`inline-block px-4 py-2 rounded-full text-sm font-medium border shadow-sm transition-transform duration-200 hover:scale-110 active:scale-95 ${variantClasses[variant]} ${className}`}
+      className={`inline-block px-3 py-1 rounded-full text-xs font-mono font-medium border shadow-sm transition-transform duration-200 hover:scale-105 active:scale-95 ${variantClasses[variant]} ${className}`}
     >
       {children}
     </span>

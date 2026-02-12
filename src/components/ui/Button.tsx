@@ -9,20 +9,37 @@ interface ButtonProps {
 }
 
 export function Button({ variant = 'primary', children, onClick, href, className = '' }: ButtonProps) {
-  const baseClasses = 'relative inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300 overflow-hidden group';
+  // Common base styles: Monospace font, sharper corners (rounded-md), technical feel
+  const baseClasses = 'relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md font-mono text-sm font-semibold tracking-wide transition-all duration-200 overflow-hidden group whitespace-nowrap active:scale-[0.98]';
   
   const variantClasses = {
-    primary: 'bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-400 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-100',
-    secondary: 'bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border text-light-text-primary dark:text-dark-text-primary hover:bg-light-card dark:hover:bg-dark-card hover:border-light-accent-primary dark:hover:border-dark-accent-primary shadow-md hover:shadow-lg'
+    // Primary: High Contrast "Terminal" Block
+    // Light: Black background -> Hover Indigo
+    // Dark: White background -> Hover Indigo (with white text)
+    primary: `
+      bg-zinc-900 text-white border border-zinc-900
+      dark:bg-zinc-100 dark:text-zinc-900 dark:border-zinc-100
+      
+      hover:bg-emerald-600 hover:border-emerald-600 hover:text-white hover:shadow-lg hover:shadow-emerald-500/20
+      dark:hover:bg-emerald-500 dark:hover:border-emerald-500 dark:hover:text-white dark:hover:shadow-emerald-500/30
+    `,
+
+    // Secondary: Technical Outline
+    // Transparent with visible border
+    secondary: `
+      bg-transparent 
+      text-zinc-600 border border-zinc-300
+      dark:text-zinc-400 dark:border-zinc-700
+      
+      hover:text-zinc-900 hover:border-zinc-900 hover:bg-zinc-50
+      dark:hover:text-zinc-100 dark:hover:border-zinc-100 dark:hover:bg-zinc-800
+    `
   };
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
+  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`.replace(/\s+/g, ' ');
 
   const content = (
     <>
-      {/* Ripple/Shimmer Effect */}
-      <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-      
       {/* Content */}
       <span className="relative z-10 inline-flex items-center gap-2">
         {children}

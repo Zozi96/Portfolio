@@ -18,10 +18,10 @@
   --color-border: #E4E4E7;           /* Zinc-200 */
   --color-border-subtle: #F4F4F5;    /* Zinc-100 */
   
-  --color-accent-primary: #4F46E5;   /* Indigo-600 */
-  --color-accent-hover: #4338CA;     /* Indigo-700 */
-  --color-accent-light: #EEF2FF;     /* Indigo-50 */
-  --color-accent-subtle: #C7D2FE;    /* Indigo-200 */
+  --color-accent-primary: #059669;   /* Emerald-600 */
+  --color-accent-hover: #047857;     /* Emerald-700 */
+  --color-accent-light: #ECFDF5;     /* Emerald-50 */
+  --color-accent-subtle: #A7F3D0;    /* Emerald-200 */
 }
 
 .dark {
@@ -38,10 +38,10 @@
   --color-border: #3F3F46;           /* Zinc-700 */
   --color-border-subtle: #27272A;    /* Zinc-800 */
   
-  --color-accent-primary: #6366F1;   /* Indigo-500 */
-  --color-accent-hover: #818CF8;     /* Indigo-400 */
-  --color-accent-dark: #312E81;      /* Indigo-900 */
-  --color-accent-subtle: #4338CA;    /* Indigo-700 */
+  --color-accent-primary: #10B981;   /* Emerald-500 */
+  --color-accent-hover: #34D399;     /* Emerald-400 */
+  --color-accent-dark: #064E3B;      /* Emerald-900 */
+  --color-accent-subtle: #065F46;    /* Emerald-800 */
 }
 
 /* ============================================
@@ -58,8 +58,8 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-secondary);
   
-  /* Enhanced dot pattern con animación sutil */
-  background-image: radial-gradient(circle, rgba(79, 70, 229, 0.08) 1px, transparent 1px);
+  /* Enhanced dot pattern con animación sutil - Usando Emerald */
+  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.08) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: 0 0, 12px 12px;
   animation: dotAnimation 20s ease-in-out infinite;
@@ -77,8 +77,8 @@ body {
 }
 
 .dark body {
-  /* Pattern más visible en dark mode con animación */
-  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.06) 1px, transparent 1px);
+  /* Pattern más visible en dark mode con animación - Usando Emerald */
+  background-image: radial-gradient(circle, rgba(16, 185, 129, 0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 

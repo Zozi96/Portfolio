@@ -32,10 +32,10 @@ export default {
           },
           
           accent: {
-            primary: '#4F46E5',      // Indigo-600 - botones, enlaces
-            hover: '#4338CA',        // Indigo-700 - hover states
-            light: '#EEF2FF',        // Indigo-50 - fondos de acento
-            subtle: '#C7D2FE',       // Indigo-200 - badges, highlights
+            primary: '#059669',      // Emerald-600 - botones, enlaces
+            hover: '#047857',        // Emerald-700 - hover states
+            light: '#ECFDF5',        // Emerald-50 - fondos de acento
+            subtle: '#A7F3D0',       // Emerald-200 - badges, highlights
           },
         },
         
@@ -58,10 +58,10 @@ export default {
           },
           
           accent: {
-            primary: '#6366F1',      // Indigo-500 - botones, enlaces
-            hover: '#818CF8',        // Indigo-400 - hover states
-            dark: '#312E81',         // Indigo-900 - fondos de acento
-            subtle: '#4338CA',       // Indigo-700 - badges, highlights
+            primary: '#10B981',      // Emerald-500 - botones, enlaces
+            hover: '#34D399',        // Emerald-400 - hover states
+            dark: '#064E3B',         // Emerald-900 - fondos de acento
+            subtle: '#065F46',       // Emerald-800 - badges, highlights
           },
         },
         
