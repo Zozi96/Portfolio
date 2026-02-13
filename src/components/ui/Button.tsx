@@ -56,6 +56,7 @@ export function Button({ variant = 'primary', children, onClick, href, className
         target="_blank" 
         rel="noopener noreferrer"
         aria-disabled={disabled}
+        role={disabled ? 'link' : undefined}
       >
         {content}
       </a>

@@ -37,7 +37,7 @@
 
   --color-text-primary: #fafafa; /* Zinc-50 */
   --color-text-secondary: #d4d4d8; /* Zinc-300 */
-  --color-text-muted: #d4d4d8; /* Zinc-300 - Improved contrast for WCAG AA */
+  --color-text-muted: #c4c4c8; /* Between Zinc-300 and Zinc-400 - Improved contrast for WCAG AA */
   --color-text-disabled: #71717a; /* Zinc-500 */
 
   --color-border: #3f3f46; /* Zinc-700 */
