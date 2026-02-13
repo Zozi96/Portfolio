@@ -33,9 +33,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <a href="#home" className="flex-shrink-0">
-            <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
-              Zozi
-            </span>
+            <img src="/favicon.png" alt="Zozbit" className="h-8 w-auto" />
           </a>
 
           {/* Nav links */}
