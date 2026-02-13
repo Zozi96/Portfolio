@@ -90,7 +90,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-4">
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-4">
               Navigation
             </h4>
             <ul className="space-y-2">
@@ -111,7 +111,7 @@ export function Footer() {
           {/* Info */}
           <div className="flex flex-col justify-between">
             <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-4">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-4">
                 Contact
               </h4>
               <button

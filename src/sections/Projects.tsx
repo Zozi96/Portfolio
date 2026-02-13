@@ -90,7 +90,7 @@ export function Projects() {
                             `projects.items.${index}.metrics.${metricIndex}.value`,
                           )}
                         </div>
-                        <div className="text-[9px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                        <div className="text-[9px] font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                           {t(
                             `projects.items.${index}.metrics.${metricIndex}.label`,
                           )}

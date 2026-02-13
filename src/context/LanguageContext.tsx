@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 type Locale = 'en' | 'es';
 
 interface Translations {
-  [key: string]: string | Translations | Array<string | Translations>;
+  [key: string]: unknown;
 }
 
 interface LanguageContextType {
@@ -49,11 +49,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: string | Translations | Array<string | Translations> = translations[locale];
+    let value: unknown = translations[locale];
     
     for (const k of keys) {
       if (typeof value === 'object' && value !== null && !Array.isArray(value) && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else if (Array.isArray(value)) {
         const index = parseInt(k, 10);
         if (!isNaN(index) && index < value.length) {

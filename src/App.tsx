@@ -1,15 +1,25 @@
+import { lazy, Suspense } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider, setTranslations, useLanguage } from "./context/LanguageContext";
 import { content } from "./data/content";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import FocusAreas from "./sections/FocusAreas";
-import Projects from "./sections/Projects";
-import TechStack from "./sections/TechStack";
-import Experience from "./sections/Experience";
 import Footer from "./components/layout/Footer";
 
+const Projects = lazy(() => import("./sections/Projects"));
+const TechStack = lazy(() => import("./sections/TechStack"));
+const Experience = lazy(() => import("./sections/Experience"));
+
 setTranslations(content);
+
+function SectionLoader() {
+  return (
+    <div className="flex items-center justify-center py-12">
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-200 dark:border-zinc-700 border-t-emerald-500"></div>
+    </div>
+  );
+}
 
 function AppContent() {
   const { t } = useLanguage();
@@ -34,9 +44,15 @@ function AppContent() {
         <main>
           <Hero />
           <FocusAreas />
-          <Projects />
-          <TechStack />
-          <Experience />
+          <Suspense fallback={<SectionLoader />}>
+            <Projects />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <TechStack />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Experience />
+          </Suspense>
         </main>
         <Footer />
       </div>
