@@ -7,67 +7,77 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      borderRadius: {
+        'xl': '1rem',
+        '2xl': '1.5rem',
+        '3xl': '2rem',
+      },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.05)',
+        'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+        'premium': '0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02)',
+        'premium-hover': '0 25px 50px -12px rgba(0, 0, 0, 0.08)',
+        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
+        'card-dark': '0 4px 6px -1px rgba(0, 0, 0, 0.3)',
+      },
       colors: {
         // ============================================
-        // SEMANTIC COLOR SYSTEM
-        // Light/Dark modes managed via CSS variables
+        // APPLE-INSPIRED PREMIUM PALETTE
         // ============================================
         
-        // Light Mode Palette
+        // Light Mode
         light: {
-          background: '#FAFAFA',     // Zinc-50 cálido - base general
-          surface: '#F4F4F5',        // Zinc-100 - secciones elevadas
-          card: '#FFFFFF',           // Blanco puro - tarjetas con elevación máxima
+          background: '#FBFBFD',     // Apple Background
+          surface: '#F5F5F7',        // Apple Surface
+          card: '#FFFFFF',
           
           text: {
-            primary: '#18181B',      // Zinc-900 - encabezados, énfasis
-            secondary: '#3F3F46',    // Zinc-700 - cuerpo de texto
-            muted: '#71717A',        // Zinc-500 - texto auxiliar
-            disabled: '#A1A1AA',     // Zinc-400 - estados deshabilitados
+            primary: '#1D1D1F',      // Apple Text Primary
+            secondary: '#424245',    // Apple Text Secondary
+            muted: '#86868B',        // Apple Text Muted
+            disabled: '#A1A1AA',
           },
           
           border: {
-            DEFAULT: '#E4E4E7',      // Zinc-200 - bordes visibles
-            subtle: '#F4F4F5',       // Zinc-100 - separadores sutiles
+            DEFAULT: '#D2D2D7',
+            subtle: '#E8E8ED',
           },
           
           accent: {
-            primary: '#059669',      // Emerald-600 - botones, enlaces
-            hover: '#047857',        // Emerald-700 - hover states
-            light: '#ECFDF5',        // Emerald-50 - fondos de acento
-            subtle: '#A7F3D0',       // Emerald-200 - badges, highlights
+            primary: '#06C167',      // Refined Emerald
+            hover: '#05A658',
+            light: '#F2FFF9',
+            subtle: '#D1FAE5',
           },
         },
         
-        // Dark Mode Palette
+        // Dark Mode
         dark: {
-          background: '#09090B',     // Zinc-950 - base general
-          surface: '#18181B',        // Zinc-900 - secciones elevadas
-          card: '#27272A',           // Zinc-800 - tarjetas con elevación máxima
+          background: '#000000',     // Pure Black
+          surface: '#1D1D1F',        // Dark Surface
+          card: '#1C1C1E',           // Dark Card
           
           text: {
-            primary: '#FAFAFA',      // Zinc-50 - encabezados, énfasis
-            secondary: '#D4D4D8',    // Zinc-300 - cuerpo de texto
-            muted: '#A1A1AA',        // Zinc-400 - texto auxiliar
-            disabled: '#71717A',     // Zinc-500 - estados deshabilitados
+            primary: '#F5F5F7',
+            secondary: '#A1A1AA',
+            muted: '#86868B',
+            disabled: '#424245',
           },
           
           border: {
-            DEFAULT: '#3F3F46',      // Zinc-700 - bordes visibles
-            subtle: '#27272A',       // Zinc-800 - separadores sutiles
+            DEFAULT: '#323232',
+            subtle: '#262626',
           },
           
           accent: {
-            primary: '#10B981',      // Emerald-500 - botones, enlaces
-            hover: '#34D399',        // Emerald-400 - hover states
-            dark: '#064E3B',         // Emerald-900 - fondos de acento
-            subtle: '#065F46',       // Emerald-800 - badges, highlights
+            primary: '#10B981',
+            hover: '#34D399',
+            dark: '#064E3B',
+            subtle: '#065F46',
           },
         },
         
-        // ============================================
-        // ZINC SCALE COMPLETA (para uso directo)
-        // ============================================
+        // Keeping zinc and indigo for some secondary uses if needed
         zinc: {
           50: '#FAFAFA',
           100: '#F4F4F5',
@@ -80,75 +90,6 @@ export default {
           800: '#27272A',
           900: '#18181B',
           950: '#09090B',
-        },
-        
-        // ============================================
-        // INDIGO SCALE COMPLETA (acento principal)
-        // ============================================
-        indigo: {
-          50: '#EEF2FF',
-          100: '#E0E7FF',
-          200: '#C7D2FE',
-          300: '#A5B4FC',
-          400: '#818CF8',
-          500: '#6366F1',
-          600: '#4F46E5',
-          700: '#4338CA',
-          800: '#3730A3',
-          900: '#312E81',
-          950: '#1E1B4B',
-        },
-        
-        // ============================================
-        // COLORES SECUNDARIOS POR CATEGORÍA
-        // Para diferenciación visual de proyectos/áreas
-        // ============================================
-        accent: {
-          // APIs & Backend (Verde)
-          api: {
-            light: '#10B981',      // Emerald-500
-            dark: '#34D399',       // Emerald-400
-            bg: '#ECFDF5',         // Emerald-50
-            'dark-bg': '#064E3B',  // Emerald-900
-          },
-          // Data & Databases (Azul)
-          data: {
-            light: '#3B82F6',      // Blue-500
-            dark: '#60A5FA',       // Blue-400
-            bg: '#EFF6FF',         // Blue-50
-            'dark-bg': '#1E3A8A',  // Blue-900
-          },
-          // Performance (Ámbar/Amarillo)
-          perf: {
-            light: '#F59E0B',      // Amber-500
-            dark: '#FBBF24',       // Amber-400
-            bg: '#FFFBEB',         // Amber-50
-            'dark-bg': '#78350F',  // Amber-900
-          },
-          // Cloud & DevOps (Púrpura)
-          cloud: {
-            light: '#8B5CF6',      // Violet-500
-            dark: '#A78BFA',       // Violet-400
-            bg: '#F5F3FF',         // Violet-50
-            'dark-bg': '#4C1D95',  // Violet-900
-          },
-        },
-        
-        // ============================================
-        // LEGACY SUPPORT (mantener compatibilidad)
-        // Deprecar gradualmente en favor del sistema semántico
-        // ============================================
-        primary: {
-          50: '#EEF2FF',
-          100: '#E0E7FF',
-          200: '#C7D2FE',
-          300: '#A5B4FC',
-          400: '#818CF8',
-          500: '#6366F1',   // Cambiado de purple a indigo
-          600: '#4F46E5',
-          700: '#4338CA',
-          800: '#3730A3',
-          900: '#312E81',
         },
       },
       fontFamily: {
@@ -172,41 +113,19 @@ export default {
           'monospace',
         ],
       },
-      backdropBlur: {
-        xs: '2px',
-      },
-      boxShadow: {
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
-        'glass-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.4)',
-        'brutal': '8px 8px 0px 0px rgba(0, 0, 0, 1)',
-        'brutal-sm': '4px 4px 0px 0px rgba(0, 0, 0, 1)',
-        
-        // Nuevas sombras adaptadas al sistema
-        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
-        'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
-        'card-dark': '0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3)',
-        'card-dark-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.5)',
-      },
-      
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'bounce-subtle': 'bounceSubtle 0.3s ease-in-out',
-        'shimmer': 'shimmer 2s linear infinite',
+        'fade-in': 'fadeIn 0.5s ease-out',
+        'float': 'float 6s ease-in-out infinite',
       },
-      
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0', transform: 'translateY(10px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        bounceSubtle: {
-          '0%, 100%': { transform: 'scale(1)' },
-          '50%': { transform: 'scale(1.1)' },
-        },
-        shimmer: {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(100%)' },
-        },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        }
       },
     },
   },

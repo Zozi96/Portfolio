@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Github, Linkedin, Mail, Check, Copy } from 'lucide-react';
-import { useLanguage } from '../../context/LanguageContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
+import { Github, Linkedin, Mail, Check, ArrowUpRight } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -10,93 +10,121 @@ export function Footer() {
 
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
-    const email = t('footer.email');
+    const email = t("footer.email");
     navigator.clipboard.writeText(email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return (
-    <footer className="relative bg-light-surface dark:bg-dark-surface border-t border-light-border dark:border-dark-border overflow-hidden">
-      {/* Refined Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-light-accent-light/50 via-transparent to-light-accent-light/30 dark:from-dark-accent-dark/20 dark:via-transparent dark:to-dark-accent-dark/10" />
-      
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <div>
-            <h3 className="text-2xl font-bold mb-6 text-light-text-primary dark:text-dark-text-primary">
-              {t('footer.contact')}
-            </h3>
-            <div className="flex flex-col gap-4">
-              
-              {/* Email with Copy Functionality */}
-              <div className="relative group flex items-center gap-3">
-                <button
-                  onClick={handleCopyEmail}
-                  className="flex items-center gap-3 text-lg text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-all duration-300 w-full md:w-auto text-left"
-                >
-                  <div className="relative p-2 rounded-lg bg-light-accent-light dark:bg-dark-accent-dark group-hover:scale-110 transition-transform duration-300">
-                    <AnimatePresence mode='wait'>
-                      {copied ? (
-                        <motion.div
-                          key="check"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                        >
-                          <Check className="w-6 h-6 text-green-500" />
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="mail"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                        >
-                          <Mail className="w-6 h-6" />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <span className="group-hover:translate-x-1 transition-transform duration-300 font-mono">
-                    {t('footer.email')}
-                  </span>
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity text-xs text-light-text-muted dark:text-dark-text-muted ml-2 flex items-center gap-1">
-                    <Copy className="w-3 h-3" />
-                    <span className="hidden sm:inline">Click to copy</span>
-                  </div>
-                </button>
-              </div>
+  const navLinks = [
+    { key: "home", href: "#home" },
+    { key: "focus", href: "#focus" },
+    { key: "projects", href: "#projects" },
+    { key: "stack", href: "#stack" },
+    { key: "experience", href: "#experience" },
+  ];
 
+  return (
+    <footer className="relative bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200/50 dark:border-zinc-800/50">
+      {/* Subtle gradient accent */}
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
+
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* CTA Column */}
+          <div className="md:col-span-1">
+            <h3 className="text-2xl font-bold mb-2 tracking-tight text-zinc-900 dark:text-white">
+              {t("footer.contact")}
+            </h3>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+              Open to new opportunities and collaborations.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={handleCopyEmail}
+                className="p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300 cursor-pointer"
+                aria-label="Copy email"
+              >
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.div
+                      key="check"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <Check className="w-5 h-5 text-emerald-500" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="mail"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <Mail className="w-5 h-5" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
               <a
-                href={`https://${t('footer.github')}`}
+                href={`https://${t("footer.github")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-lg text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-all duration-300"
+                className="p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300"
+                aria-label="GitHub"
               >
-                <div className="p-2 rounded-lg bg-light-accent-light dark:bg-dark-accent-dark group-hover:scale-110 transition-transform duration-300">
-                  <Github className="w-6 h-6" />
-                </div>
-                <span className="group-hover:translate-x-1 transition-transform duration-300 font-mono">GitHub</span>
+                <Github className="w-5 h-5" />
               </a>
               <a
-                href={`https://${t('footer.linkedin')}`}
+                href={`https://${t("footer.linkedin")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex items-center gap-3 text-lg text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-all duration-300"
+                className="p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300"
+                aria-label="LinkedIn"
               >
-                <div className="p-2 rounded-lg bg-light-accent-light dark:bg-dark-accent-dark group-hover:scale-110 transition-transform duration-300">
-                  <Linkedin className="w-6 h-6" />
-                </div>
-                <span className="group-hover:translate-x-1 transition-transform duration-300 font-mono">LinkedIn</span>
+                <Linkedin className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          <div className="flex items-end justify-start md:justify-end">
-            <div className="text-sm text-light-text-muted dark:text-dark-text-muted">
-              <p>© {currentYear} • {t('footer.rights')}</p>
-              <p className="mt-1 opacity-50 text-xs">Built with React + Tailwind + Love</p>
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-4">
+              Navigation
+            </h4>
+            <ul className="space-y-2">
+              {navLinks.map((link) => (
+                <li key={link.key}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors inline-flex items-center gap-1"
+                  >
+                    {t(`nav.${link.key}`)}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-0.5 translate-x-0.5 group-hover:opacity-100 transition-all" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Info */}
+          <div className="flex flex-col justify-between">
+            <div>
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 dark:text-zinc-500 mb-4">
+                Contact
+              </h4>
+              <button
+                onClick={handleCopyEmail}
+                className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer"
+              >
+                {t("footer.email")} {copied && "✓"}
+              </button>
+            </div>
+            <div className="mt-8 text-xs text-zinc-400 dark:text-zinc-600">
+              <p>
+                © {currentYear} • {t("footer.rights")}
+              </p>
             </div>
           </div>
         </div>

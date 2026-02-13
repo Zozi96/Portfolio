@@ -8,6 +8,7 @@ export const content = {
       experience: "Experience"
     },
     hero: {
+      badge: "Open to interesting proposals",
       title: "Senior Software Engineer",
       subtitle: "Full-stack engineer specializing in Python ecosystem (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions following SOLID principles for international clients.",
       cta1: "View Projects",
@@ -56,7 +57,7 @@ export const content = {
           stack: ["Python", "Django", "MySQL", "Docker", "AWS"]
         },
         {
-          title: "Mosaic.tech Data Pipeline",
+          title: "Bob Finance Data Pipeline",
           category: "Data Engineering",
           description: "ETL pipelines on AWS Glue using Python and PySpark to ingest and transform large data volumes from multiple formats (Parquet, CSV) with optimized performance.",
           metrics: [
@@ -99,7 +100,7 @@ export const content = {
           description: [
             "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
             "Modernize legacy infrastructure by migrating on-premise systems to cloud-native architectures, reducing maintenance costs and improving deployment velocity.",
-            "Engineer high-performance data pipelines for Mosaic.tech using AWS Glue and PySpark, optimizing ETL processes for large-scale datasets.",
+            "Engineer high-performance data pipelines for Bob Finance using AWS Glue and PySpark, optimizing ETL processes for large-scale datasets.",
             "Drive technical decision-making for backend systems at Wag Hotels, implementing scalable Python/Django solutions on AWS infrastructure."
           ]
         },
@@ -166,6 +167,7 @@ export const content = {
       experience: "Experiencia"
     },
     hero: {
+      badge: "Abierto a escuchar propuestas interesantes",
       title: "Ingeniero de Software Senior",
       subtitle: "Ingeniero full-stack especializado en el ecosistema Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables siguiendo principios SOLID para clientes internacionales.",
       cta1: "Ver Proyectos",
@@ -214,7 +216,7 @@ export const content = {
           stack: ["Python", "Django", "MySQL", "Docker", "AWS"]
         },
         {
-          title: "Pipeline de Datos Mosaic.tech",
+          title: "Pipeline de Datos Bob Finance",
           category: "Ingeniería de Datos",
           description: "Pipelines ETL en AWS Glue usando Python y PySpark para ingerir y transformar grandes volúmenes de datos de múltiples formatos (Parquet, CSV) con rendimiento optimizado.",
           metrics: [
@@ -257,7 +259,7 @@ export const content = {
           description: [
             "Lidero el diseño arquitectónico y desarrollo de microservicios distribuidos para Advanta Health, asegurando alta disponibilidad utilizando .NET Core.",
             "Modernizo infraestructura heredada migrando sistemas on-premise a arquitecturas cloud-native, reduciendo costos operativos y tiempos de despliegue.",
-            "Ingeniero pipelines de datos de alto rendimiento para Mosaic.tech usando AWS Glue y PySpark, optimizando procesos ETL para datasets masivos.",
+            "Ingeniero pipelines de datos de alto rendimiento para Bob Finance usando AWS Glue y PySpark, optimizando procesos ETL para datasets masivos.",
             "Dirijo la toma de decisiones técnicas para los sistemas backend de Wag Hotels, implementando soluciones escalables en Python/Django sobre AWS."
           ]
         },

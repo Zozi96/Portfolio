@@ -1,69 +1,81 @@
-import { Server, Database, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { Section } from '../components/ui/Section';
-import { SpotlightCard } from '../components/ui/SpotlightCard';
-import { useLanguage } from '../context/LanguageContext';
+import { Server, Database, Zap } from "lucide-react";
+import { motion } from "framer-motion";
+import { Section } from "../components/ui/Section";
+import { SpotlightCard } from "../components/ui/SpotlightCard";
+import { useLanguage } from "../context/LanguageContext";
 
 const iconMap = {
   0: Server,
   1: Database,
-  2: Zap
+  2: Zap,
 };
 
 const colorMap = {
   0: {
-    icon: 'text-accent-api-light dark:text-accent-api-dark',
-    bg: 'from-accent-api-light/5 to-accent-api-light/0 dark:from-accent-api-dark/10 dark:to-accent-api-dark/0',
-    pattern: 'text-accent-api-light/5 dark:text-accent-api-dark/10'
+    icon: "text-emerald-500",
+    border: "border-t-emerald-500",
+    bg: "bg-emerald-500/10 dark:bg-emerald-500/15",
   },
   1: {
-    icon: 'text-accent-data-light dark:text-accent-data-dark',
-    bg: 'from-accent-data-light/5 to-accent-data-light/0 dark:from-accent-data-dark/10 dark:to-accent-data-dark/0',
-    pattern: 'text-accent-data-light/5 dark:text-accent-data-dark/10'
+    icon: "text-blue-500",
+    border: "border-t-blue-500",
+    bg: "bg-blue-500/10 dark:bg-blue-500/15",
   },
   2: {
-    icon: 'text-accent-perf-light dark:text-accent-perf-dark',
-    bg: 'from-accent-perf-light/5 to-accent-perf-light/0 dark:from-accent-perf-dark/10 dark:to-accent-perf-dark/0',
-    pattern: 'text-accent-perf-light/5 dark:text-accent-perf-dark/10'
-  }
+    icon: "text-amber-500",
+    border: "border-t-amber-500",
+    bg: "bg-amber-500/10 dark:bg-amber-500/15",
+  },
 };
 
 export function FocusAreas() {
   const { t } = useLanguage();
 
   return (
-    <Section id="focus" className="bg-light-surface dark:bg-dark-surface">
-      <motion.h2
+    <Section id="focus" className="bg-zinc-50/50 dark:bg-zinc-950">
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-4xl md:text-5xl font-bold text-center mb-12"
+        transition={{ duration: 0.8 }}
+        className="text-center mb-16"
       >
-        {t('focus.title')}
-      </motion.h2>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
+          {t("focus.title")}
+        </h2>
+        <div className="h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
+      </motion.div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[0, 1, 2].map((index) => {
           const Icon = iconMap[index as keyof typeof iconMap];
           const colors = colorMap[index as keyof typeof colorMap];
-          
+
           return (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
-              <SpotlightCard className="relative overflow-hidden">
-                <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} pointer-events-none`} />
-                
-                <div className="relative z-10">
-                  <Icon className={`w-12 h-12 ${colors.icon} mb-4`} />
-                  <h3 className="text-xl font-bold mb-3">
+              <SpotlightCard
+                className={`p-8 h-full border-t-2 ${colors.border}`}
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div
+                    className={`p-3.5 rounded-2xl ${colors.bg} mb-5 ${colors.icon}`}
+                  >
+                    <Icon className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 tracking-tight text-zinc-900 dark:text-white">
                     {t(`focus.areas.${index}.title`)}
                   </h3>
-                  <p className="text-light-text-secondary dark:text-dark-text-secondary">
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed">
                     {t(`focus.areas.${index}.description`)}
                   </p>
                 </div>

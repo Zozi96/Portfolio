@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Menu, X, Moon, Sun, Globe } from 'lucide-react';
-import { motion, useScroll, useSpring } from 'framer-motion';
-import { useTheme } from '../../context/ThemeContext';
-import { useLanguage } from '../../context/LanguageContext';
+import { useState } from "react";
+import { Menu, X, Moon, Sun, Globe } from "lucide-react";
+import { motion, useScroll, useSpring } from "framer-motion";
+import { useTheme } from "../../context/ThemeContext";
+import { useLanguage } from "../../context/LanguageContext";
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,79 +12,90 @@ export function Navbar() {
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
     damping: 30,
-    restDelta: 0.001
+    restDelta: 0.001,
   });
 
   const navItems = [
-    { key: 'home', href: '#home' },
-    { key: 'focus', href: '#focus' },
-    { key: 'projects', href: '#projects' },
-    { key: 'stack', href: '#stack' },
-    { key: 'experience', href: '#experience' }
+    { key: "home", href: "#home" },
+    { key: "focus", href: "#focus" },
+    { key: "projects", href: "#projects" },
+    { key: "stack", href: "#stack" },
+    { key: "experience", href: "#experience" },
   ];
 
   const handleLocaleToggle = () => {
-    setLocale(locale === 'en' ? 'es' : 'en');
+    setLocale(locale === "en" ? "es" : "en");
   };
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md bg-light-background/80 dark:bg-dark-background/80 border-b border-light-border/50 dark:border-dark-border/50 supports-[backdrop-filter]:bg-light-background/60 dark:supports-[backdrop-filter]:bg-dark-background/60">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
+    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-zinc-950/70 border-b border-zinc-200/40 dark:border-zinc-800/40">
+      <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex-shrink-0">
-            <span className="text-xl font-mono font-bold text-light-accent-primary dark:text-dark-accent-primary">
-              {'<Zozi />'}
+          {/* Logo */}
+          <a href="#home" className="flex-shrink-0">
+            <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">
+              Zozi
             </span>
-          </div>
+          </a>
 
+          {/* Nav links */}
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map(item => (
+            {navItems.map((item) => (
               <a
                 key={item.key}
                 href={item.href}
-                className="text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-colors"
+                className="text-[13px] font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
               >
                 {t(`nav.${item.key}`)}
               </a>
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Actions */}
+          <div className="flex items-center gap-1">
             <button
               onClick={handleLocaleToggle}
-              className="p-2 rounded-lg text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface dark:hover:bg-dark-surface hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Toggle language"
             >
-              <Globe className="w-5 h-5" />
-              <span className="sr-only">{locale.toUpperCase()}</span>
+              <Globe className="w-4 h-4" />
             </button>
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface dark:hover:bg-dark-surface hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Toggle theme"
             >
-              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
+              {theme === "light" ? (
+                <Moon className="w-4 h-4" />
+              ) : (
+                <Sun className="w-4 h-4" />
+              )}
             </button>
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-surface dark:hover:bg-dark-surface transition-colors cursor-pointer"
+              className="md:hidden p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {isMenuOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
             </button>
           </div>
         </div>
 
+        {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-light-border dark:border-dark-border">
-            {navItems.map(item => (
+          <div className="md:hidden py-3 border-t border-zinc-200/50 dark:border-zinc-800/50">
+            {navItems.map((item) => (
               <a
                 key={item.key}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="block py-2 text-light-text-secondary dark:text-dark-text-secondary hover:text-light-accent-primary dark:hover:text-dark-accent-primary transition-colors"
+                className="block py-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
               >
                 {t(`nav.${item.key}`)}
               </a>
@@ -92,10 +103,10 @@ export function Navbar() {
           </div>
         )}
       </div>
-      
-      {/* Scroll Progress Bar */}
+
+      {/* Scroll progress */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[2px] bg-light-accent-primary dark:bg-dark-accent-primary origin-left"
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-emerald-500 origin-left"
         style={{ scaleX }}
       />
     </nav>

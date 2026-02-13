@@ -9,41 +9,37 @@ interface ButtonProps {
 }
 
 export function Button({ variant = 'primary', children, onClick, href, className = '' }: ButtonProps) {
-  // Common base styles: Monospace font, sharper corners (rounded-md), technical feel
-  const baseClasses = 'relative inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md font-mono text-sm font-semibold tracking-wide transition-all duration-200 overflow-hidden group whitespace-nowrap active:scale-[0.98]';
+  // Apple-style base: Rounded, smooth transitions, sans-serif
+  const baseClasses = 'relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all duration-300 group overflow-hidden active:scale-95';
   
   const variantClasses = {
-    // Primary: High Contrast "Terminal" Block
-    // Light: Black background -> Hover Indigo
-    // Dark: White background -> Hover Indigo (with white text)
+    // Primary: Prominent Apple Button
     primary: `
-      bg-zinc-900 text-white border border-zinc-900
-      dark:bg-zinc-100 dark:text-zinc-900 dark:border-zinc-100
-      
-      hover:bg-emerald-600 hover:border-emerald-600 hover:text-white hover:shadow-lg hover:shadow-emerald-500/20
-      dark:hover:bg-emerald-500 dark:hover:border-emerald-500 dark:hover:text-white dark:hover:shadow-emerald-500/30
+      bg-black text-white 
+      dark:bg-white dark:text-black
+      shadow-premium hover:shadow-premium-hover hover:-translate-y-0.5
+      border border-transparent
     `,
 
-    // Secondary: Technical Outline
-    // Transparent with visible border
+    // Secondary: Subtle Apple Button
     secondary: `
-      bg-transparent 
-      text-zinc-600 border border-zinc-300
-      dark:text-zinc-400 dark:border-zinc-700
-      
-      hover:text-zinc-900 hover:border-zinc-900 hover:bg-zinc-50
-      dark:hover:text-zinc-100 dark:hover:border-zinc-100 dark:hover:bg-zinc-800
+      bg-white text-zinc-900 border border-zinc-200
+      dark:bg-zinc-900 dark:text-white dark:border-zinc-700
+      hover:bg-zinc-50 dark:hover:bg-zinc-800
+      shadow-sm
     `
   };
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`.replace(/\s+/g, ' ');
+  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
   const content = (
     <>
-      {/* Content */}
       <span className="relative z-10 inline-flex items-center gap-2">
         {children}
       </span>
+      {variant === 'primary' && (
+        <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out" />
+      )}
     </>
   );
 

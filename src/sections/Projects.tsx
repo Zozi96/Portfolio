@@ -1,29 +1,26 @@
-import { motion } from 'framer-motion';
-import { Code2, Database, Zap } from 'lucide-react';
-import { Section } from '../components/ui/Section';
-import { SpotlightCard } from '../components/ui/SpotlightCard';
-import { Badge } from '../components/ui/Badge';
-import { useLanguage } from '../context/LanguageContext';
+import { motion } from "framer-motion";
+import { Code2, Database, Zap } from "lucide-react";
+import { Section } from "../components/ui/Section";
+import { SpotlightCard } from "../components/ui/SpotlightCard";
+import { Badge } from "../components/ui/Badge";
+import { useLanguage } from "../context/LanguageContext";
 
 const categoryConfig = {
   0: {
-    color: 'border-accent-api-light dark:border-accent-api-dark',
-    bgColor: 'from-accent-api-light/10 to-accent-data-light/10 dark:from-accent-api-dark/10 dark:to-accent-data-dark/10',
     icon: Code2,
-    iconColor: 'text-accent-api-light dark:text-accent-api-dark'
+    color: "text-emerald-500",
+    bg: "bg-emerald-500/8 dark:bg-emerald-500/10",
   },
   1: {
-    color: 'border-accent-data-light dark:border-accent-data-dark',
-    bgColor: 'from-accent-data-light/10 to-accent-perf-light/10 dark:from-accent-data-dark/10 dark:to-accent-perf-dark/10',
     icon: Database,
-    iconColor: 'text-accent-data-light dark:text-accent-data-dark'
+    color: "text-blue-500",
+    bg: "bg-blue-500/8 dark:bg-blue-500/10",
   },
   2: {
-    color: 'border-accent-perf-light dark:border-accent-perf-dark',
-    bgColor: 'from-accent-perf-light/10 to-accent-cloud-light/10 dark:from-accent-perf-dark/10 dark:to-accent-cloud-dark/10',
     icon: Zap,
-    iconColor: 'text-accent-perf-light dark:text-accent-perf-dark'
-  }
+    color: "text-amber-500",
+    bg: "bg-amber-500/8 dark:bg-amber-500/10",
+  },
 };
 
 export function Projects() {
@@ -31,78 +28,92 @@ export function Projects() {
 
   return (
     <Section id="projects">
-      <motion.h2
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-4xl md:text-5xl font-bold text-center mb-12"
+        transition={{ duration: 0.8 }}
+        className="text-center mb-16"
       >
-        {t('projects.title')}
-      </motion.h2>
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
+          {t("projects.title")}
+        </h2>
+        <div className="h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[0, 1, 2].map((index) => {
           const config = categoryConfig[index as keyof typeof categoryConfig];
           const Icon = config.icon;
-          
-          const gridSpans = ['md:col-span-3', 'md:col-span-3', 'md:col-span-6'];
-          const heights = ['', '', 'md:h-auto'];
-          
+
           return (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className={`${gridSpans[index]} ${heights[index]}`}
+              transition={{
+                duration: 0.8,
+                delay: index * 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
             >
-              <div className={`relative p-[2px] bg-gradient-to-br ${config.color} rounded-2xl h-full`}>
-                <SpotlightCard className={`flex flex-col h-full border-t-4 ${config.color} relative overflow-hidden`}>
-                  {/* Decorative Number Background */}
-                  <div className={`absolute -right-10 -top-10 text-[200px] font-bold ${config.iconColor} opacity-5 select-none pointer-events-none`}>
-                    {index + 1}
-                  </div>
-                  
-                  <div className={`relative h-40 -mx-6 -mt-6 mb-4 rounded-t-2xl overflow-hidden bg-gradient-to-br ${config.bgColor}`}>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Icon className={`w-20 h-20 ${config.iconColor} opacity-40`} />
-                    </div>
-                  </div>
-                  
-                  <div className="mb-2 relative z-10">
-                    <span className={`text-sm font-semibold ${config.iconColor}`}>
-                      {t(`projects.items.${index}.category`)}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 relative z-10">
+              <SpotlightCard className="flex flex-col h-full p-0 overflow-hidden">
+                {/* Icon hero */}
+                <div
+                  className={`h-32 flex items-center justify-center ${config.bg} relative overflow-hidden group`}
+                >
+                  <Icon
+                    className={`w-10 h-10 ${config.color} transition-transform duration-700 group-hover:scale-110`}
+                  />
+                </div>
+
+                <div className="p-6 flex flex-col flex-grow">
+                  <span
+                    className={`text-[10px] font-bold tracking-widest uppercase ${config.color} mb-1.5`}
+                  >
+                    {t(`projects.items.${index}.category`)}
+                  </span>
+                  <h3 className="text-lg font-bold mb-2 tracking-tight text-zinc-900 dark:text-white">
                     {t(`projects.items.${index}.title`)}
                   </h3>
-                  <p className="text-light-text-secondary dark:text-dark-text-secondary mb-4 flex-grow relative z-10">
+                  <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-5 flex-grow leading-relaxed">
                     {t(`projects.items.${index}.description`)}
                   </p>
-                  <div className="grid grid-cols-3 gap-2 mb-4 py-4 border-y border-light-border dark:border-dark-border relative z-10">
+
+                  {/* Metrics */}
+                  <div className="grid grid-cols-3 gap-3 mb-5 py-4 border-y border-zinc-100 dark:border-zinc-800">
                     {[0, 1, 2].map((metricIndex) => (
                       <div key={metricIndex} className="text-center">
-                        <div className={`text-lg font-bold font-mono ${config.iconColor}`}>
-                          {t(`projects.items.${index}.metrics.${metricIndex}.value`)}
+                        <div className="text-sm font-bold tracking-tight text-zinc-900 dark:text-white">
+                          {t(
+                            `projects.items.${index}.metrics.${metricIndex}.value`,
+                          )}
                         </div>
-                        <div className="text-xs text-light-text-muted dark:text-dark-text-muted">
-                          {t(`projects.items.${index}.metrics.${metricIndex}.label`)}
+                        <div className="text-[9px] font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
+                          {t(
+                            `projects.items.${index}.metrics.${metricIndex}.label`,
+                          )}
                         </div>
                       </div>
                     ))}
                   </div>
-                  <div className="flex flex-wrap gap-2 relative z-10">
+
+                  {/* Tech stack */}
+                  <div className="flex flex-wrap gap-1.5">
                     {[0, 1, 2, 3, 4].map((stackIndex) => {
-                      const tech = t(`projects.items.${index}.stack.${stackIndex}`);
-                      return tech && tech !== `projects.items.${index}.stack.${stackIndex}` ? (
+                      const tech = t(
+                        `projects.items.${index}.stack.${stackIndex}`,
+                      );
+                      return tech &&
+                        tech !==
+                          `projects.items.${index}.stack.${stackIndex}` ? (
                         <Badge key={stackIndex}>{tech}</Badge>
                       ) : null;
                     })}
                   </div>
-                </SpotlightCard>
-              </div>
+                </div>
+              </SpotlightCard>
             </motion.div>
           );
         })}
