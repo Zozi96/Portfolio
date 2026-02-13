@@ -25,6 +25,8 @@
   --color-accent-hover: #047857; /* Emerald-700 */
   --color-accent-light: #ecfdf5; /* Emerald-50 */
   --color-accent-subtle: #a7f3d0; /* Emerald-200 */
+  
+  --color-accent-rgb: 5, 150, 105; /* Emerald-600 RGB */
 }
 
 .dark {
@@ -35,7 +37,7 @@
 
   --color-text-primary: #fafafa; /* Zinc-50 */
   --color-text-secondary: #d4d4d8; /* Zinc-300 */
-  --color-text-muted: #a1a1aa; /* Zinc-400 */
+  --color-text-muted: #d4d4d8; /* Zinc-300 - Improved contrast for WCAG AA */
   --color-text-disabled: #71717a; /* Zinc-500 */
 
   --color-border: #3f3f46; /* Zinc-700 */
@@ -45,6 +47,8 @@
   --color-accent-hover: #34d399; /* Emerald-400 */
   --color-accent-dark: #064e3b; /* Emerald-900 */
   --color-accent-subtle: #065f46; /* Emerald-800 */
+  
+  --color-accent-rgb: 16, 185, 129; /* Emerald-500 RGB */
 }
 
 /* ============================================
