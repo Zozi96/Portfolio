@@ -1,5 +1,101 @@
-export const content = {
+interface ProjectMetric {
+  label: string;
+  value: string;
+}
+
+interface ProjectItem {
+  title: string;
+  category: string;
+  description: string;
+  metrics: ProjectMetric[];
+  stack: string[];
+}
+
+interface FocusArea {
+  title: string;
+  description: string;
+}
+
+interface ExperienceRole {
+  title: string;
+  company: string;
+  period: string;
+  description: string[];
+}
+
+interface TechStackCategory {
+  name: string;
+  items: string[];
+}
+
+interface Content {
+  [key: string]: unknown;
+  seo: {
+    title: string;
+    description: string;
+    keywords: string;
+    author: string;
+    ogTitle: string;
+    ogDescription: string;
+  };
+  nav: {
+    home: string;
+    focus: string;
+    projects: string;
+    stack: string;
+    experience: string;
+  };
+  hero: {
+    badge: string;
+    name: string;
+    title: string;
+    subtitle: string;
+    cta1: string;
+    cta2: string;
+  };
+  focus: {
+    title: string;
+    areas: FocusArea[];
+  };
+  projects: {
+    title: string;
+    items: ProjectItem[];
+  };
+  techStack: {
+    title: string;
+    categories: TechStackCategory[];
+  };
+  experience: {
+    title: string;
+    roles: ExperienceRole[];
+  };
+  footer: {
+    contact: string;
+    email: string;
+    github: string;
+    linkedin: string;
+    rights: string;
+  };
+}
+
+interface LocalizedContent {
+  en: Content;
+  es: Content;
+}
+
+export const content: LocalizedContent = {
   en: {
+    seo: {
+      title: "Zozimo Fernández | Senior Software Engineer",
+      description:
+        "Full-stack engineer specializing in Python (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions for international clients.",
+      keywords:
+        "Software Engineer, Full-Stack Developer, Python, Django, FastAPI, .NET, C#, AWS, Cloud Architecture, React, TypeScript",
+      author: "Zozimo Fernández",
+      ogTitle: "Zozimo Fernández - Senior Software Engineer Portfolio",
+      ogDescription:
+        "Experienced full-stack engineer specializing in Python ecosystem and .NET development. Expert in building scalable cloud solutions.",
+    },
     nav: {
       home: "Home",
       focus: "Focus Areas",
@@ -180,6 +276,17 @@ export const content = {
     },
   },
   es: {
+    seo: {
+      title: "Zozimo Fernández | Ingeniero de Software Senior",
+      description:
+        "Ingeniero full-stack especializado en Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables para clientes internacionales.",
+      keywords:
+        "Ingeniero de Software, Desarrollador Full-Stack, Python, Django, FastAPI, .NET, C#, AWS, Arquitectura en la Nube, React, TypeScript",
+      author: "Zozimo Fernández",
+      ogTitle: "Zozimo Fernández - Portfolio Ingeniero de Software Senior",
+      ogDescription:
+        "Ingeniero full-stack experimentado especializado en el ecosistema Python y desarrollo .NET. Experto en construcción de soluciones escalables en la nube.",
+    },
     nav: {
       home: "Inicio",
       focus: "Áreas de Enfoque",
