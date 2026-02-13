@@ -35,15 +35,25 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* Title */}
+        {/* Name */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white mb-6 leading-[1.1]"
+          className="text-5xl md:text-7xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1]"
+        >
+          {t("hero.name")}
+        </motion.h1>
+
+        {/* Title/Role */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="text-3xl md:text-5xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8"
         >
           {t("hero.title")}
-        </motion.h1>
+        </motion.h2>
 
         {/* Subtitle */}
         <motion.p
