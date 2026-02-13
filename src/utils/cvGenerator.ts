@@ -12,263 +12,373 @@ interface CVGeneratorOptions {
 export function generateCV({ language, theme }: CVGeneratorOptions): void {
   const data = content[language];
   const doc = new jsPDF();
-
   const isDark = theme === "dark";
 
-  const colors = {
-    primary: [16, 185, 129] as [number, number, number],
-    accent: [52, 211, 153] as [number, number, number],
-    bg: isDark ? ([18, 18, 18] as [number, number, number]) : ([255, 255, 255] as [number, number, number]),
-    text: isDark ? ([244, 244, 245] as [number, number, number]) : ([24, 24, 27] as [number, number, number]),
-    textSecondary: isDark ? ([161, 161, 170] as [number, number, number]) : ([113, 113, 122] as [number, number, number]),
+  type ColorTuple = [number, number, number];
+
+  interface Colors {
+    accent: ColorTuple;
+    bg: ColorTuple;
+    surface: ColorTuple;
+    text: ColorTuple;
+    textSecondary: ColorTuple;
+    border: ColorTuple;
+  }
+
+  // Apple-inspired premium palette
+  const colors: Colors = {
+    accent: isDark ? [16, 185, 129] : [5, 150, 105],
+    bg: isDark ? [0, 0, 0] : [251, 251, 253],
+    surface: isDark ? [29, 29, 31] : [245, 245, 247],
+    text: isDark ? [245, 245, 247] : [29, 29, 31],
+    textSecondary: isDark ? [161, 161, 170] : [66, 66, 69],
+    border: isDark ? [50, 50, 50] : [210, 210, 215],
   };
 
-  if (isDark) {
+  const drawBackground = () => {
+    // Fill main background
     doc.setFillColor(...colors.bg);
     doc.rect(0, 0, 210, 297, "F");
-  }
 
-  let yPosition = 25;
+    // Add subtle dot pattern (simulating the site)
+    doc.setFillColor(...colors.accent);
+    const dotOpacity = 0.05;
 
-  const drawSectionDivider = (y: number) => {
-    doc.setDrawColor(...colors.primary);
-    doc.setLineWidth(0.5);
-    doc.line(15, y, 195, y);
+    interface GState {
+      new (options: { opacity: number }): unknown;
+    }
+
+    const ExtendedDoc = doc as jsPDF & {
+      GState?: GState;
+      setGState?: (state: unknown) => jsPDF;
+    };
+
+    const ExtendedConstructor = jsPDF as unknown as {
+      GState?: GState;
+    };
+
+    const GStateClass = ExtendedDoc.GState || ExtendedConstructor.GState;
+
+    if (GStateClass && ExtendedDoc.setGState) {
+      try {
+        ExtendedDoc.setGState(new GStateClass({ opacity: dotOpacity }));
+      } catch {
+        // Fallback if GState fails
+      }
+    }
+
+    for (let x = 0; x < 210; x += 15) {
+      for (let y = 0; y < 297; y += 15) {
+        doc.circle(x, y, 0.15, "F");
+      }
+    }
+
+    if (GStateClass && ExtendedDoc.setGState) {
+      try {
+        ExtendedDoc.setGState(new GStateClass({ opacity: 1.0 }));
+      } catch {
+        // Fallback
+      }
+    }
+
+    // Draw sidebar background
+    doc.setFillColor(...colors.surface);
+    doc.rect(0, 0, 65, 297, "F");
+
+    // Sidebar border
+    doc.setDrawColor(...colors.border);
+    doc.setLineWidth(0.1);
+    doc.line(65, 0, 65, 297);
   };
 
-  doc.setFontSize(32);
-  doc.setTextColor(...colors.primary);
-  doc.setFont("helvetica", "bold");
-  doc.text(data.hero.name, 20, yPosition);
+  const drawBadge = (text: string, x: number, y: number): number => {
+    doc.setFontSize(7);
+    const textWidth = doc.getTextWidth(text);
+    const padding = 2;
+    const width = textWidth + padding * 2;
+    const height = 5;
 
-  yPosition += 10;
-  doc.setFontSize(16);
-  doc.setTextColor(...colors.text);
-  doc.setFont("helvetica", "normal");
-  doc.text(data.hero.title, 20, yPosition);
+    const badgeBg: ColorTuple = isDark ? [30, 40, 35] : [236, 253, 245];
+    doc.setFillColor(...badgeBg);
+    doc.roundedRect(x, y - 3.5, width, height, 1, 1, "F");
 
-  yPosition += 8;
-  doc.setFontSize(9);
-  doc.setTextColor(...colors.textSecondary);
-  doc.text(data.footer.email, 20, yPosition);
-  doc.text(`${data.footer.github}  |  ${data.footer.linkedin}`, 20, yPosition + 4);
-
-  yPosition += 12;
-  drawSectionDivider(yPosition);
-  yPosition += 8;
-
-  doc.setFontSize(12);
-  doc.setTextColor(...colors.primary);
-  doc.setFont("helvetica", "bold");
-  doc.text(language === "en" ? "PROFESSIONAL SUMMARY" : "RESUMEN PROFESIONAL", 20, yPosition);
-  
-  yPosition += 6;
-  doc.setFontSize(9.5);
-  doc.setTextColor(...colors.text);
-  doc.setFont("helvetica", "normal");
-  const summaryLines = doc.splitTextToSize(data.hero.subtitle, 170);
-  doc.text(summaryLines, 20, yPosition);
-  yPosition += summaryLines.length * 5 + 6;
-
-  drawSectionDivider(yPosition);
-  yPosition += 8;
-
-  doc.setFontSize(12);
-  doc.setTextColor(...colors.primary);
-  doc.setFont("helvetica", "bold");
-  doc.text(
-    language === "en" ? "CORE COMPETENCIES" : "COMPETENCIAS PRINCIPALES",
-    20,
-    yPosition
-  );
-  yPosition += 6;
-
-  data.focus.areas.forEach((area) => {
-    doc.setFontSize(10);
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
-    
-    doc.setFillColor(...colors.primary);
-    doc.circle(17, yPosition - 1.5, 1.2, "F");
-    
-    doc.text(area.title, 22, yPosition);
-    yPosition += 5;
+    doc.text(text, x + padding, y);
 
-    doc.setFontSize(9);
-    doc.setTextColor(...colors.text);
-    doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(area.description, 168);
-    doc.text(descLines, 22, yPosition);
-    yPosition += descLines.length * 4.5 + 4;
-  });
+    return width + 2; // Return total width consumed + gap
+  };
 
-  yPosition += 2;
-  drawSectionDivider(yPosition);
-  yPosition += 8;
-
-  doc.setFontSize(12);
-  doc.setTextColor(...colors.primary);
-  doc.setFont("helvetica", "bold");
-  doc.text(
-    language === "en" ? "TECHNICAL SKILLS" : "HABILIDADES TÉCNICAS",
-    20,
-    yPosition
-  );
-  yPosition += 6;
-
-  data.techStack.categories.forEach((category) => {
-    doc.setFontSize(10);
-    doc.setTextColor(...colors.accent);
-    doc.setFont("helvetica", "bold");
-    doc.text(`${category.name}`, 20, yPosition);
-    
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(9);
-    doc.setTextColor(...colors.text);
-    const skillsText = category.items.join("  •  ");
-    const skillLines = doc.splitTextToSize(skillsText, 170);
-    doc.text(skillLines, 20, yPosition + 4);
-    yPosition += 4 + skillLines.length * 4.5 + 3;
-  });
-
-  if (yPosition > 250) {
-    doc.addPage();
-    if (isDark) {
-      doc.setFillColor(...colors.bg);
-      doc.rect(0, 0, 210, 297, "F");
-    }
-    yPosition = 20;
-  } else {
-    yPosition += 2;
-  }
-
-  drawSectionDivider(yPosition);
-  yPosition += 8;
-
-  doc.setFontSize(12);
-  doc.setTextColor(...colors.primary);
-  doc.setFont("helvetica", "bold");
-  doc.text(
-    language === "en" ? "PROFESSIONAL EXPERIENCE" : "EXPERIENCIA PROFESIONAL",
-    20,
-    yPosition
-  );
-  yPosition += 6;
-
-  data.experience.roles.forEach((role) => {
-    const estimatedHeight = 20 + (role.description.length * 10);
-    
-    if (yPosition + estimatedHeight > 275) {
-      doc.addPage();
-      if (isDark) {
-        doc.setFillColor(...colors.bg);
-        doc.rect(0, 0, 210, 297, "F");
-      }
-      yPosition = 20;
-    }
-
+  const drawSectionHeader = (text: string, x: number, y: number) => {
     doc.setFontSize(11);
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
-    doc.text(role.title, 20, yPosition);
-    
-    yPosition += 5;
-    doc.setFontSize(9.5);
-    doc.setTextColor(...colors.textSecondary);
-    doc.setFont("helvetica", "italic");
-    doc.text(`${role.company}  |  ${role.period}`, 20, yPosition);
-    yPosition += 6;
+    doc.text(text.toUpperCase(), x, y);
 
-    doc.setFontSize(9);
+    doc.setDrawColor(...colors.accent);
+    doc.setLineWidth(0.8);
+    doc.line(x, y + 2, x + 15, y + 2);
+  };
+
+  const setupPage = () => {
+    drawBackground();
+  };
+
+  // Initial page setup
+  setupPage();
+
+  // --- SIDEBAR CONTENT ---
+  let sidebarY = 25;
+
+  // Profile Photo Placeholder or Initial
+  doc.setFillColor(...colors.accent);
+  doc.roundedRect(15, sidebarY, 35, 35, 3, 3, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(22);
+  doc.setFont("helvetica", "bold");
+  const nameInitial = data.hero.name.charAt(0);
+  const initialWidth = doc.getTextWidth(nameInitial);
+  doc.text(nameInitial, 15 + (35 - initialWidth) / 2, sidebarY + 23);
+
+  sidebarY += 45;
+
+  // Contact Info
+  doc.setFontSize(10);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "CONTACT" : "CONTACTO", 15, sidebarY);
+  sidebarY += 7;
+
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...colors.textSecondary);
+
+  const contactInfo = [
+    { label: "Email", value: data.footer.email },
+    { label: "Github", value: data.footer.github.replace("https://", "") },
+    { label: "Linkedin", value: data.footer.linkedin.replace("https://", "") },
+  ];
+
+  contactInfo.forEach((info) => {
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(...colors.text);
+    doc.text(info.label, 15, sidebarY);
+    sidebarY += 4;
     doc.setFont("helvetica", "normal");
-    
-    role.description.forEach((item) => {
-      const itemLines = doc.splitTextToSize(item, 165);
-      
-      if (yPosition + itemLines.length * 4.5 > 280) {
-        doc.addPage();
-        if (isDark) {
-          doc.setFillColor(...colors.bg);
-          doc.rect(0, 0, 210, 297, "F");
-        }
-        yPosition = 20;
-      }
-      
-      doc.setFillColor(...colors.primary);
-      doc.circle(17, yPosition - 1, 0.8, "F");
-      
-      doc.text(itemLines, 22, yPosition);
-      yPosition += itemLines.length * 4.5 + 2;
-    });
-
-    yPosition += 4;
+    doc.setTextColor(...colors.textSecondary);
+    doc.text(info.value, 15, sidebarY);
+    sidebarY += 7;
   });
 
-  if (yPosition > 230) {
-    doc.addPage();
-    if (isDark) {
-      doc.setFillColor(...colors.bg);
-      doc.rect(0, 0, 210, 297, "F");
-    }
-    yPosition = 20;
-  } else {
-    yPosition += 2;
-  }
+  sidebarY += 5;
 
-  drawSectionDivider(yPosition);
-  yPosition += 8;
-
-  doc.setFontSize(12);
-  doc.setTextColor(...colors.primary);
+  // Languages (Hardcoded for now as it is not in content.ts directly in a list format, but we can add it)
+  doc.setFontSize(10);
+  doc.setTextColor(...colors.text);
   doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "LANGUAGES" : "IDIOMAS", 15, sidebarY);
+  sidebarY += 7;
+
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...colors.textSecondary);
   doc.text(
-    language === "en" ? "KEY CLIENT PROJECTS" : "PROYECTOS CLAVE DE CLIENTES",
-    20,
-    yPosition
+    language === "en" ? "English (Professional)" : "Inglés (Profesional)",
+    15,
+    sidebarY,
   );
-  yPosition += 6;
+  sidebarY += 4;
+  doc.text(
+    language === "en" ? "Spanish (Native)" : "Español (Nativo)",
+    15,
+    sidebarY,
+  );
+  sidebarY += 12;
 
-  data.projects.items.forEach((project) => {
-    const estimatedHeight = 30;
-    
-    if (yPosition + estimatedHeight > 270) {
-      doc.addPage();
-      if (isDark) {
-        doc.setFillColor(...colors.bg);
-        doc.rect(0, 0, 210, 297, "F");
-      }
-      yPosition = 20;
-    }
+  // Skills as list in sidebar
+  doc.setFontSize(10);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "EXPERTISE" : "ESPECIALIDAD", 15, sidebarY);
+  sidebarY += 7;
 
-    doc.setFontSize(10.5);
+  data.focus.areas.forEach((area) => {
+    doc.setFontSize(8);
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
-    doc.text(project.title, 20, yPosition);
-    
-    yPosition += 4.5;
+    doc.text(area.title, 15, sidebarY);
+    sidebarY += 5;
+  });
+
+  // --- MAIN CONTENT ---
+  let mainY = 25;
+  const mainX = 75;
+  const contentWidth = 120;
+
+  // Header
+  doc.setFontSize(28);
+  doc.setTextColor(...colors.accent);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.hero.name, mainX, mainY);
+
+  mainY += 10;
+  doc.setFontSize(14);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.hero.title, mainX, mainY);
+
+  mainY += 15;
+
+  // Summary
+  drawSectionHeader(
+    language === "en" ? "Professional Summary" : "Resumen Profesional",
+    mainX,
+    mainY,
+  );
+  mainY += 10;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...colors.textSecondary);
+  doc.setFont("helvetica", "normal");
+  const summaryLines = doc.splitTextToSize(data.hero.subtitle, contentWidth);
+  doc.text(summaryLines, mainX, mainY);
+  mainY += summaryLines.length * 4.5 + 12;
+
+  // Technical Skills (Badges)
+  drawSectionHeader(
+    language === "en" ? "Technical Stack" : "Stack Técnico",
+    mainX,
+    mainY,
+  );
+  mainY += 10;
+
+  data.techStack.categories.forEach((category) => {
     doc.setFontSize(9);
-    doc.setTextColor(...colors.primary);
-    doc.setFont("helvetica", "italic");
-    doc.text(project.category, 20, yPosition);
-    
-    yPosition += 5;
-    doc.setFont("helvetica", "normal");
     doc.setTextColor(...colors.text);
-    const projDescLines = doc.splitTextToSize(project.description, 170);
-    doc.text(projDescLines, 20, yPosition);
-    yPosition += projDescLines.length * 4.5 + 3;
+    doc.setFont("helvetica", "bold");
+    doc.text(category.name, mainX, mainY);
+    mainY += 6;
+
+    let currentX = mainX;
+    category.items.forEach((skill) => {
+      const badgeWidth = drawBadge(skill, currentX, mainY);
+      currentX += badgeWidth;
+      if (currentX > mainX + contentWidth - 10) {
+        currentX = mainX;
+        mainY += 7;
+      }
+    });
+    mainY += 10;
+  });
+
+  // Experience
+  if (mainY > 200) {
+    doc.addPage();
+    setupPage();
+    mainY = 25;
+  }
+
+  drawSectionHeader(
+    language === "en" ? "Experience" : "Experiencia",
+    mainX,
+    mainY,
+  );
+  mainY += 10;
+
+  data.experience.roles.forEach((role) => {
+    const roleTitleLines = doc.splitTextToSize(role.title, contentWidth);
+
+    if (mainY + 20 > 280) {
+      doc.addPage();
+      setupPage();
+      mainY = 25;
+    }
+
+    doc.setFontSize(10);
+    doc.setTextColor(...colors.text);
+    doc.setFont("helvetica", "bold");
+    doc.text(roleTitleLines, mainX, mainY);
+    mainY += roleTitleLines.length * 5;
+
+    doc.setFontSize(8.5);
+    doc.setTextColor(...colors.accent);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${role.company}  |  ${role.period}`, mainX, mainY);
+    mainY += 6;
 
     doc.setFontSize(8.5);
     doc.setTextColor(...colors.textSecondary);
-    doc.setFont("helvetica", "bold");
-    const techText = `${language === "en" ? "Tech Stack" : "Stack Técnico"}: `;
-    doc.text(techText, 20, yPosition);
-    
-    const techWidth = doc.getTextWidth(techText);
     doc.setFont("helvetica", "normal");
-    doc.text(project.stack.join("  •  "), 20 + techWidth, yPosition);
-    yPosition += 7;
+
+    role.description.forEach((item) => {
+      const itemLines = doc.splitTextToSize(item, contentWidth - 5);
+      if (mainY + itemLines.length * 4 > 285) {
+        doc.addPage();
+        setupPage();
+        mainY = 25;
+      }
+
+      doc.setFillColor(...colors.accent);
+      doc.circle(mainX + 1.5, mainY - 1, 0.5, "F");
+      doc.text(itemLines, mainX + 5, mainY);
+      mainY += itemLines.length * 4 + 2;
+    });
+    mainY += 4;
+  });
+
+  // Projects
+  if (mainY > 220) {
+    doc.addPage();
+    setupPage();
+    mainY = 25;
+  }
+
+  drawSectionHeader(
+    language === "en" ? "Key Projects" : "Proyectos Clave",
+    mainX,
+    mainY,
+  );
+  mainY += 10;
+
+  data.projects.items.forEach((project) => {
+    if (mainY + 25 > 280) {
+      doc.addPage();
+      setupPage();
+      mainY = 25;
+    }
+
+    doc.setFontSize(10);
+    doc.setTextColor(...colors.text);
+    doc.setFont("helvetica", "bold");
+    doc.text(project.title, mainX, mainY);
+    mainY += 5;
+
+    doc.setFontSize(8);
+    doc.setTextColor(...colors.accent);
+    doc.setFont("helvetica", "italic");
+    doc.text(project.category, mainX, mainY);
+    mainY += 5;
+
+    doc.setFontSize(8.5);
+    doc.setTextColor(...colors.textSecondary);
+    doc.setFont("helvetica", "normal");
+    const projDescLines = doc.splitTextToSize(
+      project.description,
+      contentWidth,
+    );
+    doc.text(projDescLines, mainX, mainY);
+    mainY += projDescLines.length * 4 + 3;
+
+    let currentX = mainX;
+    project.stack.forEach((tech) => {
+      const badgeWidth = drawBadge(tech, currentX, mainY);
+      currentX += badgeWidth;
+      if (currentX > mainX + contentWidth - 10) {
+        currentX = mainX;
+        mainY += 7;
+      }
+    });
+    mainY += 12;
   });
 
   const fileName = `${data.hero.name.replace(/\s+/g, "_")}_CV_${language.toUpperCase()}.pdf`;
