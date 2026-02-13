@@ -19,7 +19,7 @@ export function Card({ className = '', children, variant = 'default', gradientCo
   if (variant === 'gradient') {
     return (
       <div className={`p-[1px] bg-gradient-to-br ${gradientColors[gradientColor]} rounded-2xl ${className}`}>
-        <div className="bg-light-card dark:bg-dark-card rounded-2xl p-6 h-full hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-300">
+        <div className="bg-[var(--color-card)] rounded-2xl p-6 h-full hover:shadow-card-hover dark:hover:shadow-card-dark-hover transition-all duration-300">
           {children}
         </div>
       </div>
@@ -28,7 +28,7 @@ export function Card({ className = '', children, variant = 'default', gradientCo
 
   return (
     <div
-      className={`bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border rounded-2xl p-6 shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${className}`}
+      className={`bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${className}`}
     >
       {children}
     </div>
