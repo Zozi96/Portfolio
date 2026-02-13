@@ -11,7 +11,7 @@ interface ButtonProps {
 
 export function Button({ variant = 'primary', children, onClick, href, className = '', disabled = false }: ButtonProps) {
   // Apple-style base: Rounded, smooth transitions, sans-serif
-  const baseClasses = 'relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all duration-300 group overflow-hidden active:scale-95';
+  const baseClasses = 'relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-base font-semibold transition-all duration-300 group overflow-hidden active:scale-95 cursor-pointer';
   
   const disabledClasses = disabled 
     ? 'opacity-50 cursor-not-allowed pointer-events-none' 

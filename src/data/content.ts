@@ -52,6 +52,7 @@ interface Content {
     subtitle: string;
     cta1: string;
     cta2: string;
+    cta3: string;
   };
   focus: {
     title: string;
@@ -111,6 +112,7 @@ export const content: LocalizedContent = {
         "Full-stack engineer specializing in Python ecosystem (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions following SOLID principles for international clients.",
       cta1: "View Projects",
       cta2: "GitHub Profile",
+      cta3: "Download CV",
     },
     focus: {
       title: "Core Focus Areas",
@@ -302,6 +304,7 @@ export const content: LocalizedContent = {
         "Ingeniero full-stack especializado en el ecosistema Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables siguiendo principios SOLID para clientes internacionales.",
       cta1: "Ver Proyectos",
       cta2: "Perfil GitHub",
+      cta3: "Descargar CV",
     },
     focus: {
       title: "Áreas de Enfoque Principales",

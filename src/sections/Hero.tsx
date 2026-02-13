@@ -1,11 +1,22 @@
-import { Github, ArrowRight } from "lucide-react";
+import { Github, ArrowRight, Download } from "lucide-react";
 import { motion } from "framer-motion";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
+import { useTheme } from "../context/ThemeContext";
+import { generateCV } from "../utils/cvGenerator";
+import type { Language, Theme } from "../utils/cvGenerator";
 
 export function Hero() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const { theme } = useTheme();
+
+  const handleDownloadCV = () => {
+    generateCV({ 
+      language: locale as Language,
+      theme: theme as Theme
+    });
+  };
 
   return (
     <Section
@@ -86,6 +97,10 @@ export function Hero() {
           <Button variant="secondary" href="https://github.com/Zozi96">
             <Github className="w-4 h-4" />
             {t("hero.cta2")}
+          </Button>
+          <Button variant="secondary" onClick={handleDownloadCV}>
+            <Download className="w-4 h-4" />
+            {t("hero.cta3")}
           </Button>
         </motion.div>
       </div>
