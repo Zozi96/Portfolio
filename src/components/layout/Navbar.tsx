@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Menu, X, Moon, Sun, Globe } from "lucide-react";
+import { Menu, X, Moon, Sun, Globe, Terminal } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useLanguage } from "../../context/LanguageContext";
 
-export function Navbar() {
+export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { locale, setLocale, t } = useLanguage();
@@ -51,6 +51,15 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="flex items-center gap-1">
+            <button
+              onClick={onTerminalOpen}
+              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              aria-label="Open terminal"
+              title="Open terminal (⌘K)"
+            >
+              <Terminal className="w-4 h-4" />
+            </button>
+
             <button
               onClick={handleLocaleToggle}
               className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState, useEffect } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider, setTranslations, useLanguage } from "./context/LanguageContext";
 import { content } from "./data/content";
@@ -6,6 +6,7 @@ import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
 import FocusAreas from "./sections/FocusAreas";
 import Footer from "./components/layout/Footer";
+import { Terminal } from "./components/ui/Terminal";
 
 const Projects = lazy(() => import("./sections/Projects"));
 const TechStack = lazy(() => import("./sections/TechStack"));
@@ -23,6 +24,19 @@ function SectionLoader() {
 
 function AppContent() {
   const { t } = useLanguage();
+  const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setIsTerminalOpen((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <>
@@ -40,7 +54,7 @@ function AppContent() {
       <meta name="twitter:description" content={t("seo.ogDescription")} />
 
       <div className="min-h-screen">
-        <Navbar />
+        <Navbar onTerminalOpen={() => setIsTerminalOpen(true)} />
         <main>
           <Hero />
           <FocusAreas />
@@ -56,6 +70,8 @@ function AppContent() {
         </main>
         <Footer />
       </div>
+
+      <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
     </>
   );
 }
