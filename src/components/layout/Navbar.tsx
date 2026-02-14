@@ -21,6 +21,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
     { key: "projects", href: "#projects" },
     { key: "stack", href: "#stack" },
     { key: "experience", href: "#experience" },
+    { key: "contact", href: "#contact" },
   ];
 
   const handleLocaleToggle = () => {

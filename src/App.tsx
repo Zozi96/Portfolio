@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
-import { LanguageProvider, setTranslations, useLanguage } from "./context/LanguageContext";
+import { LanguageProvider, useLanguage } from "./context/LanguageContext";
+import { setTranslations } from "./utils/translations";
 import { content } from "./data/content";
 import Navbar from "./components/layout/Navbar";
 import Hero from "./sections/Hero";
@@ -11,6 +12,7 @@ import { Terminal } from "./components/ui/Terminal";
 const Projects = lazy(() => import("./sections/Projects"));
 const TechStack = lazy(() => import("./sections/TechStack"));
 const Experience = lazy(() => import("./sections/Experience"));
+const Contact = lazy(() => import("./sections/Contact"));
 
 setTranslations(content);
 
@@ -66,6 +68,9 @@ function AppContent() {
           </Suspense>
           <Suspense fallback={<SectionLoader />}>
             <Experience />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <Contact />
           </Suspense>
         </main>
         <Footer />

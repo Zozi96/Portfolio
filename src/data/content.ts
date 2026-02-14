@@ -44,6 +44,7 @@ interface Content {
     projects: string;
     stack: string;
     experience: string;
+    contact: string;
   };
   hero: {
     badge: string;
@@ -69,6 +70,24 @@ interface Content {
   experience: {
     title: string;
     roles: ExperienceRole[];
+  };
+  contact: {
+    title: string;
+    nameLabel: string;
+    emailLabel: string;
+    typeLabel: string;
+    subjectLabel: string;
+    messageLabel: string;
+    sendButton: string;
+    sending: string;
+    success: string;
+    error: string;
+    types: {
+      project: string;
+      job: string;
+      consultancy: string;
+      other: string;
+    };
   };
   footer: {
     contact: string;
@@ -103,6 +122,7 @@ export const content: LocalizedContent = {
       projects: "Projects",
       stack: "Tech Stack",
       experience: "Experience",
+      contact: "Contact",
     },
     hero: {
       badge: "Open to interesting proposals",
@@ -269,6 +289,24 @@ export const content: LocalizedContent = {
         },
       ],
     },
+    contact: {
+      title: "Contact Me",
+      nameLabel: "Full Name",
+      emailLabel: "Corporate/Personal Email",
+      typeLabel: "Inquiry Type",
+      subjectLabel: "Subject",
+      messageLabel: "Message",
+      sendButton: "Send Message",
+      sending: "Sending...",
+      success: "Message sent successfully!",
+      error: "Error sending message. Please try again.",
+      types: {
+        project: "Project Proposal (Freelance)",
+        job: "Job Opportunity (Full-time)",
+        consultancy: "Consultancy",
+        other: "Other",
+      },
+    },
     footer: {
       contact: "Get in Touch",
       email: "zozi.fer96@gmail.com",
@@ -295,6 +333,7 @@ export const content: LocalizedContent = {
       projects: "Proyectos",
       stack: "Stack Tecnológico",
       experience: "Experiencia",
+      contact: "Contacto",
     },
     hero: {
       badge: "Abierto a escuchar propuestas interesantes",
@@ -461,6 +500,24 @@ export const content: LocalizedContent = {
         },
       ],
     },
+    contact: {
+      title: "Contáctame",
+      nameLabel: "Nombre Completo",
+      emailLabel: "Email Corporativo/Personal",
+      typeLabel: "Tipo de Consulta",
+      subjectLabel: "Asunto",
+      messageLabel: "Mensaje",
+      sendButton: "Enviar Mensaje",
+      sending: "Enviando...",
+      success: "¡Mensaje enviado con éxito!",
+      error: "Error al enviar el mensaje. Inténtalo de nuevo.",
+      types: {
+        project: "Propuesta de Proyecto (Freelance)",
+        job: "Oportunidad Laboral (Full-time)",
+        consultancy: "Consultoría",
+        other: "Otro",
+      },
+    },
     footer: {
       contact: "Contacto",
       email: "zozi.fer96@gmail.com",
@@ -470,3 +527,4 @@ export const content: LocalizedContent = {
     },
   },
 };
+

@@ -1,11 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
+import { getTranslations } from '../utils/translations';
 
 type Locale = 'en' | 'es';
-
-interface Translations {
-  [key: string]: unknown;
-}
 
 interface LanguageContextType {
   locale: Locale;
@@ -14,15 +11,6 @@ interface LanguageContextType {
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
-
-let translations: Record<Locale, Translations> = {
-  en: {},
-  es: {}
-};
-
-export function setTranslations(newTranslations: Record<Locale, Translations>) {
-  translations = newTranslations;
-}
 
 function getInitialLocale(): Locale {
   if (typeof window === 'undefined') return 'en';
@@ -49,7 +37,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: unknown = translations[locale];
+    let value: unknown = getTranslations(locale);
     
     for (const k of keys) {
       if (typeof value === 'object' && value !== null && !Array.isArray(value) && k in value) {
