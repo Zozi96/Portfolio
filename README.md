@@ -221,8 +221,8 @@ docker run -d -p 8080:80 portfolio:latest
 
 The Docker setup uses a multi-stage build with:
 - **Builder stage**: Node.js 20 on Debian Bookworm Slim for building the application
-- **Production stage**: Debian Bookworm Slim with nginx for serving static files
-- Optimized for production with asset caching and SPA routing support
+- **Production stage**: Node.js 20 on Debian Bookworm Slim with serve for serving static files
+- Optimized for production with SPA routing support
 
 ### Environment Variables
 
