@@ -38,11 +38,14 @@ export default function Contact() {
     const result = contactSchema.safeParse(form);
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof FormState, string>> = {};
-      result.error.errors.forEach((err) => {
-        if (err.path[0]) {
-          fieldErrors[err.path[0] as keyof FormState] = err.message;
+      const flattenedErrors = result.error.flatten().fieldErrors;
+
+      Object.entries(flattenedErrors).forEach(([key, messages]) => {
+        if (messages && messages.length > 0) {
+          fieldErrors[key as keyof FormState] = messages[0];
         }
       });
+
       setErrors(fieldErrors);
       return false;
     }
