@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Github, Linkedin, Mail, Check, ArrowUpRight } from "lucide-react";
+import { Github, Linkedin, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
-import { motion, AnimatePresence } from "framer-motion";
 
 export function Footer() {
   const { t } = useLanguage();
@@ -40,33 +39,6 @@ export function Footer() {
               Open to new opportunities and collaborations.
             </p>
             <div className="flex gap-3">
-              <button
-                onClick={handleCopyEmail}
-                className="p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-zinc-200/80 dark:border-zinc-700/60 text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-200 dark:hover:border-emerald-800 transition-all duration-300 cursor-pointer"
-                aria-label="Copy email"
-              >
-                <AnimatePresence mode="wait">
-                  {copied ? (
-                    <motion.div
-                      key="check"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                    >
-                      <Check className="w-5 h-5 text-emerald-500" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="mail"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                    >
-                      <Mail className="w-5 h-5" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </button>
               <a
                 href={`https://${t("footer.github")}`}
                 target="_blank"

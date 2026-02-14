@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { z } from "zod";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
 
-interface FormState {
-  fullName: string;
-  email: string;
-  type: string;
-  subject: string;
-  message: string;
-}
+const contactSchema = z.object({
+  fullName: z.string().min(1, "Required"),
+  email: z.email("Invalid email format").min(1, "Required"),
+  type: z.string().min(1, "Required"),
+  subject: z.string().default(""),
+  message: z
+    .string()
+    .min(1, "Required")
+    .min(20, "Minimum 20 characters")
+    .max(1000, "Maximum 1000 characters"),
+});
+
+type FormState = z.infer<typeof contactSchema>;
 
 const INITIAL_STATE: FormState = {
   fullName: "",
@@ -25,31 +32,22 @@ export default function Contact() {
   const { t } = useLanguage();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  const [errors, setErrors] = useState<Partial<FormState>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
 
   const validate = () => {
-    const newErrors: Partial<FormState> = {};
-    if (!form.fullName.trim()) newErrors.fullName = "Required";
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!form.email.trim()) {
-      newErrors.email = "Required";
-    } else if (!emailRegex.test(form.email)) {
-      newErrors.email = "Invalid email format";
+    const result = contactSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof FormState, string>> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) {
+          fieldErrors[err.path[0] as keyof FormState] = err.message;
+        }
+      });
+      setErrors(fieldErrors);
+      return false;
     }
-
-    if (!form.type) newErrors.type = "Required";
-
-    if (!form.message.trim()) {
-      newErrors.message = "Required";
-    } else if (form.message.length < 20) {
-      newErrors.message = "Minimum 20 characters";
-    } else if (form.message.length > 1000) {
-      newErrors.message = "Maximum 1000 characters";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors({});
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,22 +59,25 @@ export default function Contact() {
     try {
       const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
       const apiPath = import.meta.env.VITE_SEND_EMAIL_PATH || "/notifications/send-email";
+      const apiKey = import.meta.env.VITE_API_KEY || "";
 
       const response = await fetch(`${apiUrl}${apiPath}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
+          "X-API-KEY": apiKey,
         },
         body: JSON.stringify({
-          subject: 1,
-          previewText: `Nuevo mensaje de ${form.fullName}: ${form.subject || t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`)}`,
+          subject: form.subject.trim() || t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`),
+          previewText: `Mensaje de ${form.fullName}`,
           templateVariables: {
-            headline: "Nueva Consulta desde el Portfolio",
+            headline: form.subject.trim() || "Nueva Consulta desde Portfolio",
             body: `Has recibido un nuevo mensaje.\n\nNombre: ${form.fullName}\nEmail: ${form.email}\nTipo: ${t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`)}\n\nMensaje:\n${form.message}`,
             badge: t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`),
             actionUrl: `mailto:${form.email}`,
-            actionLabel: "Responder al cliente",
-            footerNote: "Este mensaje fue enviado automáticamente desde el formulario de contacto de tu portfolio."
+            actionLabel: `Responder a ${form.fullName.split(' ')[0]}`,
+            footerNote: "Enviado desde el formulario de contacto de tu portfolio."
           }
         }),
       });
