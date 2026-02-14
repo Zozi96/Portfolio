@@ -6,7 +6,7 @@ yarn-error.log*
 pnpm-debug.log*
 .pnpm-store
 
-# Build output
+# Build output (will be generated during Docker build)
 dist
 .output
 out
