@@ -20,7 +20,7 @@ RUN npm run build
 FROM node:20-bookworm-slim
 
 # Install serve to serve static files
-RUN npm install -g serve
+RUN npm install -g serve@14.2.5
 
 # Set working directory
 WORKDIR /app
