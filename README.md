@@ -207,6 +207,23 @@ npm run build
 npx gh-pages -d dist
 ```
 
+#### Docker
+```bash
+# Build the Docker image
+docker build -t portfolio:latest .
+
+# Run the container
+docker run -d -p 80:80 portfolio:latest
+
+# Or with custom port
+docker run -d -p 8080:80 portfolio:latest
+```
+
+The Docker setup uses a multi-stage build with:
+- **Builder stage**: Node.js 20 on Debian Bookworm Slim for building the application
+- **Production stage**: Node.js 20 on Debian Bookworm Slim with serve for serving static files
+- Optimized for production with SPA routing support
+
 ### Environment Variables
 
 Create a `.env` file in the root directory if you need environment-specific configurations:
