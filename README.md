@@ -138,8 +138,6 @@ This project uses environment variables for configuration. Set up your environme
 
 **⚠️ Security Note:** Never commit `.env` files containing real API keys to version control!
 
-See `ARCHITECTURE.md` for detailed documentation on the configuration system.
-
 ---
 
 ## 🎨 Customization
