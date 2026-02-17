@@ -13,10 +13,16 @@ export class MockEmailService implements IEmailService {
   private config: EmailServiceConfig;
   private emailHistory: Array<{ timestamp: Date; payload: EmailPayload }> = [];
   private simulatedDelay: number;
+  private successRate: number;
 
-  constructor(config: EmailServiceConfig, simulatedDelay = 1500) {
+  constructor(
+    config: EmailServiceConfig, 
+    simulatedDelay = 1500,
+    successRate = 0.95
+  ) {
     this.config = config;
     this.simulatedDelay = simulatedDelay;
+    this.successRate = successRate;
   }
 
   /**
@@ -39,8 +45,8 @@ export class MockEmailService implements IEmailService {
       payload: { ...payload },
     });
 
-    // Simulate 95% success rate
-    const isSuccess = Math.random() > 0.05;
+    // Simulate success rate (default 95%)
+    const isSuccess = Math.random() < this.successRate;
 
     if (isSuccess) {
       console.log('✅ Mock email sent successfully');
@@ -83,5 +89,15 @@ export class MockEmailService implements IEmailService {
    */
   setSimulatedDelay(delay: number): void {
     this.simulatedDelay = delay;
+  }
+
+  /**
+   * Set success rate (0.0 to 1.0)
+   */
+  setSuccessRate(rate: number): void {
+    if (rate < 0 || rate > 1) {
+      throw new Error('Success rate must be between 0 and 1');
+    }
+    this.successRate = rate;
   }
 }

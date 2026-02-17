@@ -110,6 +110,36 @@ Portfolio/
 | `npm run lint` | Run ESLint to check code quality |
 | `npm run preview` | Preview production build locally |
 
+### Environment Configuration
+
+This project uses environment variables for configuration. Set up your environment:
+
+1. **Copy the example environment file:**
+   ```bash
+   cp .env.example .env.development
+   ```
+
+2. **Update the values in `.env.development`:**
+   ```env
+   VITE_API_URL=http://127.0.0.1:8000
+   VITE_API_KEY=your_dev_api_key
+   VITE_USE_MOCK_SERVICES=true
+   VITE_ENABLE_DEBUG_MODE=true
+   ```
+
+3. **For production, create `.env.production`:**
+   ```env
+   VITE_API_URL=https://api.production.com
+   VITE_API_KEY=your_production_api_key
+   VITE_USE_MOCK_SERVICES=false
+   VITE_ENABLE_ANALYTICS=true
+   VITE_GOOGLE_ANALYTICS_ID=G-XXXXXXXXXX
+   ```
+
+**⚠️ Security Note:** Never commit `.env` files containing real API keys to version control!
+
+See `ARCHITECTURE.md` for detailed documentation on the configuration system.
+
 ---
 
 ## 🎨 Customization
