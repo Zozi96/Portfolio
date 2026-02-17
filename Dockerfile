@@ -1,6 +1,20 @@
 # Build stage - use Node.js official image for building
 FROM node:24-bookworm-slim AS builder
 
+# Build arguments for Vite environment variables
+ARG VITE_API_URL
+ARG VITE_API_KEY
+ARG VITE_USE_MOCK_SERVICES
+ARG VITE_ENABLE_ANALYTICS
+ARG VITE_GOOGLE_ANALYTICS_ID
+
+# Make them available as environment variables during the build
+ENV VITE_API_URL=$VITE_API_URL \
+    VITE_API_KEY=$VITE_API_KEY \
+    VITE_USE_MOCK_SERVICES=$VITE_USE_MOCK_SERVICES \
+    VITE_ENABLE_ANALYTICS=$VITE_ENABLE_ANALYTICS \
+    VITE_GOOGLE_ANALYTICS_ID=$VITE_GOOGLE_ANALYTICS_ID
+
 # Set working directory
 WORKDIR /app
 
