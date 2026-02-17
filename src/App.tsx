@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState, useEffect } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext";
+import { ServiceProvider } from "./shared/context/ServiceContext";
 import { setTranslations } from "./utils/translations";
 import { content } from "./data/content";
 import Navbar from "./components/layout/Navbar";
@@ -85,7 +86,9 @@ function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AppContent />
+        <ServiceProvider>
+          <AppContent />
+        </ServiceProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

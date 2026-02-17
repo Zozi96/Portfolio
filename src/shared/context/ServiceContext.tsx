@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useMemo } from 'react';
 import { initializeServices, diContainer } from '../di';
 import type { IEmailService } from '../services/email/email.service.interface';
 import type { IAnalyticsService } from '../services/analytics/analytics.service.interface';
@@ -17,7 +17,8 @@ interface ServicesContextType {
 /**
  * Services Context
  */
-const ServicesContext = createContext<ServicesContextType | undefined>(undefined);
+// eslint-disable-next-line react-refresh/only-export-components
+export const ServicesContext = createContext<ServicesContextType | undefined>(undefined);
 
 /**
  * Service Provider Props
@@ -31,10 +32,8 @@ interface ServiceProviderProps {
  * Initializes and provides services to the application
  */
 export function ServiceProvider({ children }: ServiceProviderProps) {
-  const [isReady, setIsReady] = useState(false);
-  const [services, setServices] = useState<Omit<ServicesContextType, 'isReady'> | null>(null);
-
-  useEffect(() => {
+  // Initialize services once and memoize
+  const contextValue = useMemo<ServicesContextType | null>(() => {
     try {
       // Initialize services
       initializeServices();
@@ -44,16 +43,15 @@ export function ServiceProvider({ children }: ServiceProviderProps) {
       const analytics = diContainer.getAnalyticsService();
       const storage = diContainer.getStorageRepository();
 
-      setServices({ email, analytics, storage });
-      setIsReady(true);
+      return { email, analytics, storage, isReady: true };
     } catch (error) {
       console.error('Failed to initialize services:', error);
-      // You might want to show an error UI here
+      return null;
     }
   }, []);
 
-  if (!isReady || !services) {
-    // You can customize this loading state
+  if (!contextValue) {
+    // Error state - services failed to initialize
     return (
       <div style={{ 
         display: 'flex', 
@@ -61,55 +59,14 @@ export function ServiceProvider({ children }: ServiceProviderProps) {
         alignItems: 'center', 
         minHeight: '100vh' 
       }}>
-        <p>Initializing...</p>
+        <p>Failed to initialize services. Please refresh the page.</p>
       </div>
     );
   }
 
   return (
-    <ServicesContext.Provider value={{ ...services, isReady }}>
+    <ServicesContext.Provider value={contextValue}>
       {children}
     </ServicesContext.Provider>
   );
-}
-
-/**
- * Hook to access all services
- * @throws Error if used outside ServiceProvider
- */
-export function useServices(): ServicesContextType {
-  const context = useContext(ServicesContext);
-
-  if (!context) {
-    throw new Error('useServices must be used within a ServiceProvider');
-  }
-
-  return context;
-}
-
-/**
- * Hook to access Email Service
- * @throws Error if used outside ServiceProvider
- */
-export function useEmailService(): IEmailService {
-  const { email } = useServices();
-  return email;
-}
-
-/**
- * Hook to access Analytics Service
- * @throws Error if used outside ServiceProvider
- */
-export function useAnalyticsService(): IAnalyticsService {
-  const { analytics } = useServices();
-  return analytics;
-}
-
-/**
- * Hook to access Storage Repository
- * @throws Error if used outside ServiceProvider
- */
-export function useStorageRepository(): IStorageRepository {
-  const { storage } = useServices();
-  return storage;
 }

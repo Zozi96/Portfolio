@@ -42,6 +42,7 @@ export abstract class Command<TResult = unknown, TContext = unknown> implements 
   /**
    * Validate command (default implementation)
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   validate(_context?: TContext): boolean {
     return true;
   }

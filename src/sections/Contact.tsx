@@ -5,6 +5,9 @@ import { z } from "zod";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
+import { useEmailService } from "../shared/context";
+import { EmailBuilder } from "../shared/patterns/builder/email-builder";
+import { SendEmailCommand } from "../shared/patterns/command/send-email.command";
 
 const contactSchema = z.object({
   fullName: z.string().min(1, "Required"),
@@ -30,6 +33,7 @@ const INITIAL_STATE: FormState = {
 
 export default function Contact() {
   const { t } = useLanguage();
+  const emailService = useEmailService();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
@@ -60,32 +64,30 @@ export default function Contact() {
     setStatus("sending");
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
-      const apiPath = import.meta.env.VITE_SEND_EMAIL_PATH || "/notifications/send-email";
-      const apiKey = import.meta.env.VITE_API_KEY || "";
+      // Build email payload using Builder Pattern
+      const emailPayload = EmailBuilder.create()
+        .subject(form.subject.trim() || t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`))
+        .preview(`Mensaje de ${form.fullName}`)
+        .headline(form.subject.trim() || "Nueva Consulta desde Portfolio")
+        .body(
+          `Has recibido un nuevo mensaje.\n\n` +
+          `Nombre: ${form.fullName}\n` +
+          `Email: ${form.email}\n` +
+          `Tipo: ${t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`)}\n\n` +
+          `Mensaje:\n${form.message}`
+        )
+        .badge(t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`))
+        .action(`mailto:${form.email}`, `Responder a ${form.fullName.split(' ')[0]}`)
+        .footer("Enviado desde el formulario de contacto de tu portfolio.")
+        .build();
 
-      const response = await fetch(`${apiUrl}${apiPath}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-KEY": apiKey,
-        },
-        body: JSON.stringify({
-          subject: form.subject.trim() || t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`),
-          previewText: `Mensaje de ${form.fullName}`,
-          templateVariables: {
-            headline: form.subject.trim() || "Nueva Consulta desde Portfolio",
-            body: `Has recibido un nuevo mensaje.\n\nNombre: ${form.fullName}\nEmail: ${form.email}\nTipo: ${t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`)}\n\nMensaje:\n${form.message}`,
-            badge: t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`),
-            actionUrl: `mailto:${form.email}`,
-            actionLabel: `Responder a ${form.fullName.split(' ')[0]}`,
-            footerNote: "Enviado desde el formulario de contacto de tu portfolio."
-          }
-        }),
-      });
+      // Execute command using Command Pattern
+      const command = new SendEmailCommand(emailService);
+      const result = await command.execute({ payload: emailPayload });
 
-      if (!response.ok) throw new Error("API Error");
+      if (!result.success) {
+        throw new Error(result.error || "Failed to send email");
+      }
 
       setStatus("success");
       setForm(INITIAL_STATE);

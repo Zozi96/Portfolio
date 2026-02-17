@@ -1,7 +1,8 @@
+export { ServiceProvider } from './ServiceContext';
 export {
-  ServiceProvider,
   useServices,
   useEmailService,
   useAnalyticsService,
   useStorageRepository,
-} from './ServiceContext';
+} from './ServiceHooks';
+export type { ServicesContextType } from './ServiceHooks';
