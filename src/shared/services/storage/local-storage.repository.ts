@@ -20,6 +20,7 @@ export class LocalStorageRepository implements IStorageRepository {
 
   /**
    * Get an item from localStorage
+   * Note: Callers must ensure type safety - stored data should match type T
    */
   getItem<T = string>(key: string): T | null {
     try {
@@ -30,6 +31,7 @@ export class LocalStorageRepository implements IStorageRepository {
       try {
         return JSON.parse(item) as T;
       } catch {
+        // If parsing fails, return as string (cast to T)
         return item as T;
       }
     } catch (error) {

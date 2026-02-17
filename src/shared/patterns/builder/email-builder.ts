@@ -56,8 +56,12 @@ export class EmailBuilder {
 
   /**
    * Set action button URL and label (optional)
+   * Both URL and label must be provided together
    */
   action(url: string, label: string): this {
+    if (!url || !label) {
+      throw new Error('Both action URL and label are required');
+    }
     this._actionUrl = url;
     this._actionLabel = label;
     return this;
@@ -103,6 +107,9 @@ export class EmailBuilder {
     if (this._actionUrl && this._actionLabel) {
       templateVariables.actionUrl = this._actionUrl;
       templateVariables.actionLabel = this._actionLabel;
+    } else if (this._actionUrl || this._actionLabel) {
+      // Partial action data - this shouldn't happen due to validation in action()
+      throw new Error('Both action URL and label must be set together');
     }
     if (this._footerNote) {
       templateVariables.footerNote = this._footerNote;

@@ -119,10 +119,12 @@ export class DIContainer {
 
   /**
    * Reset container (for testing)
+   * Note: After calling reset(), initialize() must be called again before using the container
    */
   reset(): void {
     this.services.clear();
     this.initialized = false;
+    console.warn('DIContainer reset. Call initialize() before using services.');
   }
 }
 

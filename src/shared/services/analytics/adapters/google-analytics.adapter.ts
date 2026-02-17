@@ -44,15 +44,18 @@ export class GoogleAnalyticsAdapter implements IAnalyticsService {
       script.src = `https://www.googletagmanager.com/gtag/js?id=${this.config.measurementId}`;
       document.head.appendChild(script);
 
-      // Initialize gtag
+      // Initialize dataLayer and gtag if not already present
       window.dataLayer = window.dataLayer || [];
-      function gtag(...args: unknown[]) {
-        window.dataLayer.push(args);
+      
+      // Define gtag function if not already defined
+      if (!window.gtag) {
+        window.gtag = function gtag(...args: unknown[]) {
+          window.dataLayer.push(args);
+        };
       }
-      window.gtag = gtag;
 
-      gtag('js', new Date());
-      gtag('config', this.config.measurementId);
+      window.gtag('js', new Date());
+      window.gtag('config', this.config.measurementId);
 
       this.initialized = true;
       console.log('✅ Google Analytics initialized:', this.config.measurementId);

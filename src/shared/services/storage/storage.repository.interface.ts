@@ -5,6 +5,8 @@
 export interface IStorageRepository {
   /**
    * Get an item from storage
+   * Attempts to parse JSON for complex types; returns as-is for strings
+   * @returns Parsed value of type T, or null if not found
    */
   getItem<T = string>(key: string): T | null;
 

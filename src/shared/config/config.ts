@@ -56,7 +56,7 @@ export class AppConfig {
       if (!result.success) {
         const errors = result.error.flatten().fieldErrors;
         const errorMessages = Object.entries(errors)
-          .map(([key, messages]) => `  - ${key}: ${messages.join(', ')}`)
+          .map(([key, messages]) => `  - ${key}: ${(messages || []).join(', ')}`)
           .join('\n');
 
         throw new Error(

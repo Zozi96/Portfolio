@@ -8,6 +8,10 @@ import type {
 /**
  * Mock Email Service Implementation
  * Simulates email sending for development and testing
+ * 
+ * @param config - Email service configuration
+ * @param simulatedDelay - Delay in milliseconds before response (default: 1500ms)
+ * @param successRate - Success rate between 0 and 1 (default: 0.95)
  */
 export class MockEmailService implements IEmailService {
   private config: EmailServiceConfig;

@@ -77,7 +77,7 @@ export default function Contact() {
           `Mensaje:\n${form.message}`
         )
         .badge(t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`))
-        .action(`mailto:${form.email}`, `Responder a ${form.fullName.split(' ')[0]}`)
+        .action(`mailto:${form.email}`, `Responder a ${form.fullName.split(' ')[0] || form.fullName}`)
         .footer("Enviado desde el formulario de contacto de tu portfolio.")
         .build();
 

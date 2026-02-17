@@ -62,8 +62,11 @@ export class SendEmailCommand
       return this.failure('Invalid email payload');
     }
 
+    // Context is guaranteed to be valid after validation
+    const validContext = context as SendEmailCommandContext;
+
     try {
-      const result = await this.emailService.send(context!.payload);
+      const result = await this.emailService.send(validContext.payload);
 
       if (!result.success) {
         return this.failure(result.error || 'Failed to send email');
