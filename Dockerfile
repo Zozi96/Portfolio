@@ -1,5 +1,5 @@
 # Build stage - use Node.js official image for building
-FROM node:20-bookworm-slim AS builder
+FROM node:24-bookworm-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Production stage - use node bookworm-slim as requested
-FROM node:20-bookworm-slim
+FROM node:24-bookworm-slim
 
 # Install serve to serve static files
 RUN npm install -g serve@14.2.5
