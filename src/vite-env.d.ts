@@ -20,8 +20,6 @@ interface ImportMetaEnv {
 
   // Environment Variables
   readonly MODE: 'development' | 'production' | 'test'
-  readonly DEV: boolean
-  readonly PROD: boolean
 }
 
 interface ImportMeta {

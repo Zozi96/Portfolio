@@ -47,8 +47,6 @@ export class AppConfig {
 
         // Environment Variables
         MODE: import.meta.env.MODE,
-        DEV: import.meta.env.DEV,
-        PROD: import.meta.env.PROD,
       };
 
       const result = envSchema.safeParse(env);
@@ -103,8 +101,8 @@ export class AppConfig {
   public get environment() {
     return {
       mode: this.config.MODE,
-      isDevelopment: this.config.DEV,
-      isProduction: this.config.PROD,
+      isDevelopment: this.config.MODE === 'development',
+      isProduction: this.config.MODE === 'production',
     };
   }
 
@@ -132,7 +130,7 @@ export class AppConfig {
    * Only logs in debug mode or development
    */
   public debug(): void {
-    if (this.config.VITE_ENABLE_DEBUG_MODE || this.config.DEV) {
+    if (this.config.VITE_ENABLE_DEBUG_MODE || this.config.MODE === 'development') {
       console.group('🔧 Application Configuration');
       console.log('API:', this.api);
       console.log('Features:', this.features);

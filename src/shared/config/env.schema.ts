@@ -36,8 +36,6 @@ export const envSchema = z.object({
 
   // Environment Variables
   MODE: z.enum(['development', 'production', 'test']).default('development'),
-  DEV: z.boolean().optional().default(true),
-  PROD: z.boolean().optional().default(false),
 });
 
 export type EnvSchema = z.infer<typeof envSchema>;
