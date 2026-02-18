@@ -30,26 +30,20 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage - use node bookworm-slim as requested
-FROM node:24-bookworm-slim
+# Production stage - use nginx:alpine for performance
+FROM nginx:alpine
 
 # Argumento para el puerto con valor por defecto 3000
 ARG PORT=3000
 
-# Install serve to serve static files
-RUN npm install -g serve@14.2.5
-
-# Set working directory
-WORKDIR /app
-
-# Copy built files from builder stage
-COPY --from=builder /app/dist ./dist
-
 # Variable de entorno para el puerto
 ENV PORT=$PORT
 
+# Copy built files from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Copy nginx template (auto-substitutes ${PORT} at container startup)
+COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+
 # Expose el puerto dinámicamente
 EXPOSE $PORT
-
-# Serve the application usando el puerto de la variable de entorno
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
