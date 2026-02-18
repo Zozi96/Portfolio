@@ -33,15 +33,20 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } else {
       root.classList.remove('dark');
     }
-
-    localStorage.setItem('theme', theme);
+    // Only persist when the user has explicitly set a preference; do not
+    // overwrite on every render so that the OS-change listener can detect
+    // the absence of a manual override.
+    if (localStorage.getItem('theme') !== null) {
+      localStorage.setItem('theme', theme);
+    }
   }, [theme]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     const handleChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem('theme')) {
+      // Only follow OS changes when the user has not manually overridden the theme.
+      if (localStorage.getItem('theme') === null) {
         setThemeState(e.matches ? 'dark' : 'light');
       }
     };
@@ -54,10 +59,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     () => ({
       theme,
       setTheme: (newTheme: Theme) => {
+        localStorage.setItem('theme', newTheme);
         setThemeState(newTheme);
       },
       toggleTheme: () => {
         const next: Theme = theme === 'light' ? 'dark' : 'light';
+        localStorage.setItem('theme', next);
 
         if (!('startViewTransition' in document)) {
           setThemeState(next);

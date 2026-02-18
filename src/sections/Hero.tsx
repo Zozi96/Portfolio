@@ -7,6 +7,20 @@ import { useTheme } from "../context/ThemeContext";
 import { generateCV } from "../utils/cvGenerator";
 import type { Language, Theme } from "../utils/cvGenerator";
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+};
+
 export function Hero() {
   const { t, locale } = useLanguage();
   const { theme } = useTheme();
@@ -23,18 +37,31 @@ export function Hero() {
       id="home"
       className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-0"
     >
-      {/* Background gradient blobs - emerald-only palette */}
+      {/* Background gradient blobs - hardware-accelerated via translateZ(0) */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]" />
-        <div className="absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]" />
+        <div
+          className="absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]"
+          style={{ transform: "translateZ(0)", willChange: "transform" }}
+        />
+        <div
+          className="absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]"
+          style={{ transform: "translateZ(0)", willChange: "transform" }}
+        />
+        <div
+          className="absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]"
+          style={{ transform: "translateZ(0)", willChange: "transform" }}
+        />
       </div>
 
-      <div className="w-full max-w-5xl mx-auto text-center relative z-10 px-4">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="w-full max-w-5xl mx-auto text-center relative z-10 px-4"
+      >
         {/* Status badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={itemVariants}
           className="inline-flex items-center gap-2.5 px-4 py-2 mb-8 rounded-full bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-700/40 backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
@@ -48,9 +75,7 @@ export function Hero() {
 
         {/* Name */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          variants={itemVariants}
           className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1]"
         >
           {t("hero.name")}
@@ -58,9 +83,7 @@ export function Hero() {
 
         {/* Title/Role */}
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          variants={itemVariants}
           className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8"
         >
           {t("hero.title")}
@@ -68,9 +91,7 @@ export function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
+          variants={itemVariants}
           className="text-base md:text-lg lg:text-xl text-zinc-500 dark:text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
           {t("hero.subtitle")}
@@ -78,9 +99,7 @@ export function Hero() {
 
         {/* CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
+          variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Button
@@ -103,7 +122,7 @@ export function Hero() {
             {t("hero.cta3")}
           </Button>
         </motion.div>
-      </div>
+      </motion.div>
     </Section>
   );
 }
