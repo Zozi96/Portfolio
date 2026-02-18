@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 
 type Theme = 'light' | 'dark';
@@ -27,26 +27,53 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement;
-    
+
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
       root.classList.remove('dark');
     }
-    
+
     localStorage.setItem('theme', theme);
   }, [theme]);
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme);
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-  const toggleTheme = () => {
-    setThemeState(prev => prev === 'light' ? 'dark' : 'light');
-  };
+    const handleChange = (e: MediaQueryListEvent) => {
+      if (!localStorage.getItem('theme')) {
+        setThemeState(e.matches ? 'dark' : 'light');
+      }
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      theme,
+      setTheme: (newTheme: Theme) => {
+        setThemeState(newTheme);
+      },
+      toggleTheme: () => {
+        const next: Theme = theme === 'light' ? 'dark' : 'light';
+
+        if (!('startViewTransition' in document)) {
+          setThemeState(next);
+          return;
+        }
+
+        document.startViewTransition(() => {
+          setThemeState(next);
+        });
+      },
+    }),
+    [theme]
+  );
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={value}>
       {children}
     </ThemeContext.Provider>
   );
