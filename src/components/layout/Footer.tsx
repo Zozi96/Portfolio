@@ -1,19 +1,9 @@
-import { useState } from "react";
 import { Github, Linkedin, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function Footer() {
   const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const email = t("footer.email");
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const navLinks = [
     { key: "home", href: "#home" },
@@ -82,17 +72,6 @@ export function Footer() {
 
           {/* Info */}
           <div className="flex flex-col justify-between">
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-zinc-500 dark:text-zinc-400 mb-4">
-                Contact
-              </h4>
-              <button
-                onClick={handleCopyEmail}
-                className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors cursor-pointer"
-              >
-                {t("footer.email")} {copied && "✓"}
-              </button>
-            </div>
             <div className="mt-8 text-xs text-zinc-400 dark:text-zinc-600">
               <p>
                 © {currentYear} • {t("footer.rights")}
