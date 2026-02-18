@@ -16,4 +16,10 @@ server {
         expires 1y;
         add_header Cache-Control "public, immutable";
     }
+
+    location /health {
+        access_log off;
+        add_header Content-Type text/plain;
+        return 200 "ok\n";
+    }
 }
