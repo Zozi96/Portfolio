@@ -3,9 +3,8 @@ import { motion } from "framer-motion";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
-import { useTheme } from "../context/ThemeContext";
 import { generateCV } from "../utils/cvGenerator";
-import type { Language, Theme } from "../utils/cvGenerator";
+import type { Language } from "../utils/cvGenerator";
 
 const containerVariants = {
   hidden: {},
@@ -23,12 +22,10 @@ const itemVariants = {
 
 export function Hero() {
   const { t, locale } = useLanguage();
-  const { theme } = useTheme();
 
   const handleDownloadCV = () => {
     generateCV({ 
       language: locale as Language,
-      theme: theme as Theme
     });
   };
 

@@ -2,17 +2,14 @@ import jsPDF from "jspdf";
 import { content } from "../data/content";
 
 export type Language = "en" | "es";
-export type Theme = "light" | "dark";
 
 interface CVGeneratorOptions {
   language: Language;
-  theme: Theme;
 }
 
-export function generateCV({ language, theme }: CVGeneratorOptions): void {
+export function generateCV({ language }: CVGeneratorOptions): void {
   const data = content[language];
   const doc = new jsPDF();
-  const isDark = theme === "dark";
 
   type ColorTuple = [number, number, number];
 
@@ -25,67 +22,22 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     border: ColorTuple;
   }
 
-  // Apple-inspired premium palette
   const colors: Colors = {
-    accent: isDark ? [16, 185, 129] : [5, 150, 105],
-    bg: isDark ? [0, 0, 0] : [251, 251, 253],
-    surface: isDark ? [29, 29, 31] : [245, 245, 247],
-    text: isDark ? [245, 245, 247] : [29, 29, 31],
-    textSecondary: isDark ? [161, 161, 170] : [66, 66, 69],
-    border: isDark ? [50, 50, 50] : [210, 210, 215],
+    accent: [50, 50, 50],
+    bg: [255, 255, 255],
+    surface: [238, 238, 238],
+    text: [20, 20, 20],
+    textSecondary: [100, 100, 100],
+    border: [200, 200, 200],
   };
 
   const drawBackground = () => {
-    // Fill main background
     doc.setFillColor(...colors.bg);
     doc.rect(0, 0, 210, 297, "F");
 
-    // Add subtle dot pattern (simulating the site)
-    doc.setFillColor(...colors.accent);
-    const dotOpacity = 0.05;
-
-    interface GState {
-      new (options: { opacity: number }): unknown;
-    }
-
-    const ExtendedDoc = doc as jsPDF & {
-      GState?: GState;
-      setGState?: (state: unknown) => jsPDF;
-    };
-
-    const ExtendedConstructor = jsPDF as unknown as {
-      GState?: GState;
-    };
-
-    const GStateClass = ExtendedDoc.GState || ExtendedConstructor.GState;
-
-    if (GStateClass && ExtendedDoc.setGState) {
-      try {
-        ExtendedDoc.setGState(new GStateClass({ opacity: dotOpacity }));
-      } catch {
-        // Fallback if GState fails
-      }
-    }
-
-    for (let x = 0; x < 210; x += 15) {
-      for (let y = 0; y < 297; y += 15) {
-        doc.circle(x, y, 0.15, "F");
-      }
-    }
-
-    if (GStateClass && ExtendedDoc.setGState) {
-      try {
-        ExtendedDoc.setGState(new GStateClass({ opacity: 1.0 }));
-      } catch {
-        // Fallback
-      }
-    }
-
-    // Draw sidebar background
     doc.setFillColor(...colors.surface);
     doc.rect(0, 0, 65, 297, "F");
 
-    // Sidebar border
     doc.setDrawColor(...colors.border);
     doc.setLineWidth(0.1);
     doc.line(65, 0, 65, 297);
@@ -98,15 +50,14 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     const width = textWidth + padding * 2;
     const height = 5;
 
-    const badgeBg: ColorTuple = isDark ? [30, 40, 35] : [236, 253, 245];
-    doc.setFillColor(...badgeBg);
+    doc.setFillColor(220, 220, 220);
     doc.roundedRect(x, y - 3.5, width, height, 1, 1, "F");
 
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
     doc.text(text, x + padding, y);
 
-    return width + 2; // Return total width consumed + gap
+    return width + 2;
   };
 
   const drawSectionHeader = (text: string, x: number, y: number) => {
@@ -124,159 +75,156 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     drawBackground();
   };
 
-  // Initial page setup
   setupPage();
 
-  // --- SIDEBAR CONTENT ---
-  let sidebarY = 25;
+  let sidebarY = 20;
+  const sidebarX = 8;
+  const sidebarWidth = 49;
 
-  // Profile Photo Placeholder or Initial
-  doc.setFillColor(...colors.accent);
-  doc.roundedRect(15, sidebarY, 35, 35, 3, 3, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(22);
+  doc.setFontSize(13);
+  doc.setTextColor(...colors.accent);
   doc.setFont("helvetica", "bold");
-  const nameInitial = data.hero.name.charAt(0);
-  const initialWidth = doc.getTextWidth(nameInitial);
-  doc.text(nameInitial, 15 + (35 - initialWidth) / 2, sidebarY + 23);
-
-  sidebarY += 45;
-
-  // Contact Info
-  doc.setFontSize(10);
-  doc.setTextColor(...colors.text);
-  doc.setFont("helvetica", "bold");
-  doc.text(language === "en" ? "CONTACT" : "CONTACTO", 15, sidebarY);
-  sidebarY += 7;
+  const nameLines = doc.splitTextToSize(data.hero.name, sidebarWidth);
+  doc.text(nameLines, sidebarX, sidebarY);
+  sidebarY += nameLines.length * 6;
 
   doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
   doc.setTextColor(...colors.textSecondary);
+  doc.setFont("helvetica", "normal");
+  const titleLines = doc.splitTextToSize(data.hero.title, sidebarWidth);
+  doc.text(titleLines, sidebarX, sidebarY);
+  sidebarY += titleLines.length * 4 + 7;
+
+  doc.setDrawColor(...colors.border);
+  doc.setLineWidth(0.3);
+  doc.line(sidebarX, sidebarY, sidebarX + sidebarWidth, sidebarY);
+  sidebarY += 6;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "CONTACT" : "CONTACTO", sidebarX, sidebarY);
+  sidebarY += 6;
 
   const contactInfo = [
     { label: "Email", value: data.footer.email },
     { label: "Github", value: data.footer.github.replace("https://", "") },
-    { label: "Linkedin", value: data.footer.linkedin.replace("https://", "") },
+    { label: "LinkedIn", value: data.footer.linkedin.replace("https://", "") },
   ];
 
   contactInfo.forEach((info) => {
+    doc.setFontSize(7.5);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...colors.text);
-    doc.text(info.label, 15, sidebarY);
-    sidebarY += 4;
+    doc.text(info.label, sidebarX, sidebarY);
+    sidebarY += 3.5;
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...colors.textSecondary);
-    doc.text(info.value, 15, sidebarY);
-    sidebarY += 7;
+    const valLines = doc.splitTextToSize(info.value, sidebarWidth);
+    doc.text(valLines, sidebarX, sidebarY);
+    sidebarY += valLines.length * 3.5 + 3;
   });
 
-  sidebarY += 5;
+  sidebarY += 3;
 
-  // Languages (Hardcoded for now as it is not in content.ts directly in a list format, but we can add it)
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setTextColor(...colors.text);
   doc.setFont("helvetica", "bold");
-  doc.text(language === "en" ? "LANGUAGES" : "IDIOMAS", 15, sidebarY);
-  sidebarY += 7;
+  doc.text(language === "en" ? "LANGUAGES" : "IDIOMAS", sidebarX, sidebarY);
+  sidebarY += 6;
 
-  doc.setFontSize(8);
+  doc.setFontSize(7.5);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...colors.textSecondary);
   doc.text(
     language === "en" ? "English (Professional)" : "Inglés (Profesional)",
-    15,
+    sidebarX,
     sidebarY,
   );
   sidebarY += 4;
   doc.text(
     language === "en" ? "Spanish (Native)" : "Español (Nativo)",
-    15,
+    sidebarX,
     sidebarY,
   );
-  sidebarY += 12;
+  sidebarY += 10;
 
-  // Skills as list in sidebar
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setTextColor(...colors.text);
   doc.setFont("helvetica", "bold");
-  doc.text(language === "en" ? "EXPERTISE" : "ESPECIALIDAD", 15, sidebarY);
-  sidebarY += 7;
+  doc.text(language === "en" ? "EXPERTISE" : "ESPECIALIDAD", sidebarX, sidebarY);
+  sidebarY += 6;
 
   data.focus.areas.forEach((area) => {
-    doc.setFontSize(8);
-    doc.setTextColor(...colors.accent);
+    doc.setFontSize(7.5);
+    doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "bold");
-    doc.text(area.title, 15, sidebarY);
+    doc.text(`• ${area.title}`, sidebarX, sidebarY);
     sidebarY += 5;
   });
 
-  // --- MAIN CONTENT ---
-  let mainY = 25;
+  sidebarY += 5;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "SUMMARY" : "RESUMEN", sidebarX, sidebarY);
+  doc.setDrawColor(...colors.accent);
+  doc.setLineWidth(0.8);
+  doc.line(sidebarX, sidebarY + 2, sidebarX + 12, sidebarY + 2);
+  sidebarY += 8;
+
+  doc.setFontSize(7.5);
+  doc.setTextColor(...colors.textSecondary);
+  doc.setFont("helvetica", "normal");
+  const summaryLines = doc.splitTextToSize(data.hero.subtitle, sidebarWidth);
+  doc.text(summaryLines, sidebarX, sidebarY);
+  sidebarY += summaryLines.length * 3.8 + 8;
+
+  doc.setFontSize(9);
+  doc.setTextColor(...colors.text);
+  doc.setFont("helvetica", "bold");
+  doc.text(language === "en" ? "TECH STACK" : "STACK TÉCNICO", sidebarX, sidebarY);
+  doc.setDrawColor(...colors.accent);
+  doc.setLineWidth(0.8);
+  doc.line(sidebarX, sidebarY + 2, sidebarX + 12, sidebarY + 2);
+  sidebarY += 8;
+
+  data.techStack.categories.forEach((category) => {
+    doc.setFontSize(7.5);
+    doc.setTextColor(...colors.text);
+    doc.setFont("helvetica", "bold");
+    doc.text(category.name, sidebarX, sidebarY);
+    sidebarY += 5;
+
+    let currentX = sidebarX;
+    category.items.forEach((skill) => {
+      const badgeWidth = drawBadge(skill, currentX, sidebarY);
+      currentX += badgeWidth;
+      if (currentX > sidebarX + sidebarWidth - 5) {
+        currentX = sidebarX;
+        sidebarY += 6;
+      }
+    });
+    sidebarY += 9;
+  });
+
+  let mainY = 20;
   const mainX = 75;
   const contentWidth = 120;
 
-  // Header
-  doc.setFontSize(28);
+  doc.setFontSize(26);
   doc.setTextColor(...colors.accent);
   doc.setFont("helvetica", "bold");
   doc.text(data.hero.name, mainX, mainY);
 
-  mainY += 10;
-  doc.setFontSize(14);
+  mainY += 9;
+  doc.setFontSize(13);
   doc.setTextColor(...colors.text);
   doc.setFont("helvetica", "normal");
   doc.text(data.hero.title, mainX, mainY);
 
-  mainY += 15;
-
-  // Summary
-  drawSectionHeader(
-    language === "en" ? "Professional Summary" : "Resumen Profesional",
-    mainX,
-    mainY,
-  );
-  mainY += 10;
-
-  doc.setFontSize(9);
-  doc.setTextColor(...colors.textSecondary);
-  doc.setFont("helvetica", "normal");
-  const summaryLines = doc.splitTextToSize(data.hero.subtitle, contentWidth);
-  doc.text(summaryLines, mainX, mainY);
-  mainY += summaryLines.length * 4.5 + 12;
-
-  // Technical Skills (Badges)
-  drawSectionHeader(
-    language === "en" ? "Technical Stack" : "Stack Técnico",
-    mainX,
-    mainY,
-  );
-  mainY += 10;
-
-  data.techStack.categories.forEach((category) => {
-    doc.setFontSize(9);
-    doc.setTextColor(...colors.text);
-    doc.setFont("helvetica", "bold");
-    doc.text(category.name, mainX, mainY);
-    mainY += 6;
-
-    let currentX = mainX;
-    category.items.forEach((skill) => {
-      const badgeWidth = drawBadge(skill, currentX, mainY);
-      currentX += badgeWidth;
-      if (currentX > mainX + contentWidth - 10) {
-        currentX = mainX;
-        mainY += 7;
-      }
-    });
-    mainY += 10;
-  });
-
-  // Experience
-  if (mainY > 200) {
-    doc.addPage();
-    setupPage();
-    mainY = 25;
-  }
+  mainY += 14;
 
   drawSectionHeader(
     language === "en" ? "Experience" : "Experiencia",
@@ -301,7 +249,7 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     mainY += roleTitleLines.length * 5;
 
     doc.setFontSize(8.5);
-    doc.setTextColor(...colors.accent);
+    doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "bold");
     doc.text(`${role.company}  |  ${role.period}`, mainX, mainY);
     mainY += 6;
@@ -326,7 +274,6 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     mainY += 4;
   });
 
-  // Projects
   if (mainY > 220) {
     doc.addPage();
     setupPage();
@@ -354,7 +301,7 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     mainY += 5;
 
     doc.setFontSize(8);
-    doc.setTextColor(...colors.accent);
+    doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "italic");
     doc.text(project.category, mainX, mainY);
     mainY += 5;
@@ -362,10 +309,7 @@ export function generateCV({ language, theme }: CVGeneratorOptions): void {
     doc.setFontSize(8.5);
     doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "normal");
-    const projDescLines = doc.splitTextToSize(
-      project.description,
-      contentWidth,
-    );
+    const projDescLines = doc.splitTextToSize(project.description, contentWidth);
     doc.text(projDescLines, mainX, mainY);
     mainY += projDescLines.length * 4 + 3;
 
