@@ -1,5 +1,6 @@
 import { Github, ArrowRight, Download } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { useEffect } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
@@ -23,6 +24,36 @@ const itemVariants = {
 export function Hero() {
   const { t, locale } = useLanguage();
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const reverseMouseX = useMotionValue(0);
+  const reverseMouseY = useMotionValue(0);
+
+  const springConfig = { damping: 50, stiffness: 400 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
+  const smoothReverseX = useSpring(reverseMouseX, springConfig);
+  const smoothReverseY = useSpring(reverseMouseY, springConfig);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX / innerWidth) * 2 - 1;
+      const y = (e.clientY / innerHeight) * 2 - 1;
+      
+      mouseX.set(x * 50);
+      mouseY.set(y * 50);
+
+      reverseMouseX.set(x * -30);
+      reverseMouseY.set(y * -30);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY, reverseMouseX, reverseMouseY]);
+
   const handleDownloadCV = () => {
     generateCV({ 
       language: locale as Language,
@@ -34,19 +65,27 @@ export function Hero() {
       id="home"
       className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-0"
     >
-      {/* Background gradient blobs - hardware-accelerated via translateZ(0) */}
       <div className="absolute inset-0 -z-10">
-        <div
+        <motion.div
           className="absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]"
-          style={{ transform: "translateZ(0)", willChange: "transform" }}
+          style={{ 
+            x: smoothX,
+            y: smoothY,
+          }}
         />
-        <div
+        <motion.div
           className="absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]"
-          style={{ transform: "translateZ(0)", willChange: "transform" }}
+          style={{ 
+            x: smoothReverseX,
+            y: smoothReverseY,
+          }}
         />
-        <div
+        <motion.div
           className="absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]"
-          style={{ transform: "translateZ(0)", willChange: "transform" }}
+          style={{ 
+            x: smoothX,
+            y: smoothY,
+          }}
         />
       </div>
 

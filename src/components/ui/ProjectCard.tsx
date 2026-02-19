@@ -46,7 +46,15 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
   };
 
   return (
-    <SpotlightCard className="flex flex-col h-full p-0 overflow-hidden">
+    <SpotlightCard 
+      className="flex flex-col h-full p-0 overflow-hidden"
+      spotlightColor={
+        config.color.includes("emerald") ? "rgba(16, 185, 129, 0.15)" :
+        config.color.includes("blue") ? "rgba(59, 130, 246, 0.15)" :
+        config.color.includes("amber") ? "rgba(245, 158, 11, 0.15)" :
+        "rgba(16, 185, 129, 0.15)"
+      }
+    >
       <div
         className={`h-32 flex items-center justify-center relative overflow-hidden group`}
         style={{ background: `linear-gradient(135deg, transparent 0%, transparent 50%, rgba(0,0,0,0.03) 100%)` }}

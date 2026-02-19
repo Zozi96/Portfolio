@@ -23,12 +23,12 @@ export function generateCV({ language }: CVGeneratorOptions): void {
   }
 
   const colors: Colors = {
-    accent: [50, 50, 50],
+    accent: [79, 70, 229],
     bg: [255, 255, 255],
-    surface: [238, 238, 238],
-    text: [20, 20, 20],
-    textSecondary: [100, 100, 100],
-    border: [200, 200, 200],
+    surface: [248, 250, 252],
+    text: [15, 23, 42],
+    textSecondary: [71, 85, 105],
+    border: [226, 232, 240],
   };
 
   const drawBackground = () => {
@@ -36,39 +36,62 @@ export function generateCV({ language }: CVGeneratorOptions): void {
     doc.rect(0, 0, 210, 297, "F");
 
     doc.setFillColor(...colors.surface);
-    doc.rect(0, 0, 65, 297, "F");
+    doc.rect(0, 0, 70, 297, "F");
 
     doc.setDrawColor(...colors.border);
     doc.setLineWidth(0.1);
-    doc.line(65, 0, 65, 297);
+    doc.line(70, 0, 70, 297);
   };
 
   const drawBadge = (text: string, x: number, y: number): number => {
-    doc.setFontSize(7);
+    doc.setFontSize(7.5);
     const textWidth = doc.getTextWidth(text);
-    const padding = 2;
+    const padding = 3;
     const width = textWidth + padding * 2;
-    const height = 5;
+    const height = 5.5;
 
-    doc.setFillColor(220, 220, 220);
-    doc.roundedRect(x, y - 3.5, width, height, 1, 1, "F");
+    doc.setFillColor(238, 242, 255);
+    doc.roundedRect(x, y - 4, width, height, 1.5, 1.5, "F");
 
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
     doc.text(text, x + padding, y);
 
-    return width + 2;
+    return width + 2.5;
   };
 
   const drawSectionHeader = (text: string, x: number, y: number) => {
-    doc.setFontSize(11);
+    doc.setFontSize(12);
     doc.setTextColor(...colors.accent);
     doc.setFont("helvetica", "bold");
     doc.text(text.toUpperCase(), x, y);
 
     doc.setDrawColor(...colors.accent);
+    doc.setLineWidth(1.2);
+    doc.line(x, y + 2.5, x + 18, y + 2.5);
+  };
+
+  const drawTimelineNode = (x: number, y: number, height: number, isLast: boolean) => {
+    if (!isLast) {
+      doc.setDrawColor(...colors.border);
+      doc.setLineWidth(0.5);
+      doc.line(x, y + 3, x, y + height);
+    }
+    doc.setFillColor(...colors.accent);
+    doc.circle(x, y, 1.5, "F");
+    doc.setFillColor(255, 255, 255);
+    doc.circle(x, y, 0.7, "F");
+  };
+
+  const drawProjectCard = (x: number, y: number, width: number, height: number) => {
+    doc.setDrawColor(...colors.border);
+    doc.setLineWidth(0.3);
+    doc.setFillColor(252, 253, 255);
+    doc.roundedRect(x, y, width, height, 2, 2, "FD");
+
+    doc.setDrawColor(...colors.accent);
     doc.setLineWidth(0.8);
-    doc.line(x, y + 2, x + 15, y + 2);
+    doc.line(x, y + 2, x, y + 10);
   };
 
   const setupPage = () => {
@@ -77,23 +100,23 @@ export function generateCV({ language }: CVGeneratorOptions): void {
 
   setupPage();
 
-  let sidebarY = 20;
-  const sidebarX = 8;
-  const sidebarWidth = 49;
+  let sidebarY = 25;
+  const sidebarX = 10;
+  const sidebarWidth = 50;
 
-  doc.setFontSize(13);
+  doc.setFontSize(14);
   doc.setTextColor(...colors.accent);
   doc.setFont("helvetica", "bold");
   const nameLines = doc.splitTextToSize(data.hero.name, sidebarWidth);
   doc.text(nameLines, sidebarX, sidebarY);
   sidebarY += nameLines.length * 6;
 
-  doc.setFontSize(8);
+  doc.setFontSize(9);
   doc.setTextColor(...colors.textSecondary);
   doc.setFont("helvetica", "normal");
   const titleLines = doc.splitTextToSize(data.hero.title, sidebarWidth);
   doc.text(titleLines, sidebarX, sidebarY);
-  sidebarY += titleLines.length * 4 + 7;
+  sidebarY += titleLines.length * 4 + 8;
 
   doc.setDrawColor(...colors.border);
   doc.setLineWidth(0.3);
@@ -113,7 +136,7 @@ export function generateCV({ language }: CVGeneratorOptions): void {
   ];
 
   contactInfo.forEach((info) => {
-    doc.setFontSize(7.5);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...colors.text);
     doc.text(info.label, sidebarX, sidebarY);
@@ -199,32 +222,24 @@ export function generateCV({ language }: CVGeneratorOptions): void {
 
     let currentX = sidebarX;
     category.items.forEach((skill) => {
+      doc.setFontSize(7.5);
+      const textWidth = doc.getTextWidth(skill);
+      const expectedBadgeWidth = textWidth + 6 + 2.5;
+
+      if (currentX + expectedBadgeWidth > sidebarX + sidebarWidth) {
+        currentX = sidebarX;
+        sidebarY += 6.5;
+      }
+      
       const badgeWidth = drawBadge(skill, currentX, sidebarY);
       currentX += badgeWidth;
-      if (currentX > sidebarX + sidebarWidth - 5) {
-        currentX = sidebarX;
-        sidebarY += 6;
-      }
     });
     sidebarY += 9;
   });
 
-  let mainY = 20;
-  const mainX = 75;
-  const contentWidth = 120;
-
-  doc.setFontSize(26);
-  doc.setTextColor(...colors.accent);
-  doc.setFont("helvetica", "bold");
-  doc.text(data.hero.name, mainX, mainY);
-
-  mainY += 9;
-  doc.setFontSize(13);
-  doc.setTextColor(...colors.text);
-  doc.setFont("helvetica", "normal");
-  doc.text(data.hero.title, mainX, mainY);
-
-  mainY += 14;
+  let mainY = 25;
+  const mainX = 80;
+  const contentWidth = 115;
 
   drawSectionHeader(
     language === "en" ? "Experience" : "Experiencia",
@@ -233,43 +248,48 @@ export function generateCV({ language }: CVGeneratorOptions): void {
   );
   mainY += 10;
 
-  data.experience.roles.forEach((role) => {
-    const roleTitleLines = doc.splitTextToSize(role.title, contentWidth);
+  data.experience.roles.forEach((role, index) => {
+    const isLast = index === data.experience.roles.length - 1;
+    const roleTitleLines = doc.splitTextToSize(role.title, contentWidth - 10);
+    const timelineX = mainX;
+    const contentStartX = mainX + 8;
 
-    if (mainY + 20 > 280) {
+    let roleHeight = roleTitleLines.length * 5 + 6;
+    role.description.forEach((item) => {
+      const itemLines = doc.splitTextToSize(item, contentWidth - 14);
+      roleHeight += itemLines.length * 4.5 + 2;
+    });
+
+    if (mainY + roleHeight > 280) {
       doc.addPage();
       setupPage();
       mainY = 25;
     }
 
-    doc.setFontSize(10);
+    drawTimelineNode(timelineX, mainY + 1.5, roleHeight, isLast);
+
+    doc.setFontSize(10.5);
     doc.setTextColor(...colors.text);
     doc.setFont("helvetica", "bold");
-    doc.text(roleTitleLines, mainX, mainY);
+    doc.text(roleTitleLines, contentStartX, mainY + 2);
     mainY += roleTitleLines.length * 5;
 
     doc.setFontSize(8.5);
     doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "bold");
-    doc.text(`${role.company}  |  ${role.period}`, mainX, mainY);
-    mainY += 6;
+    doc.text(`${role.company}  |  ${role.period}`, contentStartX, mainY + 2);
+    mainY += 7;
 
     doc.setFontSize(8.5);
     doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "normal");
 
     role.description.forEach((item) => {
-      const itemLines = doc.splitTextToSize(item, contentWidth - 5);
-      if (mainY + itemLines.length * 4 > 285) {
-        doc.addPage();
-        setupPage();
-        mainY = 25;
-      }
-
+      const itemLines = doc.splitTextToSize(item, contentWidth - 14);
       doc.setFillColor(...colors.accent);
-      doc.circle(mainX + 1.5, mainY - 1, 0.5, "F");
-      doc.text(itemLines, mainX + 5, mainY);
-      mainY += itemLines.length * 4 + 2;
+      doc.circle(contentStartX + 1, mainY - 1.2, 0.6, "F");
+      doc.text(itemLines, contentStartX + 5, mainY);
+      mainY += itemLines.length * 4.5 + 2;
     });
     mainY += 4;
   });
@@ -288,41 +308,66 @@ export function generateCV({ language }: CVGeneratorOptions): void {
   mainY += 10;
 
   data.projects.items.forEach((project) => {
-    if (mainY + 25 > 280) {
+    doc.setFontSize(8.5);
+    doc.setFont("helvetica", "normal");
+    const projDescLines = doc.splitTextToSize(project.description, contentWidth - 12);
+    let techLinesCount = 1;
+    let currentTempX = mainX + 4;
+    project.stack.forEach((tech) => {
+      doc.setFontSize(7.5);
+      const textWidth = doc.getTextWidth(tech);
+      const expectedBadgeWidth = textWidth + 6 + 2.5 + 3.5;
+
+      if (currentTempX + expectedBadgeWidth > mainX + contentWidth - 4) {
+        currentTempX = mainX + 4;
+        techLinesCount++;
+      }
+      currentTempX += expectedBadgeWidth;
+    });
+
+    const projectHeight = 5 + 5 + projDescLines.length * 4.5 + 3 + techLinesCount * 8.5 + 4;
+
+    if (mainY + projectHeight > 280) {
       doc.addPage();
       setupPage();
       mainY = 25;
     }
 
-    doc.setFontSize(10);
+    drawProjectCard(mainX, mainY - 4, contentWidth, projectHeight);
+
+    doc.setFontSize(10.5);
     doc.setTextColor(...colors.text);
     doc.setFont("helvetica", "bold");
-    doc.text(project.title, mainX, mainY);
-    mainY += 5;
+    doc.text(project.title, mainX + 4, mainY + 2);
+    mainY += 6;
 
     doc.setFontSize(8);
     doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "italic");
-    doc.text(project.category, mainX, mainY);
-    mainY += 5;
+    doc.text(project.category, mainX + 4, mainY + 2);
+    mainY += 6;
 
     doc.setFontSize(8.5);
     doc.setTextColor(...colors.textSecondary);
     doc.setFont("helvetica", "normal");
-    const projDescLines = doc.splitTextToSize(project.description, contentWidth);
-    doc.text(projDescLines, mainX, mainY);
-    mainY += projDescLines.length * 4 + 3;
+    doc.text(projDescLines, mainX + 4, mainY + 2);
+    mainY += projDescLines.length * 4.5 + 3;
 
-    let currentX = mainX;
+    let currentX = mainX + 4;
     project.stack.forEach((tech) => {
-      const badgeWidth = drawBadge(tech, currentX, mainY);
-      currentX += badgeWidth;
-      if (currentX > mainX + contentWidth - 10) {
-        currentX = mainX;
-        mainY += 7;
+      doc.setFontSize(7.5);
+      const textWidth = doc.getTextWidth(tech);
+      const expectedBadgeWidth = textWidth + 6 + 2.5 + 3.5;
+
+      if (currentX + expectedBadgeWidth > mainX + contentWidth - 4) {
+        currentX = mainX + 4;
+        mainY += 8.5;
       }
+
+      const badgeWidth = drawBadge(tech, currentX, mainY + 2);
+      currentX += badgeWidth + 3.5;
     });
-    mainY += 12;
+    mainY += 15;
   });
 
   const fileName = `${data.hero.name.replace(/\s+/g, "_")}_CV_${language.toUpperCase()}.pdf`;

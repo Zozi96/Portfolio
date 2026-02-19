@@ -19,6 +19,8 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
     { type: "output", content: "" },
   ]);
   const [input, setInput] = useState("");
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const historyEndRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
@@ -54,6 +56,7 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
           { type: "output", content: "  experience        - Show work experience" },
           { type: "output", content: "  projects          - List client projects" },
           { type: "output", content: "  social            - Show social links" },
+          { type: "output", content: "  whoami            - Print effective userid" },
           { type: "output", content: "  clear             - Clear terminal" },
           { type: "output", content: "  exit              - Close terminal" },
           { type: "output", content: "" },
@@ -211,6 +214,13 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
         ]);
         break;
 
+      case "whoami":
+        setHistory((prev) => [
+          ...prev,
+          { type: "output", content: "guest" },
+        ]);
+        break;
+
       case "clear":
         setHistory([]);
         break;
@@ -238,6 +248,8 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
     e.preventDefault();
     if (input.trim()) {
       executeCommand(input);
+      setCommandHistory((prev) => [input, ...prev]);
+      setHistoryIndex(-1);
       setInput("");
     }
   };
@@ -245,6 +257,23 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
       onClose();
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (historyIndex < commandHistory.length - 1) {
+        const nextIndex = historyIndex + 1;
+        setHistoryIndex(nextIndex);
+        setInput(commandHistory[nextIndex]);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIndex > 0) {
+        const prevIndex = historyIndex - 1;
+        setHistoryIndex(prevIndex);
+        setInput(commandHistory[prevIndex]);
+      } else if (historyIndex === 0) {
+        setHistoryIndex(-1);
+        setInput("");
+      }
     }
   };
 

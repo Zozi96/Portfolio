@@ -54,7 +54,6 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
           {/* Actions */}
           <div className="flex items-center gap-1">
             <div className="hidden md:block w-px h-4 bg-zinc-200 dark:bg-zinc-700 mx-1" />
-            <div className="hidden md:block w-px h-4 bg-zinc-200 dark:bg-zinc-700 mx-1" />
             <button
               onClick={onTerminalOpen}
               className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"

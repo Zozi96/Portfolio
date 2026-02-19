@@ -28,9 +28,6 @@ export function TechStack() {
         <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
           Skills
         </p>
-        <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
-          Skills
-        </p>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
           {t("techStack.title")}
         </h2>
