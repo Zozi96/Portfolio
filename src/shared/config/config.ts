@@ -41,6 +41,9 @@ export class AppConfig {
         // Analytics Configuration
         VITE_GOOGLE_ANALYTICS_ID: import.meta.env.VITE_GOOGLE_ANALYTICS_ID,
 
+        // Error Monitoring
+        VITE_GLITCHTIP_DSN: import.meta.env.VITE_GLITCHTIP_DSN,
+
         // App Metadata
         VITE_APP_VERSION: import.meta.env.VITE_APP_VERSION,
         VITE_APP_NAME: import.meta.env.VITE_APP_NAME,
@@ -112,6 +115,12 @@ export class AppConfig {
   public get analytics() {
     return {
       googleAnalyticsId: this.config.VITE_GOOGLE_ANALYTICS_ID,
+    };
+  }
+
+  public get monitoring() {
+    return {
+      glitchtipDsn: this.config.VITE_GLITCHTIP_DSN,
     };
   }
 

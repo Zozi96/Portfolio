@@ -30,6 +30,9 @@ export const envSchema = z.object({
   // Analytics Configuration
   VITE_GOOGLE_ANALYTICS_ID: z.string().optional(),
 
+  // Error Monitoring
+  VITE_GLITCHTIP_DSN: z.string().optional(),
+
   // App Metadata
   VITE_APP_VERSION: z.string().default('1.0.0'),
   VITE_APP_NAME: z.string().default('Portfolio'),
