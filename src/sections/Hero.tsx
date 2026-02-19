@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
-import { generateCV } from "../utils/cvGenerator";
 import type { Language } from "../utils/cvGenerator";
 
 const containerVariants = {
@@ -54,8 +53,9 @@ export function Hero() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY, reverseMouseX, reverseMouseY]);
 
-  const handleDownloadCV = () => {
-    generateCV({ 
+  const handleDownloadCV = async () => {
+    const { generateCV } = await import("../utils/cvGenerator");
+    generateCV({
       language: locale as Language,
     });
   };
