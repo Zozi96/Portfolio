@@ -1,6 +1,7 @@
 interface ProjectMetric {
   label: string;
   value: string;
+  live?: "pypi_version" | "github_stars";
 }
 
 interface ProjectItem {
@@ -9,6 +10,10 @@ interface ProjectItem {
   description: string;
   metrics: ProjectMetric[];
   stack: string[];
+  liveStats?: {
+    pypi?: string;
+    github?: string;
+  };
 }
 
 interface FocusArea {
@@ -42,6 +47,7 @@ interface Content {
     home: string;
     focus: string;
     projects: string;
+    personal: string;
     stack: string;
     experience: string;
     contact: string;
@@ -60,6 +66,10 @@ interface Content {
     areas: FocusArea[];
   };
   projects: {
+    title: string;
+    items: ProjectItem[];
+  };
+  personalProjects: {
     title: string;
     items: ProjectItem[];
   };
@@ -120,6 +130,7 @@ export const content: LocalizedContent = {
       home: "Home",
       focus: "Focus Areas",
       projects: "Projects",
+      personal: "Personal",
       stack: "Tech Stack",
       experience: "Experience",
       contact: "Contact",
@@ -198,6 +209,24 @@ export const content: LocalizedContent = {
             { label: "Data Formats", value: "Parquet/CSV" },
           ],
           stack: ["Python", "PySpark", "AWS Glue", "Parquet", "ETL"],
+        },
+      ],
+    },
+    personalProjects: {
+      title: "Personal Projects",
+      items: [
+        {
+          title: "hash-forge",
+          category: "Open Source Library",
+          description:
+            "Lightweight Python library for hashing and verifying data using 10+ secure algorithms (bcrypt, Argon2, PBKDF2, Blake2/3, Scrypt and more). Features async/await support, builder pattern, batch processing, and configuration management.",
+          metrics: [
+            { label: "Algorithms", value: "10+" },
+            { label: "Version", value: "—", live: "pypi_version" as const },
+            { label: "Stars", value: "—", live: "github_stars" as const },
+          ],
+          stack: ["Python", "asyncio", "bcrypt", "Argon2", "PBKDF2"],
+          liveStats: { pypi: "hash-forge", github: "Zozi96/hash-forge" },
         },
       ],
     },
@@ -331,6 +360,7 @@ export const content: LocalizedContent = {
       home: "Inicio",
       focus: "Áreas de Enfoque",
       projects: "Proyectos",
+      personal: "Personal",
       stack: "Stack Tecnológico",
       experience: "Experiencia",
       contact: "Contacto",
@@ -409,6 +439,24 @@ export const content: LocalizedContent = {
             { label: "Formatos de Datos", value: "Parquet/CSV" },
           ],
           stack: ["Python", "PySpark", "AWS Glue", "Parquet", "ETL"],
+        },
+      ],
+    },
+    personalProjects: {
+      title: "Proyectos Personales",
+      items: [
+        {
+          title: "hash-forge",
+          category: "Librería Open Source",
+          description:
+            "Librería Python ligera para hashing y verificación de datos con más de 10 algoritmos seguros (bcrypt, Argon2, PBKDF2, Blake2/3, Scrypt y más). Incluye soporte async/await, patrón builder, operaciones en lote y gestión de configuración.",
+          metrics: [
+            { label: "Algoritmos", value: "10+" },
+            { label: "Versión", value: "—", live: "pypi_version" as const },
+            { label: "Estrellas", value: "—", live: "github_stars" as const },
+          ],
+          stack: ["Python", "asyncio", "bcrypt", "Argon2", "PBKDF2"],
+          liveStats: { pypi: "hash-forge", github: "Zozi96/hash-forge" },
         },
       ],
     },

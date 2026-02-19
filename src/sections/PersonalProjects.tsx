@@ -1,32 +1,22 @@
 import { motion } from "framer-motion";
-import { Code2, Database, Zap } from "lucide-react";
+import { Shield } from "lucide-react";
 import { Section } from "../components/ui/Section";
 import { ProjectCard } from "../components/ui/ProjectCard";
 import { useLanguage } from "../context/LanguageContext";
+import { content } from "../data/content";
 
-const categoryConfig = [
-  {
-    icon: Code2,
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/8 dark:bg-emerald-500/10",
-  },
-  {
-    icon: Database,
-    color: "text-blue-500",
-    bg: "bg-blue-500/8 dark:bg-blue-500/10",
-  },
-  {
-    icon: Zap,
-    color: "text-amber-500",
-    bg: "bg-amber-500/8 dark:bg-amber-500/10",
-  },
-];
+const itemConfig = {
+  icon: Shield,
+  color: "text-violet-500",
+  bg: "bg-violet-500/8 dark:bg-violet-500/10",
+};
 
-export function Projects() {
-  const { t } = useLanguage();
+export function PersonalProjects() {
+  const { t, locale } = useLanguage();
+  const items = content[locale].personalProjects.items;
 
   return (
-    <Section id="projects">
+    <Section id="personal">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -35,13 +25,13 @@ export function Projects() {
         className="text-center mb-16"
       >
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
-          {t("projects.title")}
+          {t("personalProjects.title")}
         </h2>
-        <div className="h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
+        <div className="h-1 w-10 bg-violet-500 mx-auto rounded-full" />
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {categoryConfig.map((config, index) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {items.map((_, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 30 }}
@@ -53,7 +43,11 @@ export function Projects() {
               ease: [0.16, 1, 0.3, 1],
             }}
           >
-            <ProjectCard sectionKey="projects" index={index} config={config} />
+            <ProjectCard
+              sectionKey="personalProjects"
+              index={index}
+              config={itemConfig}
+            />
           </motion.div>
         ))}
       </div>
@@ -61,4 +55,4 @@ export function Projects() {
   );
 }
 
-export default Projects;
+export default PersonalProjects;

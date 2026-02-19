@@ -11,6 +11,7 @@ import Footer from "./components/layout/Footer";
 import { Terminal } from "./components/ui/Terminal";
 
 const Projects = lazy(() => import("./sections/Projects"));
+const PersonalProjects = lazy(() => import("./sections/PersonalProjects"));
 const TechStack = lazy(() => import("./sections/TechStack"));
 const Experience = lazy(() => import("./sections/Experience"));
 const Contact = lazy(() => import("./sections/Contact"));
@@ -63,6 +64,9 @@ function AppContent() {
           <FocusAreas />
           <Suspense fallback={<SectionLoader />}>
             <Projects />
+          </Suspense>
+          <Suspense fallback={<SectionLoader />}>
+            <PersonalProjects />
           </Suspense>
           <Suspense fallback={<SectionLoader />}>
             <TechStack />

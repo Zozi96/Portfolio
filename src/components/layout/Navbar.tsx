@@ -19,6 +19,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
     { key: "home", href: "#home" },
     { key: "focus", href: "#focus" },
     { key: "projects", href: "#projects" },
+    { key: "personal", href: "#personal" },
     { key: "stack", href: "#stack" },
     { key: "experience", href: "#experience" },
     { key: "contact", href: "#contact" },
