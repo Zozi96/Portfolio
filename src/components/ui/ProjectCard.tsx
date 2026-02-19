@@ -48,10 +48,12 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
   return (
     <SpotlightCard className="flex flex-col h-full p-0 overflow-hidden">
       <div
-        className={`h-32 flex items-center justify-center ${config.bg} relative overflow-hidden group`}
+        className={`h-32 flex items-center justify-center relative overflow-hidden group`}
+        style={{ background: `linear-gradient(135deg, transparent 0%, transparent 50%, rgba(0,0,0,0.03) 100%)` }}
       >
+        <div className={`absolute inset-0 ${config.bg}`} />
         <Icon
-          className={`w-10 h-10 ${config.color} transition-transform duration-700 group-hover:scale-110`}
+          className={`w-10 h-10 ${config.color} transition-transform duration-700 group-hover:scale-110 relative z-10`}
         />
       </div>
 

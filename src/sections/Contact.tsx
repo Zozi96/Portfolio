@@ -125,6 +125,9 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
+          <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
+            Let&apos;s Talk
+          </p>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
             {t("contact.title")}
           </h2>

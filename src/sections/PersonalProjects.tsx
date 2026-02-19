@@ -24,6 +24,9 @@ export function PersonalProjects() {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
+        <p className="text-xs font-bold tracking-widest uppercase text-violet-600 dark:text-violet-400 mb-3">
+          Side Projects
+        </p>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
           {t("personalProjects.title")}
         </h2>

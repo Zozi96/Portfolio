@@ -71,11 +71,13 @@ export function Footer() {
           </div>
 
           {/* Info */}
-          <div className="flex flex-col justify-between">
-            <div className="mt-8 text-xs text-zinc-400 dark:text-zinc-600">
-              <p>
-                © {currentYear} • {t("footer.rights")}
-              </p>
+          <div className="flex flex-col gap-4">
+            <div>
+              <p className="text-sm font-semibold text-zinc-900 dark:text-white mb-1">Zozimo Fern&#225;ndez</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">Building scalable systems with clean architecture.</p>
+            </div>
+            <div className="mt-auto pt-6 text-xs text-zinc-400 dark:text-zinc-600">
+              <p>© {currentYear} • {t("footer.rights")}</p>
             </div>
           </div>
         </div>

@@ -24,6 +24,9 @@ export function Experience() {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
+        <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
+          Career
+        </p>
         <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white mb-4 tracking-tight">
           {t("experience.title")}
         </h2>
@@ -51,7 +54,7 @@ export function Experience() {
             >
               {/* Timeline node */}
               <div className="relative flex-shrink-0 mt-6">
-                <div className="w-[10px] h-[10px] rounded-full bg-emerald-500 ring-4 ring-white dark:ring-zinc-950 z-10 relative" />
+                <div className={`w-3 h-3 rounded-full bg-emerald-500 ring-[3px] ${roleIndex === 0 ? "ring-emerald-100 dark:ring-emerald-900" : "ring-white dark:ring-zinc-950"} z-10 relative`} />
               </div>
 
               {/* Content card */}

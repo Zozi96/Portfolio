@@ -6,6 +6,13 @@ import { useLanguage } from "../context/LanguageContext";
 
 const categoryIcons = [Code2, Server, Database, Cloud];
 
+const categoryColors = [
+  { icon: "text-emerald-500", bg: "bg-emerald-500/10 dark:bg-emerald-500/15" },
+  { icon: "text-blue-500",    bg: "bg-blue-500/10 dark:bg-blue-500/15" },
+  { icon: "text-violet-500",  bg: "bg-violet-500/10 dark:bg-violet-500/15" },
+  { icon: "text-amber-500",   bg: "bg-amber-500/10 dark:bg-amber-500/15" },
+];
+
 export function TechStack() {
   const { t } = useLanguage();
 
@@ -18,6 +25,12 @@ export function TechStack() {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
+        <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
+          Skills
+        </p>
+        <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
+          Skills
+        </p>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
           {t("techStack.title")}
         </h2>
@@ -45,7 +58,7 @@ export function TechStack() {
               className="p-6 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/80 dark:border-zinc-700/60 shadow-sm"
             >
               <div className="flex items-center gap-3 mb-5">
-                <div className="p-2 rounded-xl bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-500">
+                <div className={`p-2 rounded-xl ${categoryColors[catIndex].bg} ${categoryColors[catIndex].icon}`}>
                   <CategoryIcon className="w-4 h-4" />
                 </div>
                 <h3 className="text-base font-bold tracking-tight text-zinc-900 dark:text-white">

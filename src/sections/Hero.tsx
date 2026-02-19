@@ -89,10 +89,36 @@ export function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={itemVariants}
-          className="text-base md:text-lg lg:text-xl text-zinc-500 dark:text-zinc-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+          className="text-base md:text-lg lg:text-xl text-zinc-500 dark:text-zinc-400 mb-8 max-w-xl mx-auto leading-relaxed"
         >
           {t("hero.subtitle")}
         </motion.p>
+
+        {/* Stats row */}
+        <motion.div
+          variants={itemVariants}
+          className="flex items-center justify-center gap-8 mb-12"
+        >
+          {[
+            { value: "5+", label: "Years exp." },
+            { value: "15+", label: "Projects" },
+            { value: "3", label: "Industries" },
+          ].map((stat, i, arr) => (
+            <div key={stat.label} className="flex items-center gap-8">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-zinc-900 dark:text-white leading-none">
+                  {stat.value}
+                </div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 tracking-wide">
+                  {stat.label}
+                </div>
+              </div>
+              {i < arr.length - 1 && (
+                <span className="text-zinc-300 dark:text-zinc-600 text-xl select-none">·</span>
+              )}
+            </div>
+          ))}
+        </motion.div>
 
         {/* CTA */}
         <motion.div

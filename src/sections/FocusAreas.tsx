@@ -40,6 +40,9 @@ export function FocusAreas() {
         transition={{ duration: 0.8 }}
         className="text-center mb-16"
       >
+        <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3 block">
+          Expertise
+        </span>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
           {t("focus.title")}
         </h2>
