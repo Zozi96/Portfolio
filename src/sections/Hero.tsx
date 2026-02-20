@@ -67,26 +67,27 @@ export function Hero() {
     >
       <div className="absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]"
+          className="hidden md:block absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]"
           style={{ 
             x: smoothX,
             y: smoothY,
           }}
         />
         <motion.div
-          className="absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]"
+          className="hidden md:block absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]"
           style={{ 
             x: smoothReverseX,
             y: smoothReverseY,
           }}
         />
         <motion.div
-          className="absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]"
+          className="hidden md:block absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]"
           style={{ 
             x: smoothX,
             y: smoothY,
           }}
         />
+        <div className="md:hidden absolute inset-0 opacity-60 dark:opacity-30" style={{ background: 'radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.2) 0%, transparent 60%), radial-gradient(circle at 90% 90%, rgba(52, 211, 153, 0.2) 0%, transparent 60%)' }} />
       </div>
 
       <motion.div
