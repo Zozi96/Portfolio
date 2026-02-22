@@ -118,13 +118,13 @@ export const content: LocalizedContent = {
     seo: {
       title: "Zozimo Fernández | Senior Software Engineer",
       description:
-        "Full-stack engineer specializing in Python (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions for international clients.",
+        "Senior Software Engineer specializing in distributed systems, Python (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions for international clients.",
       keywords:
         "Software Engineer, Full-Stack Developer, Python, Django, FastAPI, .NET, C#, AWS, Cloud Architecture, React, TypeScript",
       author: "Zozimo Fernández",
       ogTitle: "Zozimo Fernández - Senior Software Engineer Portfolio",
       ogDescription:
-        "Experienced full-stack engineer specializing in Python ecosystem and .NET development. Expert in building scalable cloud solutions.",
+        "Experienced Software Engineer specializing in distributed systems, the Python ecosystem, and .NET development. Expert in building scalable cloud solutions.",
     },
     nav: {
       home: "Home",
@@ -140,7 +140,7 @@ export const content: LocalizedContent = {
       name: "Zozimo Fernández",
       title: "Senior Software Engineer",
       subtitle:
-        "Full-stack engineer specializing in Python ecosystem (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions following SOLID principles for international clients.",
+        "Senior Software Engineer specializing in distributed systems, Python ecosystem (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions following SOLID principles for international clients.",
       cta1: "View Projects",
       cta2: "GitHub Profile",
       cta3: "Download CV",
@@ -149,9 +149,9 @@ export const content: LocalizedContent = {
       title: "Core Focus Areas",
       areas: [
         {
-          title: "Full-Stack Development",
+          title: "Distributed Systems & Architecture",
           description:
-            "Expertise in Python (Django, FastAPI, Litestar, Flask), .NET (C#, ASP.NET Core, Blazor), and modern frontend technologies for building complete solutions",
+            "Expertise in designing scalable architectures using Python (Django, FastAPI, Litestar), .NET (C#, ASP.NET Core), and modern technologies for robust enterprise solutions.",
         },
         {
           title: "Data Engineering",
@@ -267,9 +267,9 @@ export const content: LocalizedContent = {
           period: "March 2023 - Present",
           description: [
             "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
-            "Modernize legacy infrastructure by migrating on-premise systems to cloud-native architectures, reducing maintenance costs and improving deployment velocity.",
-            "Engineer high-performance data pipelines for Bob Finance using AWS Glue and PySpark, optimizing ETL processes for large-scale datasets.",
-            "Drive technical decision-making for backend systems at Wag Hotels, implementing scalable Python/Django solutions on AWS infrastructure.",
+            "Spearheaded the modernization of the Wag Hotels (mywag) legacy platform by migrating the infrastructure to a Kubernetes-based cloud architecture, significantly improving system stability.",
+            "Optimized core backend performance by refactoring complex database queries, drastically reducing execution times and improving overall application speed.",
+            "Architected and implemented massive data ingestion pipelines for the Mosaic project using AWS Glue and PySpark, efficiently processing large-scale datasets from Amazon Redshift and Google BigQuery.",
           ],
         },
         {
@@ -278,9 +278,9 @@ export const content: LocalizedContent = {
           period: "April 2022 - March 2023",
           description: [
             "Engineered the core backend for ADContent, a digital asset management system, utilizing Django REST Framework for robust API delivery.",
-            "Optimized database performance by implementing advanced indexing strategies and query tuning for high-traffic MySQL and SQL Server clusters.",
+            "Designed an isolated, high-performance database architecture specifically for a new invoice processing portal, decoupling it from the main application to ensure scalability.",
+            "Improved overall system performance and response times by implementing advanced indexing strategies and comprehensive query tuning across high-traffic MySQL and SQL Server clusters.",
             "Spearheaded the containerization initiative using Docker, standardizing development environments and streamlining CI/CD pipelines.",
-            "Enhanced system reliability by introducing comprehensive unit testing and automated quality assurance protocols.",
           ],
         },
         {
@@ -348,13 +348,13 @@ export const content: LocalizedContent = {
     seo: {
       title: "Zozimo Fernández | Ingeniero de Software Senior",
       description:
-        "Ingeniero full-stack especializado en Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables para clientes internacionales.",
+        "Ingeniero de Software Senior especializado en sistemas distribuidos, Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables para clientes internacionales.",
       keywords:
         "Ingeniero de Software, Desarrollador Full-Stack, Python, Django, FastAPI, .NET, C#, AWS, Arquitectura en la Nube, React, TypeScript",
       author: "Zozimo Fernández",
       ogTitle: "Zozimo Fernández - Portfolio Ingeniero de Software Senior",
       ogDescription:
-        "Ingeniero full-stack experimentado especializado en el ecosistema Python y desarrollo .NET. Experto en construcción de soluciones escalables en la nube.",
+        "Ingeniero de Software experimentado especializado en sistemas distribuidos, el ecosistema Python y desarrollo .NET. Experto en construcción de soluciones escalables en la nube.",
     },
     nav: {
       home: "Inicio",
@@ -370,7 +370,7 @@ export const content: LocalizedContent = {
       name: "Zozimo Fernández",
       title: "Ingeniero de Software Senior",
       subtitle:
-        "Ingeniero full-stack especializado en el ecosistema Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables siguiendo principios SOLID para clientes internacionales.",
+        "Ingeniero de Software Senior especializado en sistemas distribuidos, el ecosistema Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables siguiendo principios SOLID para clientes internacionales.",
       cta1: "Ver Proyectos",
       cta2: "Perfil GitHub",
       cta3: "Descargar CV",
@@ -379,9 +379,9 @@ export const content: LocalizedContent = {
       title: "Áreas de Enfoque Principales",
       areas: [
         {
-          title: "Desarrollo Full-Stack",
+          title: "Sistemas Distribuidos y Arquitectura",
           description:
-            "Experiencia en Python (Django, FastAPI, Litestar, Flask), .NET (C#, ASP.NET Core, Blazor) y tecnologías frontend modernas para construir soluciones completas",
+            "Experiencia en el diseño de arquitecturas escalables usando Python (Django, FastAPI, Litestar), .NET (C#, ASP.NET Core) y tecnologías modernas para soluciones empresariales robustas.",
         },
         {
           title: "Ingeniería de Datos",
@@ -497,9 +497,9 @@ export const content: LocalizedContent = {
           period: "Marzo 2023 - Presente",
           description: [
             "Lidero el diseño arquitectónico y desarrollo de microservicios distribuidos para Advanta Health, asegurando alta disponibilidad utilizando .NET Core.",
-            "Modernizo infraestructura heredada migrando sistemas on-premise a arquitecturas cloud-native, reduciendo costos operativos y tiempos de despliegue.",
-            "Ingeniero pipelines de datos de alto rendimiento para Bob Finance usando AWS Glue y PySpark, optimizando procesos ETL para datasets masivos.",
-            "Dirijo la toma de decisiones técnicas para los sistemas backend de Wag Hotels, implementando soluciones escalables en Python/Django sobre AWS.",
+            "Dirigí la modernización de la plataforma legacy de Wag Hotels (mywag) migrando la infraestructura a una arquitectura cloud basada en Kubernetes, mejorando significativamente la estabilidad del sistema.",
+            "Optimicé el rendimiento crítico del backend mediante la refactorización de consultas complejas de base de datos, reduciendo drásticamente los tiempos de ejecución y la velocidad general de la aplicación.",
+            "Arquitecté e implementé pipelines de ingesta masiva de datos para el proyecto Mosaic usando AWS Glue y PySpark, procesando eficientemente datasets a gran escala desde Amazon Redshift y Google BigQuery.",
           ],
         },
         {
@@ -508,9 +508,9 @@ export const content: LocalizedContent = {
           period: "Abril 2022 - Marzo 2023",
           description: [
             "Ingenié el backend principal para ADContent, un sistema de gestión de activos digitales, utilizando Django REST Framework para APIs robustas.",
-            "Optimicé el rendimiento de bases de datos implementando estrategias avanzadas de indexación en clústeres MySQL y SQL Server de alto tráfico.",
+            "Diseñé una arquitectura de base de datos aislada y de alto rendimiento específicamente para un nuevo portal de procesamiento de facturas, desacoplándola de la aplicación principal para garantizar su escalabilidad.",
+            "Mejoré el rendimiento general del sistema y los tiempos de respuesta implementando estrategias avanzadas de indexación y optimización exhaustiva de consultas en clústeres de alto tráfico.",
             "Encabecé la iniciativa de contenerización usando Docker, estandarizando entornos de desarrollo y agilizando pipelines de CI/CD.",
-            "Mejoré la confiabilidad del sistema introduciendo pruebas unitarias exhaustivas y protocolos de control de calidad automatizados.",
           ],
         },
         {
