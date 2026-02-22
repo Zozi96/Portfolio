@@ -403,9 +403,9 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md">
       <div
-        className="w-full max-w-3xl h-[600px] bg-zinc-950 rounded-xl shadow-2xl border border-zinc-800 flex flex-col overflow-hidden"
+        className="w-full max-w-3xl h-[600px] bg-zinc-950/40 backdrop-blur-3xl backdrop-saturate-200 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden"
         onKeyDown={handleKeyDown}
       >
         <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/50">
