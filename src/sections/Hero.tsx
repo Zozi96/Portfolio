@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
+import { usePdfWorker } from "../hooks/usePdfWorker";
+import { useMotionVariants } from "../utils/motionVariants";
 import type { Language } from "../utils/cvGenerator";
 
 const containerVariants = {
@@ -20,9 +22,14 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 
+const reducedContainerVariants = { hidden: {}, visible: {} };
+
 export function Hero() {
   const { t, locale } = useLanguage();
+  const safeItemVariants = useMotionVariants(itemVariants);
+  const safeContainerVariants = useMotionVariants(containerVariants, reducedContainerVariants);
   const [isDownloading, setIsDownloading] = useState(false);
+  const { generateAndDownload } = usePdfWorker();
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -59,10 +66,7 @@ export function Hero() {
   const handleDownloadCV = async () => {
     setIsDownloading(true);
     try {
-      const { generateCV } = await import("../utils/cvGenerator");
-      generateCV({
-        language: locale as Language,
-      });
+      await generateAndDownload(locale as Language);
     } finally {
       setIsDownloading(false);
     }
@@ -99,14 +103,14 @@ export function Hero() {
       </div>
 
       <motion.div
-        variants={containerVariants}
+        variants={safeContainerVariants}
         initial="hidden"
         animate="visible"
         className="w-full max-w-5xl mx-auto text-center relative z-10 px-4"
       >
         {/* Status badge */}
         <motion.div
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="inline-flex items-center gap-2.5 px-4 py-2 mb-8 rounded-full bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-700/40 backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
@@ -120,7 +124,7 @@ export function Hero() {
 
         {/* Name */}
         <motion.h1
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1]"
         >
           {t("hero.name")}
@@ -128,7 +132,7 @@ export function Hero() {
 
         {/* Title/Role */}
         <motion.h2
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8"
         >
           {t("hero.title")}
@@ -136,7 +140,7 @@ export function Hero() {
 
         {/* Subtitle */}
         <motion.p
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="text-base md:text-lg lg:text-xl text-zinc-500 dark:text-zinc-400 mb-8 max-w-xl mx-auto leading-relaxed"
         >
           {t("hero.subtitle")}
@@ -144,7 +148,7 @@ export function Hero() {
 
         {/* Stats row */}
         <motion.div
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="flex items-center justify-center gap-8 mb-12"
         >
           {[
@@ -170,7 +174,7 @@ export function Hero() {
 
         {/* CTA */}
         <motion.div
-          variants={itemVariants}
+          variants={safeItemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Button
