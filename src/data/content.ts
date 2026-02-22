@@ -269,7 +269,7 @@ export const content: LocalizedContent = {
             "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
             "Spearheaded the modernization of the Wag Hotels (mywag) legacy platform by migrating the infrastructure to a Kubernetes-based cloud architecture, significantly improving system stability.",
             "Optimized core backend performance by refactoring complex database queries, drastically reducing execution times and improving overall application speed.",
-            "Architected and implemented massive data ingestion pipelines for the Mosaic project using AWS Glue and PySpark, efficiently processing large-scale datasets from Amazon Redshift and Google BigQuery.",
+            "Architected and implemented massive data ingestion pipelines for the Bob Finance project using AWS Glue and PySpark, efficiently processing large-scale datasets from Amazon Redshift and Google BigQuery.",
           ],
         },
         {
@@ -499,7 +499,7 @@ export const content: LocalizedContent = {
             "Lidero el diseño arquitectónico y desarrollo de microservicios distribuidos para Advanta Health, asegurando alta disponibilidad utilizando .NET Core.",
             "Dirigí la modernización de la plataforma legacy de Wag Hotels (mywag) migrando la infraestructura a una arquitectura cloud basada en Kubernetes, mejorando significativamente la estabilidad del sistema.",
             "Optimicé el rendimiento crítico del backend mediante la refactorización de consultas complejas de base de datos, reduciendo drásticamente los tiempos de ejecución y la velocidad general de la aplicación.",
-            "Arquitecté e implementé pipelines de ingesta masiva de datos para el proyecto Mosaic usando AWS Glue y PySpark, procesando eficientemente datasets a gran escala desde Amazon Redshift y Google BigQuery.",
+            "Arquitecté e implementé pipelines de ingesta masiva de datos para el proyecto Bob Finance usando AWS Glue y PySpark, procesando eficientemente datasets a gran escala desde Amazon Redshift y Google BigQuery.",
           ],
         },
         {
