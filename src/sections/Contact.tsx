@@ -154,8 +154,9 @@ export default function Contact() {
                   onChange={handleChange}
                   className={inputClasses("fullName")}
                   placeholder="John Doe"
+                  aria-invalid={errors.fullName ? 'true' : 'false'}
                 />
-                {errors.fullName && <p className="text-xs text-red-500 ml-1">{errors.fullName}</p>}
+                {errors.fullName && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.fullName}</p>}
               </div>
 
               {/* Email */}
@@ -170,8 +171,9 @@ export default function Contact() {
                   onChange={handleChange}
                   className={inputClasses("email")}
                   placeholder="john@company.com"
+                  aria-invalid={errors.email ? 'true' : 'false'}
                 />
-                {errors.email && <p className="text-xs text-red-500 ml-1">{errors.email}</p>}
+                {errors.email && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.email}</p>}
               </div>
             </div>
 
@@ -186,6 +188,7 @@ export default function Contact() {
                   value={form.type}
                   onChange={handleChange}
                   className={inputClasses("type")}
+                  aria-invalid={errors.type ? 'true' : 'false'}
                 >
                   <option value="" disabled>Select an option</option>
                   <option value="project">{t("contact.types.project")}</option>
@@ -193,7 +196,7 @@ export default function Contact() {
                   <option value="consultancy">{t("contact.types.consultancy")}</option>
                   <option value="other">{t("contact.types.other")}</option>
                 </select>
-                {errors.type && <p className="text-xs text-red-500 ml-1">{errors.type}</p>}
+                {errors.type && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.type}</p>}
               </div>
 
               {/* Subject */}
@@ -229,8 +232,9 @@ export default function Contact() {
                 rows={5}
                 className={`${inputClasses("message")} resize-none`}
                 placeholder="How can I help you?"
+                aria-invalid={errors.message ? 'true' : 'false'}
               />
-              {errors.message && <p className="text-xs text-red-500 ml-1">{errors.message}</p>}
+              {errors.message && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.message}</p>}
             </div>
 
             {/* Submit Button */}

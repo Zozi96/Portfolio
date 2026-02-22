@@ -44,17 +44,17 @@ export function Experience() {
               key={roleIndex}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
+              viewport={{ once: true, margin: "-20px" }}
               transition={{
                 duration: 0.6,
-                delay: roleIndex * 0.1,
+                delay: Math.min(roleIndex * 0.1, 0.3),
                 ease: [0.16, 1, 0.3, 1],
               }}
               className="relative flex gap-6"
             >
               {/* Timeline node */}
               <div className="relative flex-shrink-0 mt-6">
-                <div className={`w-3 h-3 rounded-full bg-emerald-500 ring-[3px] ${roleIndex === 0 ? "ring-emerald-100 dark:ring-emerald-900" : "ring-white dark:ring-zinc-950"} z-10 relative`} />
+                <div className={`w-3 h-3 rounded-full bg-emerald-500 ring-[3px] ${roleIndex === 0 ? "ring-emerald-100 dark:ring-emerald-500/20" : "ring-white dark:ring-zinc-950"} z-10 relative`} />
               </div>
 
               {/* Content card */}

@@ -1,6 +1,6 @@
 import { Github, ArrowRight, Download } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
@@ -22,6 +22,7 @@ const itemVariants = {
 
 export function Hero() {
   const { t, locale } = useLanguage();
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -37,6 +38,8 @@ export function Hero() {
   const smoothReverseY = useSpring(reverseMouseY, springConfig);
 
   useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
       const x = (e.clientX / innerWidth) * 2 - 1;
@@ -54,10 +57,15 @@ export function Hero() {
   }, [mouseX, mouseY, reverseMouseX, reverseMouseY]);
 
   const handleDownloadCV = async () => {
-    const { generateCV } = await import("../utils/cvGenerator");
-    generateCV({
-      language: locale as Language,
-    });
+    setIsDownloading(true);
+    try {
+      const { generateCV } = await import("../utils/cvGenerator");
+      generateCV({
+        language: locale as Language,
+      });
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   return (
@@ -180,8 +188,12 @@ export function Hero() {
             <Github className="w-4 h-4" />
             {t("hero.cta2")}
           </Button>
-          <Button variant="secondary" onClick={handleDownloadCV}>
-            <Download className="w-4 h-4" />
+          <Button variant="secondary" onClick={handleDownloadCV} disabled={isDownloading}>
+            {isDownloading ? (
+              <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <Download className="w-4 h-4" />
+            )}
             {t("hero.cta3")}
           </Button>
         </motion.div>

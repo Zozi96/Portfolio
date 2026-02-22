@@ -52,7 +52,7 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{
               duration: 0.8,
-              delay: index * 0.1,
+              delay: Math.min(index * 0.1, 0.3),
               ease: [0.16, 1, 0.3, 1],
             }}
           >
