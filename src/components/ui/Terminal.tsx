@@ -335,10 +335,11 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
             { type: "output", content: "" },
           ]);
         } else if (mode === "toggle") {
+          const nextTheme = theme === "dark" ? "light" : "dark";
           toggleTheme();
           setHistory((prev) => [
             ...prev,
-            { type: "output", content: `🔄 Theme toggled to ${theme === "dark" ? "light" : "dark"}.` },
+            { type: "output", content: `🔄 Theme toggled to ${nextTheme}.` },
             { type: "output", content: "" },
           ]);
         } else {

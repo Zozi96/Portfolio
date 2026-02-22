@@ -22,12 +22,12 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
 };
 
-const reducedContainerVariants = { hidden: {}, visible: {} };
+const noMotionContainerVariants = { hidden: {}, visible: {} };
 
 export function Hero() {
   const { t, locale } = useLanguage();
   const safeItemVariants = useMotionVariants(itemVariants);
-  const safeContainerVariants = useMotionVariants(containerVariants, reducedContainerVariants);
+  const safeContainerVariants = useMotionVariants(containerVariants, noMotionContainerVariants);
   const [isDownloading, setIsDownloading] = useState(false);
   const { generateAndDownload } = usePdfWorker();
 

@@ -26,9 +26,18 @@ export class ConsoleMonitoringAdapter implements IMonitoringService {
 
   captureMessage(message: string, level: MonitoringLevel = "info"): void {
     if (!this.active) return;
-    const fn = level === "error" || level === "fatal" ? console.error
-      : level === "warning" ? console.warn
-      : console.info;
+    let fn: typeof console.log;
+    switch (level) {
+      case "error":
+      case "fatal":
+        fn = console.error;
+        break;
+      case "warning":
+        fn = console.warn;
+        break;
+      default:
+        fn = console.info;
+    }
     fn(`[Monitoring] ${level.toUpperCase()}: ${message}`);
   }
 
