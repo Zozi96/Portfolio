@@ -16,6 +16,17 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
   const data = content[language];
   const doc = new jsPDF();
 
+  /*
+   * Custom Font Injection (optional):
+   * To replace 'helvetica' with a custom font like 'Inter', add the base64-encoded
+   * font file via doc.addFileToVFS() and doc.addFont(), then call doc.setFont().
+   * Example:
+   *   import interBase64 from './Inter-Regular-base64';
+   *   doc.addFileToVFS('Inter-Regular.ttf', interBase64);
+   *   doc.addFont('Inter-Regular.ttf', 'Inter', 'normal');
+   *   doc.setFont('Inter', 'normal');
+   */
+
   type ColorTuple = [number, number, number];
 
   interface Colors {
@@ -28,7 +39,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
   }
 
   const colors: Colors = {
-    accent: [79, 70, 229],
+    accent: [16, 185, 129],
     bg: [255, 255, 255],
     surface: [248, 250, 252],
     text: [15, 23, 42],
@@ -42,10 +53,6 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
 
     doc.setFillColor(...colors.surface);
     doc.rect(0, 0, 70, 297, "F");
-
-    doc.setDrawColor(...colors.border);
-    doc.setLineWidth(0.1);
-    doc.line(70, 0, 70, 297);
   };
 
   const drawBadge = (text: string, x: number, y: number): number => {
@@ -76,23 +83,26 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
     doc.line(x, y + 2.5, x + 18, y + 2.5);
   };
 
-  const drawTimelineNode = (x: number, y: number, height: number, isLast: boolean) => {
+  const drawTimelineNode = (x: number, y: number, height: number, isLast: boolean, index: number) => {
     if (!isLast) {
       doc.setDrawColor(...colors.border);
       doc.setLineWidth(0.5);
       doc.line(x, y + 3, x, y + height);
     }
-    doc.setFillColor(...colors.accent);
-    doc.circle(x, y, 1.5, "F");
-    doc.setFillColor(255, 255, 255);
-    doc.circle(x, y, 0.7, "F");
+    if (index === 0) {
+      doc.setFillColor(...colors.accent);
+      doc.circle(x, y, 1.5, "F");
+      doc.setFillColor(255, 255, 255);
+      doc.circle(x, y, 0.7, "F");
+    } else {
+      doc.setFillColor(...colors.border);
+      doc.circle(x, y, 1.5, "F");
+    }
   };
 
   const drawProjectCard = (x: number, y: number, width: number, height: number) => {
-    doc.setDrawColor(...colors.border);
-    doc.setLineWidth(0.3);
-    doc.setFillColor(252, 253, 255);
-    doc.roundedRect(x, y, width, height, 2, 2, "FD");
+    doc.setFillColor(250, 250, 250);
+    doc.roundedRect(x, y, width, height, 2, 2, "F");
 
     doc.setDrawColor(...colors.accent);
     doc.setLineWidth(0.8);
@@ -105,7 +115,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
 
   setupPage();
 
-  let sidebarY = 25;
+  let sidebarY = 15;
   const sidebarX = 10;
   const sidebarWidth = 50;
 
@@ -134,10 +144,12 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
   doc.text(language === "en" ? "CONTACT" : "CONTACTO", sidebarX, sidebarY);
   sidebarY += 6;
 
+  const githubSlug = data.footer.github.replace("https://", "");
+  const linkedinSlug = data.footer.linkedin.replace("https://", "");
   const contactInfo = [
-    { label: "Email", value: data.footer.email },
-    { label: "Github", value: data.footer.github.replace("https://", "") },
-    { label: "LinkedIn", value: data.footer.linkedin.replace("https://", "") },
+    { label: "Email", value: data.footer.email, url: `mailto:${data.footer.email}` },
+    { label: "Github", value: githubSlug, url: `https://${githubSlug}` },
+    { label: "LinkedIn", value: linkedinSlug, url: `https://${linkedinSlug}` },
   ];
 
   contactInfo.forEach((info) => {
@@ -147,9 +159,14 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
     doc.text(info.label, sidebarX, sidebarY);
     sidebarY += 3.5;
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(...colors.textSecondary);
+    doc.setTextColor(...colors.accent);
     const valLines = doc.splitTextToSize(info.value, sidebarWidth);
-    doc.text(valLines, sidebarX, sidebarY);
+    doc.textWithLink(valLines[0], sidebarX, sidebarY, { url: info.url });
+    if (valLines.length > 1) {
+      for (let i = 1; i < valLines.length; i++) {
+        doc.text(valLines[i], sidebarX, sidebarY + i * 3.5);
+      }
+    }
     sidebarY += valLines.length * 3.5 + 3;
   });
 
@@ -242,7 +259,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
     sidebarY += 9;
   });
 
-  let mainY = 25;
+  let mainY = 15;
   const mainX = 80;
   const contentWidth = 115;
 
@@ -268,10 +285,10 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
     if (mainY + roleHeight > 280) {
       doc.addPage();
       setupPage();
-      mainY = 25;
+      mainY = 15;
     }
 
-    drawTimelineNode(timelineX, mainY + 1.5, roleHeight, isLast);
+    drawTimelineNode(timelineX, mainY + 1.5, roleHeight, isLast, index);
 
     doc.setFontSize(10.5);
     doc.setTextColor(...colors.text);
@@ -294,7 +311,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
       doc.setFillColor(...colors.accent);
       doc.circle(contentStartX + 1, mainY - 1.2, 0.6, "F");
       doc.text(itemLines, contentStartX + 5, mainY);
-      mainY += itemLines.length * 4.5 + 2;
+      mainY += itemLines.length * 5.5 + 2;
     });
     mainY += 4;
   });
@@ -302,7 +319,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
   if (mainY > 220) {
     doc.addPage();
     setupPage();
-    mainY = 25;
+    mainY = 15;
   }
 
   drawSectionHeader(
@@ -335,7 +352,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
     if (mainY + projectHeight > 280) {
       doc.addPage();
       setupPage();
-      mainY = 25;
+      mainY = 15;
     }
 
     drawProjectCard(mainX, mainY - 4, contentWidth, projectHeight);
