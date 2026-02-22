@@ -51,6 +51,7 @@ interface Content {
     stack: string;
     experience: string;
     contact: string;
+    menu: string;
   };
   hero: {
     badge: string;
@@ -139,6 +140,7 @@ export const content: LocalizedContent = {
       stack: "Tech Stack",
       experience: "Experience",
       contact: "Contact",
+      menu: "Menu",
     },
     hero: {
       badge: "Open to interesting proposals",
@@ -374,6 +376,7 @@ export const content: LocalizedContent = {
       stack: "Stack Tecnológico",
       experience: "Experiencia",
       contact: "Contacto",
+      menu: "Menú",
     },
     hero: {
       badge: "Abierto a escuchar propuestas interesantes",
