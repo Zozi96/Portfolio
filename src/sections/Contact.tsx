@@ -138,7 +138,7 @@ export default function Contact() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm border border-zinc-200 dark:border-zinc-800 p-8 rounded-3xl shadow-xl"
+          className="bg-white/40 dark:bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/50 dark:border-white/10 p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.12)]"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
