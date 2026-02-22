@@ -33,17 +33,11 @@ RUN npm run build
 # Production stage – nginx with Brotli module pre-compiled
 FROM fholzer/nginx-brotli:latest
 
-# Argumento para el puerto con valor por defecto 3000
-ARG PORT=3000
-
-# Variable de entorno para el puerto
-ENV PORT=$PORT
-
 # Copy built files from builder stage
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx template (auto-substitutes ${PORT} at container startup)
-COPY nginx.conf.template /etc/nginx/templates/default.conf.template
+# Copy nginx config
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Expose el puerto dinámicamente
-EXPOSE $PORT
+# Expose port
+EXPOSE 3000
