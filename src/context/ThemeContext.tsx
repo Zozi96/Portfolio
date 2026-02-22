@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
+import { vibrate } from '../utils/haptics';
 
 type Theme = 'light' | 'dark';
 
@@ -33,6 +34,17 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     } else {
       root.classList.remove('dark');
     }
+
+    // Update theme-color meta tag to match the current theme background.
+    // Targets the <meta name="theme-color"> without a media attribute,
+    // which acts as the dynamic/JS-controlled override.
+    const themeColorMeta = document.querySelector<HTMLMetaElement>(
+      'meta[name="theme-color"]:not([media])'
+    );
+    if (themeColorMeta) {
+      themeColorMeta.content = theme === 'dark' ? '#09090b' : '#fafafa';
+    }
+
     // Only persist when the user has explicitly set a preference; do not
     // overwrite on every render so that the OS-change listener can detect
     // the absence of a manual override.
@@ -65,6 +77,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       toggleTheme: () => {
         const next: Theme = theme === 'light' ? 'dark' : 'light';
         localStorage.setItem('theme', next);
+        vibrate(10);
 
         if (!('startViewTransition' in document)) {
           setThemeState(next);

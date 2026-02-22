@@ -5,6 +5,7 @@ import { ServiceProvider } from "./shared/context/ServiceContext";
 import { setTranslations } from "./utils/translations";
 import { content } from "./data/content";
 import Navbar from "./components/layout/Navbar";
+import { BottomNav } from "./components/layout/BottomNav";
 import Hero from "./sections/Hero";
 import FocusAreas from "./sections/FocusAreas";
 import Footer from "./components/layout/Footer";
@@ -81,7 +82,7 @@ function AppContent() {
     <>
       <div className="min-h-screen">
         <Navbar onTerminalOpen={() => setIsTerminalOpen(true)} />
-        <main>
+        <main className="pb-24 md:pb-0">
           <Hero />
           <FocusAreas />
           <div ref={projectsSentinelRef} />
@@ -108,6 +109,7 @@ function AppContent() {
         <Footer />
       </div>
 
+      <BottomNav />
       <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
     </>
   );

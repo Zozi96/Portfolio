@@ -30,7 +30,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   };
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-md md:backdrop-blur-xl bg-white/85 md:bg-white/70 dark:bg-zinc-950/85 md:dark:bg-zinc-950/70 border-b border-zinc-200/40 dark:border-zinc-800/40">
+    <nav className="hidden md:sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-zinc-950/70 border-b border-zinc-200/40 dark:border-zinc-800/40">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

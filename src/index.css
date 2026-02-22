@@ -73,6 +73,9 @@ body {
   background-color: var(--color-background);
   color: var(--color-text-secondary);
 
+  /* Prevent rubber-band overscroll showing wrong background */
+  overscroll-behavior: none;
+
   /* Subtle dot pattern */
   background-image: radial-gradient(
     circle,
@@ -93,6 +96,7 @@ body {
 
 html {
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 
 /* Selection styling */
@@ -100,3 +104,11 @@ html {
   background-color: rgba(16, 185, 129, 0.2);
   color: inherit;
 }
+
+/* Eliminate 300ms tap delay on touch devices */
+button,
+a,
+[role="button"] {
+  touch-action: manipulation;
+}
+
