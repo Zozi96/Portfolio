@@ -109,7 +109,7 @@ function AppContent() {
         <Footer />
       </div>
 
-      <BottomNav />
+      <BottomNav onTerminalOpen={() => setIsTerminalOpen(true)} />
       <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
     </>
   );
