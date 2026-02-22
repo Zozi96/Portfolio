@@ -79,7 +79,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('theme', next);
         vibrate(10);
 
-        if (!('startViewTransition' in document)) {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (!('startViewTransition' in document) || isMobile) {
           setThemeState(next);
           return;
         }
