@@ -31,7 +31,7 @@ COPY . .
 RUN npm run build
 
 # Production stage – nginx with Brotli module pre-compiled
-FROM ghcr.io/macbre/nginx-http3:mainline
+FROM fholzer/nginx-brotli:latest
 
 # Argumento para el puerto con valor por defecto 3000
 ARG PORT=3000
