@@ -1,13 +1,18 @@
-import jsPDF from "jspdf";
 import { content } from "../data/content";
 
 export type Language = "en" | "es";
+
+export interface CVResult {
+  buffer: ArrayBuffer;
+  fileName: string;
+}
 
 interface CVGeneratorOptions {
   language: Language;
 }
 
-export function generateCV({ language }: CVGeneratorOptions): void {
+export async function generateCV({ language }: CVGeneratorOptions): Promise<CVResult> {
+  const { default: jsPDF } = await import("jspdf");
   const data = content[language];
   const doc = new jsPDF();
 
@@ -371,5 +376,5 @@ export function generateCV({ language }: CVGeneratorOptions): void {
   });
 
   const fileName = `${data.hero.name.replace(/\s+/g, "_")}_CV_${language.toUpperCase()}.pdf`;
-  doc.save(fileName);
+  return { buffer: doc.output("arraybuffer"), fileName };
 }

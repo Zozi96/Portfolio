@@ -30,8 +30,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage - use nginx:alpine for performance
-FROM nginx:alpine
+# Production stage – nginx with Brotli module pre-compiled
+FROM ghcr.io/macbre/nginx-http3:mainline
 
 # Argumento para el puerto con valor por defecto 3000
 ARG PORT=3000

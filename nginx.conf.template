@@ -4,19 +4,73 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
+    # ---------- Brotli compression ----------
+    brotli on;
+    brotli_comp_level 6;
+    brotli_static on;
+    brotli_types
+        text/plain
+        text/css
+        application/javascript
+        application/json
+        application/xml
+        text/xml
+        text/javascript
+        image/svg+xml
+        font/woff
+        font/woff2;
+
+    # ---------- Gzip fallback (for clients that don't support Brotli) ----------
     gzip on;
     gzip_comp_level 6;
-    gzip_types text/plain text/css application/javascript application/json application/xml text/xml text/javascript;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_types
+        text/plain
+        text/css
+        application/javascript
+        application/json
+        application/xml
+        text/xml
+        text/javascript
+        image/svg+xml
+        font/woff
+        font/woff2;
 
+    # ---------- SPA routing ----------
     location / {
         try_files $uri /index.html;
+
+        # HTML must not be cached (SW update prompt needs fresh fetch)
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
     }
 
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|webp|avif|woff|woff2|ttf|otf|eot)$ {
+    # ---------- Vite hashed assets – immutable, 1-year max-age ----------
+    # Vite adds a content hash to every JS/CSS filename, so these files
+    # are safe to cache indefinitely.
+    location ~* /assets/.*\.(js|css|woff|woff2|ttf|otf|eot)$ {
         expires 1y;
-        add_header Cache-Control "public, immutable";
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        access_log off;
     }
 
+    # ---------- Images and static media ----------
+    location ~* \.(png|jpg|jpeg|gif|ico|svg|webp|avif)$ {
+        expires 30d;
+        add_header Cache-Control "public, max-age=2592000";
+        access_log off;
+    }
+
+    # ---------- PWA service-worker – must be re-fetched on every request ----------
+    location ~* (service-worker\.js|sw\.js|workbox-.+\.js)$ {
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Pragma "no-cache";
+        add_header Expires "0";
+    }
+
+    # ---------- Health-check endpoint (Coolify / load-balancer) ----------
     location /health {
         access_log off;
         add_header Content-Type text/plain;

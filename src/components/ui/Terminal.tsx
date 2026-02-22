@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Terminal as TerminalIcon } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
+import { useTheme } from "../../context/ThemeContext";
+import { usePdfWorker } from "../../hooks/usePdfWorker";
+import type { Language } from "../../utils/cvGenerator";
 
 interface TerminalLine {
   type: "command" | "output" | "error";
@@ -10,6 +13,27 @@ interface TerminalLine {
 interface TerminalProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+const NAVIGABLE_SECTIONS: Record<string, string> = {
+  home: "home",
+  projects: "projects",
+  "personal projects": "personal-projects",
+  "personal-projects": "personal-projects",
+  techstack: "tech-stack",
+  "tech-stack": "tech-stack",
+  tech: "tech-stack",
+  experience: "experience",
+  contact: "contact",
+};
+
+function scrollToSection(sectionId: string): boolean {
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+    return true;
+  }
+  return false;
 }
 
 export function Terminal({ isOpen, onClose }: TerminalProps) {
@@ -23,7 +47,9 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const historyEndRef = useRef<HTMLDivElement>(null);
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
+  const { theme, setTheme, toggleTheme } = useTheme();
+  const { generateAndDownload } = usePdfWorker();
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -57,6 +83,9 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
           { type: "output", content: "  projects          - List client projects" },
           { type: "output", content: "  social            - Show social links" },
           { type: "output", content: "  whoami            - Print effective userid" },
+          { type: "output", content: "  go to <section>   - Navigate to a section" },
+          { type: "output", content: "  download cv       - Download CV as PDF" },
+          { type: "output", content: "  theme <dark|light|toggle> - Change theme" },
           { type: "output", content: "  clear             - Clear terminal" },
           { type: "output", content: "  exit              - Close terminal" },
           { type: "output", content: "" },
@@ -228,6 +257,100 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
       case "exit":
         onClose();
         break;
+
+      case "go": {
+        // "go to <section>" — rest of args joined after "to"
+        const toIndex = args.indexOf("to");
+        const target = toIndex !== -1 ? args.slice(toIndex + 1).join(" ") : args.slice(1).join(" ");
+        const sectionId = NAVIGABLE_SECTIONS[target];
+        if (!sectionId) {
+          const available = Object.keys(NAVIGABLE_SECTIONS)
+            .filter((k) => !k.includes("-"))
+            .join(", ");
+          setHistory((prev) => [
+            ...prev,
+            { type: "error", content: `Unknown section: "${target}". Available: ${available}` },
+            { type: "output", content: "" },
+          ]);
+        } else {
+          const found = scrollToSection(sectionId);
+          setHistory((prev) => [
+            ...prev,
+            found
+              ? { type: "output", content: `↓ Navigating to #${sectionId}…` }
+              : { type: "error", content: `Section #${sectionId} not found in DOM.` },
+            { type: "output", content: "" },
+          ]);
+          if (found) onClose();
+        }
+        break;
+      }
+
+      case "download": {
+        const subCmd = args[1];
+        if (subCmd !== "cv") {
+          setHistory((prev) => [
+            ...prev,
+            { type: "error", content: `Unknown download target: "${subCmd}". Try 'download cv'.` },
+            { type: "output", content: "" },
+          ]);
+          break;
+        }
+        setHistory((prev) => [
+          ...prev,
+          { type: "output", content: "⏳ Generating CV in background…" },
+        ]);
+        generateAndDownload(locale as Language)
+          .then(() => {
+            setHistory((prev) => [
+              ...prev,
+              { type: "output", content: "✅ CV downloaded successfully." },
+              { type: "output", content: "" },
+            ]);
+          })
+          .catch((err: unknown) => {
+            setHistory((prev) => [
+              ...prev,
+              { type: "error", content: `Failed to generate CV: ${String(err)}` },
+              { type: "output", content: "" },
+            ]);
+          });
+        break;
+      }
+
+      case "theme": {
+        const mode = args[1];
+        if (mode === "dark") {
+          setTheme("dark");
+          setHistory((prev) => [
+            ...prev,
+            { type: "output", content: "🌙 Theme set to dark." },
+            { type: "output", content: "" },
+          ]);
+        } else if (mode === "light") {
+          setTheme("light");
+          setHistory((prev) => [
+            ...prev,
+            { type: "output", content: "☀️ Theme set to light." },
+            { type: "output", content: "" },
+          ]);
+        } else if (mode === "toggle") {
+          const nextTheme = theme === "dark" ? "light" : "dark";
+          toggleTheme();
+          setHistory((prev) => [
+            ...prev,
+            { type: "output", content: `🔄 Theme toggled to ${nextTheme}.` },
+            { type: "output", content: "" },
+          ]);
+        } else {
+          setHistory((prev) => [
+            ...prev,
+            { type: "error", content: `Usage: theme <dark|light|toggle>` },
+            { type: "output", content: "" },
+          ]);
+        }
+        break;
+      }
 
       case "":
         break;
