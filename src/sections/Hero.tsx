@@ -125,7 +125,7 @@ export function Hero() {
         {/* Name */}
         <motion.h1
           variants={safeItemVariants}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1]"
+          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1] text-balance"
         >
           {t("hero.name")}
         </motion.h1>
@@ -133,7 +133,7 @@ export function Hero() {
         {/* Title/Role */}
         <motion.h2
           variants={safeItemVariants}
-          className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8"
+          className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8 text-balance"
         >
           {t("hero.title")}
         </motion.h2>
@@ -141,7 +141,7 @@ export function Hero() {
         {/* Subtitle */}
         <motion.p
           variants={safeItemVariants}
-          className="text-base md:text-lg lg:text-xl text-zinc-500 dark:text-zinc-400 mb-8 max-w-xl mx-auto leading-relaxed"
+          className="text-base md:text-lg lg:text-xl text-zinc-600 dark:text-zinc-300 mb-8 max-w-xl mx-auto leading-relaxed text-pretty"
         >
           {t("hero.subtitle")}
         </motion.p>
@@ -152,12 +152,12 @@ export function Hero() {
           className="flex items-center justify-center gap-8 mb-12"
         >
           {[
-            { value: "5+", label: "Years exp." },
-            { value: "15+", label: "Projects" },
-            { value: "3", label: "Industries" },
+            { value: "5+", label: t("hero.stats.years") },
+            { value: "15+", label: t("hero.stats.projects") },
+            { value: "3", label: t("hero.stats.industries") },
           ].map((stat, i, arr) => (
             <div key={stat.label} className="flex items-center gap-8">
-              <div className="text-center">
+              <div className="text-center hover:-translate-y-1 transition-transform duration-300">
                 <div className="text-2xl font-bold text-zinc-900 dark:text-white leading-none">
                   {stat.value}
                 </div>
@@ -188,11 +188,11 @@ export function Hero() {
             {t("hero.cta1")}
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
-          <Button variant="secondary" href="https://github.com/Zozi96">
+          <Button variant="secondary" href="https://github.com/Zozi96" className="hover:scale-105 transition-transform duration-300 dark:hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]">
             <Github className="w-4 h-4" />
             {t("hero.cta2")}
           </Button>
-          <Button variant="secondary" onClick={handleDownloadCV} disabled={isDownloading}>
+          <Button variant="secondary" onClick={handleDownloadCV} disabled={isDownloading} className="hover:scale-105 transition-transform duration-300 dark:hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]">
             {isDownloading ? (
               <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
             ) : (

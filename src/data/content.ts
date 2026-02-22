@@ -60,6 +60,11 @@ interface Content {
     cta1: string;
     cta2: string;
     cta3: string;
+    stats: {
+      years: string;
+      projects: string;
+      industries: string;
+    };
   };
   focus: {
     title: string;
@@ -144,6 +149,11 @@ export const content: LocalizedContent = {
       cta1: "View Projects",
       cta2: "GitHub Profile",
       cta3: "Download CV",
+      stats: {
+        years: "Years exp.",
+        projects: "Projects",
+        industries: "Industries",
+      },
     },
     focus: {
       title: "Core Focus Areas",
@@ -374,6 +384,11 @@ export const content: LocalizedContent = {
       cta1: "Ver Proyectos",
       cta2: "Perfil GitHub",
       cta3: "Descargar CV",
+      stats: {
+        years: "Años exp.",
+        projects: "Proyectos",
+        industries: "Industrias",
+      },
     },
     focus: {
       title: "Áreas de Enfoque Principales",
