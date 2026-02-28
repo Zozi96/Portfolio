@@ -6,11 +6,11 @@ import type { IMonitoringService } from "../shared/services/monitoring/monitorin
 let monitoringService: IMonitoringService | null = null;
 
 export function initMonitoring(): void {
-  const { glitchtipDsn } = appConfig.monitoring;
+  const { sentryDsn } = appConfig.monitoring;
 
-  if (glitchtipDsn && appConfig.environment.isProduction) {
+  if (sentryDsn && appConfig.environment.isProduction) {
     monitoringService = new SentryMonitoringAdapter(
-      glitchtipDsn,
+      sentryDsn,
       appConfig.environment.mode,
       appConfig.app.version,
     );
