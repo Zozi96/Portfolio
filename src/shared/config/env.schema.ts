@@ -31,7 +31,7 @@ export const envSchema = z.object({
   VITE_GOOGLE_ANALYTICS_ID: z.string().optional(),
 
   // Error Monitoring
-  VITE_GLITCHTIP_DSN: z.string().optional(),
+  VITE_SENTRY_DSN: z.string().optional(),
 
   // App Metadata
   VITE_APP_VERSION: z.string().default('1.0.0'),
