@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo, useCallback } from 'react';
 import type { ReactNode } from 'react';
 import { getTranslations } from '../utils/translations';
 
@@ -23,6 +23,27 @@ function getInitialLocale(): Locale {
   return 'en';
 }
 
+function flattenObject(obj: Record<string, unknown>, prefix = ''): Record<string, string> {
+  return Object.keys(obj).reduce((acc: Record<string, string>, k: string) => {
+    const pre = prefix.length ? prefix + '.' : '';
+    const value = obj[k];
+    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+      Object.assign(acc, flattenObject(value as Record<string, unknown>, pre + k));
+    } else if (Array.isArray(value)) {
+      value.forEach((item: unknown, index: number) => {
+        if (typeof item === 'object' && item !== null) {
+          Object.assign(acc, flattenObject(item as Record<string, unknown>, `${pre}${k}.${index}`));
+        } else {
+          acc[`${pre}${k}.${index}`] = String(item);
+        }
+      });
+    } else {
+      acc[pre + k] = String(value);
+    }
+    return acc;
+  }, {});
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(getInitialLocale);
 
@@ -31,31 +52,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = locale;
   }, [locale]);
 
+  const rawTranslations = getTranslations(locale);
+  
+  const flattenedTranslations = useMemo(() => {
+    return rawTranslations ? flattenObject(rawTranslations) : {};
+  }, [rawTranslations]);
+
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
   };
 
-  const t = (key: string): string => {
-    const keys = key.split('.');
-    let value: unknown = getTranslations(locale);
-    
-    for (const k of keys) {
-      if (typeof value === 'object' && value !== null && !Array.isArray(value) && k in value) {
-        value = (value as Record<string, unknown>)[k];
-      } else if (Array.isArray(value)) {
-        const index = parseInt(k, 10);
-        if (!isNaN(index) && index < value.length) {
-          value = value[index];
-        } else {
-          return key;
-        }
-      } else {
-        return key;
-      }
-    }
-    
-    return typeof value === 'string' ? value : key;
-  };
+  const t = useCallback((key: string): string => {
+    return flattenedTranslations[key] || key;
+  }, [flattenedTranslations]);
 
   return (
     <LanguageContext.Provider value={{ locale, setLocale, t }}>
