@@ -68,7 +68,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'framer-motion': ['framer-motion'],
           'sentry': ['@sentry/browser'],
-          'pdf-vendor': ['jspdf', 'jspdf-autotable', '@react-pdf/renderer']
+          'pdf-vendor': ['@react-pdf/renderer']
         },
       },
     },
