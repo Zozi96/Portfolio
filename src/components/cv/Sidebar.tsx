@@ -1,75 +1,101 @@
 import React from 'react';
-import { View, Text, StyleSheet, Svg, Path } from '@react-pdf/renderer';
+import { View, Text, StyleSheet, Svg, Path, Link } from '@react-pdf/renderer';
 import { colors, icons } from './Common';
 
 const styles = StyleSheet.create({
   sidebar: {
     width: '30%',
-    backgroundColor: colors.surface,
-    padding: 20,
-    height: '100%',
+    backgroundColor: colors.sidebarBg,
+    paddingTop: 24,
+    paddingHorizontal: 18,
+    paddingBottom: 20,
+    alignSelf: 'stretch',
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 18,
+  },
+  sectionTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  sectionTitleBar: {
+    width: 3,
+    height: 12,
+    backgroundColor: colors.accent,
+    marginRight: 7,
   },
   sectionTitle: {
-    fontSize: 10,
-    fontWeight: 'bold',
-    color: colors.primary,
-    marginBottom: 10,
+    fontSize: 8,
+    fontFamily: 'Helvetica-Bold',
+    color: colors.sidebarTitle,
     textTransform: 'uppercase',
-    letterSpacing: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.accent,
-    paddingBottom: 2,
+    letterSpacing: 1.2,
   },
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 7,
   },
   contactIcon: {
-    width: 10,
-    height: 10,
-    marginRight: 8,
+    width: 9,
+    height: 9,
+    marginRight: 7,
   },
   contactText: {
     fontSize: 8,
-    color: colors.secondary,
+    color: colors.sidebarText,
+  },
+  contactLink: {
+    fontSize: 8,
+    color: colors.accent,
+    textDecoration: 'none',
   },
   techCategory: {
-    marginBottom: 10,
+    marginBottom: 9,
   },
   techCategoryName: {
-    fontSize: 8,
-    fontWeight: 'bold',
-    color: colors.secondary,
+    fontSize: 7.5,
+    fontFamily: 'Helvetica-Bold',
+    color: colors.sidebarTitle,
     marginBottom: 4,
+    opacity: 0.7,
   },
   techItems: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   techBadge: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.badgeBg,
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: colors.accent,
     paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 3,
-    marginRight: 4,
-    marginBottom: 4,
+    marginRight: 3,
+    marginBottom: 3,
   },
   techText: {
-    fontSize: 7,
-    color: colors.primary,
+    fontSize: 6.5,
+    fontFamily: 'Helvetica-Bold',
+    color: colors.accent,
   },
   languageItem: {
-    marginBottom: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  languageDot: {
+    width: 5,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: colors.accent,
+    marginRight: 7,
+    opacity: 0.8,
   },
   languageText: {
     fontSize: 8,
-    color: colors.secondary,
+    color: colors.sidebarText,
   },
 });
 
@@ -120,26 +146,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <View style={styles.sidebar}>
-      {/* Contact Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.contact}</Text>
+        <View style={styles.sectionTitleContainer}>
+          <View style={styles.sectionTitleBar} />
+          <Text style={styles.sectionTitle}>{labels.contact}</Text>
+        </View>
         <View style={styles.contactItem}>
           <Icon path={icons.mail} />
           <Text style={styles.contactText}>{email}</Text>
         </View>
         <View style={styles.contactItem}>
           <Icon path={icons.github} />
-          <Text style={styles.contactText}>{github.replace('https://', '')}</Text>
+          <Link src={`https://${github.replace('https://', '')}`} style={styles.contactLink}>
+            {github.replace('https://', '')}
+          </Link>
         </View>
         <View style={styles.contactItem}>
           <Icon path={icons.linkedin} />
-          <Text style={styles.contactText}>{linkedin.replace('https://', '')}</Text>
+          <Link src={`https://${linkedin.replace('https://', '')}`} style={styles.contactLink}>
+            {linkedin.replace('https://', '')}
+          </Link>
         </View>
       </View>
 
-      {/* Tech Stack Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.techStack}</Text>
+        <View style={styles.sectionTitleContainer}>
+          <View style={styles.sectionTitleBar} />
+          <Text style={styles.sectionTitle}>{labels.techStack}</Text>
+        </View>
         {techStack.map((category, index) => (
           <View key={index} style={styles.techCategory}>
             <Text style={styles.techCategoryName}>{category.name}</Text>
@@ -154,12 +188,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ))}
       </View>
 
-      {/* Spoken Languages Section */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.languages}</Text>
+        <View style={styles.sectionTitleContainer}>
+          <View style={styles.sectionTitleBar} />
+          <Text style={styles.sectionTitle}>{labels.languages}</Text>
+        </View>
         {labels.spokenLanguages.map((lang, index) => (
           <View key={index} style={styles.languageItem}>
-            <Text style={styles.languageText}>• {lang}</Text>
+            <View style={styles.languageDot} />
+            <Text style={styles.languageText}>{lang}</Text>
           </View>
         ))}
       </View>

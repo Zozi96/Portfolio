@@ -1,3 +1,8 @@
+// Polyfill window for React Refresh during development
+if (typeof window === "undefined") {
+  self.window = self;
+}
+
 import type { Language, CVResult } from "../utils/cvGenerator";
 
 interface WorkerRequest {

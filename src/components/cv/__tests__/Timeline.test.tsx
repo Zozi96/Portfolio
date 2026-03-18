@@ -1,5 +1,4 @@
 import { describe, it, expect } from 'vitest';
-import React from 'react';
 import { Timeline } from '../Timeline';
 
 const mockRoles = [
@@ -27,8 +26,8 @@ describe('Timeline Component', () => {
   });
 
   it('should return a valid React element', () => {
-    const output = Timeline({ roles: mockRoles });
+    const output = Timeline({ roles: mockRoles }) as any;
     expect(output).toBeDefined();
-    expect(output.props.children).toHaveLength(mockRoles.length);
+    expect(output?.props?.children).toHaveLength(mockRoles.length);
   });
 });

@@ -110,6 +110,7 @@ interface Content {
     email: string;
     github: string;
     linkedin: string;
+    portfolio: string;
     rights: string;
   };
 }
@@ -276,7 +277,7 @@ export const content: LocalizedContent = {
         {
           title: "Senior Software Engineer",
           company: "ArkusNexus",
-          period: "March 2023 - Present",
+          period: "March 2023 – Present",
           description: [
             "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
             "Spearheaded the modernization of the Wag Hotels (mywag) legacy platform by migrating the infrastructure to a Kubernetes-based cloud architecture, significantly improving system stability.",
@@ -350,9 +351,10 @@ export const content: LocalizedContent = {
     },
     footer: {
       contact: "Get in Touch",
-      email: "zozi.fer96@gmail.com",
+      email: "zfernandez@zozbit.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
+      portfolio: "portfolio.zozbit.com",
       rights: "All rights reserved",
     },
   },
@@ -534,7 +536,7 @@ export const content: LocalizedContent = {
         {
           title: "Ingeniero Python (Líder Técnico)",
           company: "mediQó",
-          period: "Diciembre 2021 - Mayo 2023",
+          period: "Diciembre 2021 – Mayo 2023",
           description: [
             "Dirigí la estrategia técnica y el ciclo de vida de desarrollo para una plataforma HealthTech, liderando al equipo para entregar funcionalidades críticas.",
             "Implementé algoritmos geoespaciales complejos usando PostGIS para optimizar la asignación de proveedores y servicios basados en ubicación.",
@@ -586,9 +588,10 @@ export const content: LocalizedContent = {
     },
     footer: {
       contact: "Contacto",
-      email: "zozi.fer96@gmail.com",
+      email: "zfernandez@zozbit.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
+      portfolio: "portfolio.zozbit.com",
       rights: "Todos los derechos reservados",
     },
   },

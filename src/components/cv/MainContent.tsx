@@ -6,25 +6,34 @@ import { ProjectCard } from './ProjectCard';
 
 const styles = StyleSheet.create({
   mainContent: {
-    width: '70%',
-    padding: 20,
+    flex: 1,
+    paddingTop: 25,
+    paddingBottom: 25,
+    paddingHorizontal: 30,
   },
   section: {
     marginBottom: 20,
   },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: colors.primary,
+  sectionTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 10,
+  },
+  sectionTitleBar: {
+    width: 3,
+    height: 14,
+    backgroundColor: colors.accent,
+    marginRight: 8,
+  },
+  sectionTitle: {
+    fontSize: 11,
+    fontFamily: 'Helvetica-Bold',
+    color: colors.primary,
     textTransform: 'uppercase',
     letterSpacing: 1.5,
-    borderBottomWidth: 2,
-    borderBottomColor: colors.accent,
-    paddingBottom: 2,
   },
   summary: {
-    fontSize: 9,
+    fontSize: 9.5,
     color: colors.secondary,
     lineHeight: 1.5,
     textAlign: 'justify',
@@ -39,11 +48,15 @@ interface MainContentProps {
     period: string;
     description: string[];
   }[];
-  projects: {
+  personalProjects: {
     title: string;
     category: string;
     description: string;
     stack: string[];
+  }[];
+  techStack: {
+    name: string;
+    items: string[];
   }[];
   language: 'en' | 'es';
 }
@@ -51,43 +64,57 @@ interface MainContentProps {
 export const MainContent: React.FC<MainContentProps> = ({
   summary,
   experience,
-  projects,
+  personalProjects,
   language,
 }) => {
   const labels = {
     en: {
       summary: 'Professional Summary',
       experience: 'Professional Experience',
-      projects: 'Key Projects',
+      projects: 'Personal Projects',
     },
     es: {
       summary: 'Resumen Profesional',
       experience: 'Experiencia Profesional',
-      projects: 'Proyectos Clave',
+      projects: 'Proyectos Personales',
     },
   }[language];
 
   return (
     <View style={styles.mainContent}>
-      {/* Summary */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.summary}</Text>
+        <View style={styles.sectionTitleContainer}>
+          <View style={styles.sectionTitleBar} />
+          <Text style={styles.sectionTitle}>{labels.summary}</Text>
+        </View>
         <Text style={styles.summary}>{summary}</Text>
       </View>
 
-      {/* Experience */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.experience}</Text>
+        <View style={styles.sectionTitleContainer}>
+          <View style={styles.sectionTitleBar} />
+          <Text style={styles.sectionTitle}>{labels.experience}</Text>
+        </View>
         <Timeline roles={experience} />
       </View>
 
-      {/* Projects */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>{labels.projects}</Text>
-        {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} />
-        ))}
-      </View>
+      {personalProjects.length > 0 && (
+        <View style={styles.section}>
+          <View style={styles.sectionTitleContainer}>
+            <View style={styles.sectionTitleBar} />
+            <Text style={styles.sectionTitle}>{labels.projects}</Text>
+          </View>
+          {personalProjects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              title={project.title}
+              category={project.category}
+              description={project.description}
+              stack={project.stack}
+            />
+          ))}
+        </View>
+      )}
     </View>
   );
 };
