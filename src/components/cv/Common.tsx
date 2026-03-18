@@ -1,7 +1,7 @@
 export const colors = {
-  primary: '#1e1b4b',
-  secondary: '#334155',
-  accent: '#0ea5e9',
+  primary: '#0f172a', // Very Dark Slate / Charcoal
+  secondary: '#475569', // Slate
+  accent: '#334155', // Darker Slate for accents
   surface: '#f8fafc',
   border: '#e2e8f0',
   white: '#ffffff',
