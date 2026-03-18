@@ -1,11 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import { VitePWA } from 'vite-plugin-pwa'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
+    nodePolyfills({
+      globals: {
+        Buffer: true,
+        global: true,
+        process: true,
+      },
+      protocolImports: true,
+    }),
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.png', 'OpenGraph.png'],
@@ -59,7 +68,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'framer-motion': ['framer-motion'],
           'sentry': ['@sentry/browser'],
-          'pdf-vendor': ['jspdf', 'jspdf-autotable']
+          'pdf-vendor': ['jspdf', 'jspdf-autotable', '@react-pdf/renderer']
         },
       },
     },
