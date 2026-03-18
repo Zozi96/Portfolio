@@ -6,6 +6,7 @@ import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
 import { usePdfWorker } from "../hooks/usePdfWorker";
 import { useMotionVariants } from "../utils/motionVariants";
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import type { Language } from "../utils/cvGenerator";
 
 const containerVariants = {
@@ -28,6 +29,7 @@ export function Hero() {
   const { t, locale } = useLanguage();
   const safeItemVariants = useMotionVariants(itemVariants);
   const safeContainerVariants = useMotionVariants(containerVariants, noMotionContainerVariants);
+  const prefersReduced = useReducedMotion();
   const [isDownloading, setIsDownloading] = useState(false);
   const { generateAndDownload } = usePdfWorker();
 
@@ -45,7 +47,7 @@ export function Hero() {
   const smoothReverseY = useSpring(reverseMouseY, springConfig);
 
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches || prefersReduced) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
@@ -61,7 +63,7 @@ export function Hero() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY, reverseMouseX, reverseMouseY]);
+  }, [mouseX, mouseY, reverseMouseX, reverseMouseY, prefersReduced]);
 
   const handleDownloadCV = async () => {
     setIsDownloading(true);
