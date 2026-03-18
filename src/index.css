@@ -112,3 +112,22 @@ a,
   touch-action: manipulation;
 }
 
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 dark:bg-zinc-900/50 backdrop-blur-md border border-white/10 dark:border-white/5;
+  }
+  
+  .glow-effect {
+    @apply relative overflow-hidden;
+  }
+  
+  .glow-effect::before {
+    content: "";
+    @apply absolute -inset-px rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 opacity-0 transition-opacity duration-500;
+  }
+  
+  .glow-effect:hover::before {
+    @apply opacity-100;
+  }
+}
+

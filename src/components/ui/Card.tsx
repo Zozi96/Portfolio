@@ -28,7 +28,7 @@ export function Card({ className = '', children, variant = 'default', gradientCo
 
   return (
     <div
-      className={`bg-[var(--color-card)] border border-[var(--color-border)] rounded-2xl p-6 shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${className}`}
+      className={`glass-panel rounded-2xl p-6 shadow-card dark:shadow-card-dark hover:shadow-card-hover dark:hover:shadow-card-dark-hover hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300 ${className}`}
     >
       {children}
     </div>
