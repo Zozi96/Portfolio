@@ -1,17 +1,17 @@
 # Design Spec: CV Generator Redesign with React-PDF
 
 ## 1. Overview
-Replace the existing imperative `jsPDF` implementation with a modern, declarative approach using `@react-pdf/renderer`. The goal is to produce a high-fidelity, professional CV for a Senior Software Engineer that aligns with the portfolio's aesthetic while being more maintainable and visually sophisticated.
+Replace the existing imperative `jsPDF` implementation with a modern, declarative approach using `@react-pdf/renderer`. The goal is to produce a high-fidelity, professional CV for a Senior Software Engineer that serves as a "Professional Variant" of the portfolio's aesthetic, optimized for clarity and high-quality printing.
 
 ## 2. Design Goals
 *   **Aesthetic:** "Professional Engineering" — high information density, clean hierarchy, and subtle tech accents.
-*   **Palette:**
+*   **Palette (Professional Variant):**
     *   Primary (Indigo): `#1e1b4b` (Text headers, Timeline nodes)
     *   Secondary (Slate): `#334155` (Body text, Borders)
     *   Accent (Sky): `#0ea5e9` (Interactive elements, Project accents)
     *   Surface: `#f8fafc` (Sidebar background, Card fills)
 *   **Typography:** Modern Sans-Serif (**Inter**).
-*   **Layout:** Two-column "Modern Tech" Sidebar (30/70 split).
+*   **Layout:** Two-column "Modern Tech" Sidebar (30/70 split), utilizing `border-subtle` and consistent spacing logic from the portfolio's UI components.
 
 ## 3. Architecture
 The CV generation will remain off-main-thread using the existing Web Worker pattern (`src/workers/pdf.worker.ts`).
@@ -30,7 +30,7 @@ Mapping logic in `src/utils/cvGenerator.ts` will be refactored to pass `content`
 *   **Library:** `@react-pdf/renderer` for component-based PDF generation.
 *   **Icons:** Use SVG paths (manually extracted or from a lightweight set) as `@react-pdf/renderer` does not support standard React icon libraries like `lucide-react` directly.
 *   **Performance:** Maintain the use of Web Workers to prevent blocking the UI during generation.
-*   **Deployment:** Ensure dependencies are correctly bundled for production.
+*   **Cleanup:** Remove `jspdf` and `jspdf-autotable` dependencies from `package.json` and `vite.config.ts` after successful implementation.
 
 ## 5. Success Criteria
 *   PDF matches the approved "Modern Tech" sidebar layout.
