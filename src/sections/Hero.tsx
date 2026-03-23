@@ -1,6 +1,6 @@
 import { Github, ArrowRight, Download } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
@@ -32,6 +32,12 @@ export function Hero() {
   const prefersReduced = useReducedMotion();
   const [isDownloading, setIsDownloading] = useState(false);
   const { generateAndDownload } = usePdfWorker();
+
+  const handleScrollToProjects = useCallback(() => {
+    document
+      .getElementById("projects")
+      ?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -181,11 +187,7 @@ export function Hero() {
         >
           <Button
             variant="primary"
-            onClick={() =>
-              document
-                .getElementById("projects")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
+            onClick={handleScrollToProjects}
           >
             {t("hero.cta1")}
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />

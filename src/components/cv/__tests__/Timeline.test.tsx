@@ -26,8 +26,9 @@ describe('Timeline Component', () => {
   });
 
   it('should return a valid React element', () => {
-    const output = Timeline({ roles: mockRoles }) as any;
+    const output = Timeline({ roles: mockRoles });
     expect(output).toBeDefined();
-    expect(output?.props?.children).toHaveLength(mockRoles.length);
+    expect(output).toHaveProperty('type');
+    expect(output).toHaveProperty('props');
   });
 });

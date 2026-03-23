@@ -3,6 +3,7 @@ import { Page, Text, View, Document, StyleSheet, Svg, Path, Link } from '@react-
 import { MainContent } from './MainContent';
 import { Sidebar } from './Sidebar';
 import { colors, icons } from './Common';
+import type { Content } from '../../data/content';
 
 const styles = StyleSheet.create({
   page: {
@@ -108,7 +109,7 @@ const Icon = ({ path, gold }: { path: string; gold?: boolean }) => (
 );
 
 interface CVDocumentProps {
-  data: any;
+  data: Content;
   language: 'en' | 'es';
 }
 

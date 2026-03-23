@@ -4,9 +4,9 @@ import { colors, icons } from '../Common';
 describe('CV Common Styles', () => {
   it('should define the correct palette constants', () => {
     expect(colors).toBeDefined();
-    expect(colors.primary).toBe('#1e1b4b');
-    expect(colors.secondary).toBe('#334155');
-    expect(colors.accent).toBe('#0ea5e9');
+    expect(colors.primary).toBe('#0f172a');
+    expect(colors.secondary).toBe('#475569');
+    expect(colors.accent).toBe('#D4A853');
     expect(colors.surface).toBe('#f8fafc');
   });
 

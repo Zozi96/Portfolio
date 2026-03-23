@@ -33,7 +33,7 @@ interface TechStackCategory {
   items: string[];
 }
 
-interface Content {
+export interface Content {
   [key: string]: unknown;
   seo: {
     title: string;
