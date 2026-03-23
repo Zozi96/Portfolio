@@ -53,13 +53,38 @@ export function ServiceProvider({ children }: ServiceProviderProps) {
   if (!contextValue) {
     // Error state - services failed to initialize
     return (
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        minHeight: '100vh' 
-      }}>
-        <p>Failed to initialize services. Please refresh the page.</p>
+      <div
+        role="alert"
+        aria-live="assertive"
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '100vh',
+          padding: '1rem',
+        }}
+      >
+        <div style={{ textAlign: 'center', maxWidth: '400px' }}>
+          <h1 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '0.5rem' }}>
+            Service Initialization Failed
+          </h1>
+          <p style={{ color: '#666', marginBottom: '1rem' }}>
+            Failed to initialize services. Please refresh the page to try again.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#000',
+              color: '#fff',
+              border: 'none',
+              borderRadius: '0.375rem',
+              cursor: 'pointer',
+            }}
+          >
+            Refresh Page
+          </button>
+        </div>
       </div>
     );
   }

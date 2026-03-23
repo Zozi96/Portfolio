@@ -2,6 +2,8 @@ import { lazy, Suspense, useState, useEffect, useCallback } from "react";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext";
 import { ServiceProvider } from "./shared/context/ServiceContext";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+import { SkipLink } from "./components/a11y/SkipLink";
 import { setTranslations } from "./utils/translations";
 import { content } from "./data/content";
 import Navbar from "./components/layout/Navbar";
@@ -80,9 +82,10 @@ function AppContent() {
 
   return (
     <>
+      <SkipLink />
       <div className="min-h-screen">
         <Navbar onTerminalOpen={() => setIsTerminalOpen(true)} />
-        <main className="pb-24 md:pb-0">
+        <main id="main-content" className="pb-24 md:pb-0" tabIndex={-1}>
           <Hero />
           <FocusAreas />
           <div ref={projectsSentinelRef} />
@@ -117,13 +120,15 @@ function AppContent() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <ServiceProvider>
-          <AppContent />
-        </ServiceProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <LanguageProvider>
+          <ServiceProvider>
+            <AppContent />
+          </ServiceProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
