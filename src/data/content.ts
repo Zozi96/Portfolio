@@ -55,9 +55,12 @@ export interface Content {
   };
   hero: {
     badge: string;
+    eyebrow: string;
     name: string;
     title: string;
     subtitle: string;
+    availability: string;
+    location: string;
     cta1: string;
     cta2: string;
     cta3: string;
@@ -66,29 +69,50 @@ export interface Content {
       projects: string;
       industries: string;
     };
+    commandLabel: string;
+    terminalHint: string;
+  };
+  sectionLabels: {
+    focus: string;
+    projects: string;
+    personalProjects: string;
+    techStack: string;
+    experience: string;
+    contact: string;
   };
   focus: {
     title: string;
+    intro: string;
     areas: FocusArea[];
   };
   projects: {
     title: string;
+    intro: string;
     items: ProjectItem[];
   };
   personalProjects: {
     title: string;
+    intro: string;
     items: ProjectItem[];
   };
   techStack: {
     title: string;
+    intro: string;
     categories: TechStackCategory[];
   };
   experience: {
     title: string;
+    intro: string;
     roles: ExperienceRole[];
   };
   contact: {
     title: string;
+    intro: string;
+    sideTitle: string;
+    sideDescription: string;
+    sideAvailability: string;
+    sideEmailLabel: string;
+    sideLocationLabel: string;
     nameLabel: string;
     emailLabel: string;
     typeLabel: string;
@@ -98,6 +122,9 @@ export interface Content {
     sending: string;
     success: string;
     error: string;
+    selectPlaceholder: string;
+    subjectPlaceholder: string;
+    messagePlaceholder: string;
     types: {
       project: string;
       job: string;
@@ -107,6 +134,9 @@ export interface Content {
   };
   footer: {
     contact: string;
+    description: string;
+    navigation: string;
+    signature: string;
     email: string;
     github: string;
     linkedin: string;
@@ -125,71 +155,88 @@ export const content: LocalizedContent = {
     seo: {
       title: "Zozimo Fernández | Senior Software Engineer",
       description:
-        "Senior Software Engineer specializing in distributed systems, Python (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions for international clients.",
+        "Senior Software Engineer specializing in distributed systems, Python, .NET, cloud architecture, and product-minded delivery for international teams.",
       keywords:
         "Software Engineer, Full-Stack Developer, Python, Django, FastAPI, .NET, C#, AWS, Cloud Architecture, React, TypeScript",
       author: "Zozimo Fernández",
-      ogTitle: "Zozimo Fernández - Senior Software Engineer Portfolio",
+      ogTitle: "Zozimo Fernández, Senior Software Engineer",
       ogDescription:
-        "Experienced Software Engineer specializing in distributed systems, the Python ecosystem, and .NET development. Expert in building scalable cloud solutions.",
+        "I design resilient systems, data-heavy platforms, and cloud architecture that teams can actually scale.",
     },
     nav: {
       home: "Home",
-      focus: "Focus Areas",
+      focus: "Focus",
       projects: "Projects",
-      personal: "Personal",
-      stack: "Tech Stack",
+      personal: "Labs",
+      stack: "Stack",
       experience: "Experience",
       contact: "Contact",
       menu: "Menu",
     },
     hero: {
-      badge: "Open to interesting proposals",
+      badge: "Open for sharp engineering work",
+      eyebrow: "Portfolio / Senior software engineering",
       name: "Zozimo Fernández",
-      title: "Senior Software Engineer",
+      title: "I build backend systems that stay fast, clean, and scalable under pressure.",
       subtitle:
-        "Senior Software Engineer specializing in distributed systems, Python ecosystem (Django, FastAPI, Litestar), .NET (C#), and cloud architecture. Building clean, scalable solutions following SOLID principles for international clients.",
-      cta1: "View Projects",
-      cta2: "GitHub Profile",
+        "Senior Software Engineer focused on distributed systems, Python, .NET, data engineering, and cloud architecture. I ship production-grade systems with strong fundamentals, clean boundaries, and zero patience for brittle software.",
+      availability: "Available for senior engineering, backend architecture, and high-leverage consulting.",
+      location: "Based in Villahermosa, Mexico, collaborating with international teams.",
+      cta1: "Explore selected work",
+      cta2: "GitHub",
       cta3: "Download CV",
       stats: {
-        years: "Years exp.",
-        projects: "Projects",
+        years: "Years building",
+        projects: "Shipped engagements",
         industries: "Industries",
       },
+      commandLabel: "terminal shortcuts",
+      terminalHint: "Press Ctrl/Cmd + K to open the terminal mode",
+    },
+    sectionLabels: {
+      focus: "Where I create leverage",
+      projects: "Selected client work",
+      personalProjects: "Open source and personal bets",
+      techStack: "Tools I trust in production",
+      experience: "Career timeline",
+      contact: "Start a conversation",
     },
     focus: {
-      title: "Core Focus Areas",
+      title: "Systems, data, and delivery with engineering taste.",
+      intro:
+        "I usually sit where architecture, execution, and performance all matter at the same time. The sweet spot is turning messy requirements into stable systems that teams can extend without fear.",
       areas: [
         {
           title: "Distributed Systems & Architecture",
           description:
-            "Expertise in designing scalable architectures using Python (Django, FastAPI, Litestar), .NET (C#, ASP.NET Core), and modern technologies for robust enterprise solutions.",
+            "Service boundaries, fault tolerance, long-term maintainability, and backend design that survives real traffic instead of just passing the demo.",
         },
         {
           title: "Data Engineering",
           description:
-            "Designing and executing ETL pipelines with Python, PySpark, and AWS Glue for processing large-scale data from heterogeneous sources",
+            "Batch and pipeline design with Python, PySpark, and AWS Glue for high-volume ingestion, transformation, and operational reporting.",
         },
         {
-          title: "Cloud Architecture",
+          title: "Cloud Delivery",
           description:
-            "Infrastructure management on AWS (EC2, RDS, Glue) and deployment with Docker, ensuring scalability and reliability",
+            "AWS infrastructure, Dockerized deployments, and pragmatic operational choices that improve reliability without turning the stack into theater.",
         },
       ],
     },
     projects: {
-      title: "Client Projects",
+      title: "Selected client work",
+      intro:
+        "A few examples of the kind of systems I enjoy building: operationally heavy, business-critical, and meant to hold up after the first release.",
       items: [
         {
           title: "Advanta Health Platform",
-          category: ".NET Development",
+          category: ".NET / Healthcare Platform",
           description:
-            "Enterprise healthcare platform with multiple microservices built in C# and ASP.NET. Implemented modern UI with Blazor and managed Windows Server infrastructure with SQL Server databases.",
+            "Enterprise healthcare platform composed of multiple C# and ASP.NET services, with modern Blazor interfaces and Windows-based infrastructure backed by SQL Server.",
           metrics: [
             { label: "Microservices", value: "12+" },
-            { label: "Tech Stack", value: ".NET/C#" },
-            { label: "Infrastructure", value: "Windows Server" },
+            { label: "Core stack", value: ".NET/C#" },
+            { label: "Infra", value: "Windows" },
           ],
           stack: [
             "C#",
@@ -201,42 +248,44 @@ export const content: LocalizedContent = {
         },
         {
           title: "Wag Hotels Backend",
-          category: "Python Development",
+          category: "Python / Platform Backend",
           description:
-            "Scalable backend services for pet hotel management using Django. Managed AWS cloud infrastructure and MySQL databases with Docker for consistent deployment.",
+            "Scalable Django services for hospitality operations, paired with AWS infrastructure, MySQL data management, and Docker-based delivery across environments.",
           metrics: [
             { label: "Framework", value: "Django" },
-            { label: "Database", value: "MySQL" },
+            { label: "Data", value: "MySQL" },
             { label: "Cloud", value: "AWS" },
           ],
           stack: ["Python", "Django", "MySQL", "Docker", "AWS"],
         },
         {
           title: "Bob Finance Data Pipeline",
-          category: "Data Engineering",
+          category: "Data Engineering / ETL",
           description:
-            "ETL pipelines on AWS Glue using Python and PySpark to ingest and transform large data volumes from multiple formats (Parquet, CSV) with optimized performance.",
+            "High-volume ETL pipelines on AWS Glue using Python and PySpark to process parquet and CSV sources with optimized transforms and better operational throughput.",
           metrics: [
-            { label: "Technology", value: "AWS Glue" },
-            { label: "Processing", value: "PySpark" },
-            { label: "Data Formats", value: "Parquet/CSV" },
+            { label: "Platform", value: "AWS Glue" },
+            { label: "Engine", value: "PySpark" },
+            { label: "Formats", value: "Parquet/CSV" },
           ],
           stack: ["Python", "PySpark", "AWS Glue", "Parquet", "ETL"],
         },
       ],
     },
     personalProjects: {
-      title: "Personal Projects",
+      title: "Open source and personal bets",
+      intro:
+        "I also like building small, sharp tools. Usually backend-first, security-conscious, and designed to be pleasant to use by other engineers.",
       items: [
         {
           title: "hash-forge",
-          category: "Open Source Library",
+          category: "Open Source Python Library",
           description:
-            "Lightweight Python library for hashing and verifying data using 10+ secure algorithms (bcrypt, Argon2, PBKDF2, Blake2/3, Scrypt and more). Features async/await support, builder pattern, batch processing, and configuration management.",
+            "A lightweight Python hashing toolkit with more than ten secure algorithms, async support, builder patterns, batch operations, and clean configuration ergonomics.",
           metrics: [
             { label: "Algorithms", value: "10+" },
-            { label: "Version", value: "—", live: "pypi_version" as const },
-            { label: "Stars", value: "—", live: "github_stars" as const },
+            { label: "Version", value: "—", live: "pypi_version" },
+            { label: "Stars", value: "—", live: "github_stars" },
           ],
           stack: ["Python", "asyncio", "bcrypt", "Argon2", "PBKDF2"],
           liveStats: { pypi: "hash-forge", github: "Zozi96/hash-forge" },
@@ -244,7 +293,9 @@ export const content: LocalizedContent = {
       ],
     },
     techStack: {
-      title: "Technology Stack",
+      title: "Tools I trust in production",
+      intro:
+        "These are not random logo stickers. They are the tools I reach for when delivery quality, runtime behavior, and maintainability actually matter.",
       categories: [
         {
           name: "Languages",
@@ -272,17 +323,19 @@ export const content: LocalizedContent = {
       ],
     },
     experience: {
-      title: "Professional Experience",
+      title: "A track record across platform, product, and data work.",
+      intro:
+        "Most of my work sits behind products people depend on. That means architecture decisions need to be practical, measurable, and maintainable by the next engineer who touches them.",
       roles: [
         {
           title: "Senior Software Engineer",
           company: "ArkusNexus",
           period: "March 2023 – Present",
           description: [
-            "Lead the architectural design and development of distributed microservices for Advanta Health, ensuring high availability and fault tolerance using .NET Core.",
-            "Spearheaded the modernization of the Wag Hotels (mywag) legacy platform by migrating the infrastructure to a Kubernetes-based cloud architecture, significantly improving system stability.",
-            "Optimized core backend performance by refactoring complex database queries, drastically reducing execution times and improving overall application speed.",
-            "Architected and implemented massive data ingestion pipelines for the Bob Finance project using AWS Glue and PySpark, efficiently processing large-scale datasets from Amazon Redshift and Google BigQuery.",
+            "Leading architecture and development of distributed services for Advanta Health with a strong focus on resilience and maintainability.",
+            "Modernized legacy infrastructure for Wag Hotels, helping move the platform toward a more scalable cloud setup.",
+            "Improved backend performance by refactoring expensive queries and tightening execution paths across core flows.",
+            "Designed large-scale ingestion pipelines for Bob Finance with AWS Glue and PySpark across heterogeneous data sources.",
           ],
         },
         {
@@ -290,10 +343,10 @@ export const content: LocalizedContent = {
           company: "Adinfi",
           period: "April 2022 - March 2023",
           description: [
-            "Engineered the core backend for ADContent, a digital asset management system, utilizing Django REST Framework for robust API delivery.",
-            "Designed an isolated, high-performance database architecture specifically for a new invoice processing portal, decoupling it from the main application to ensure scalability.",
-            "Improved overall system performance and response times by implementing advanced indexing strategies and comprehensive query tuning across high-traffic MySQL and SQL Server clusters.",
-            "Spearheaded the containerization initiative using Docker, standardizing development environments and streamlining CI/CD pipelines.",
+            "Built the core backend for ADContent using Django REST Framework with strong API discipline and maintainable service structure.",
+            "Designed a dedicated database architecture for invoice processing, separating concerns to preserve long-term scalability.",
+            "Improved system responsiveness through indexing strategy and query tuning on high-traffic environments.",
+            "Pushed Docker adoption to standardize local environments and deployment flows.",
           ],
         },
         {
@@ -301,10 +354,10 @@ export const content: LocalizedContent = {
           company: "mediQó",
           period: "December 2021 - May 2023",
           description: [
-            "Directed the technical strategy and development lifecycle for a HealthTech platform, leading a team of developers to deliver critical features.",
-            "Implemented complex geospatial algorithms using PostGIS to optimize provider matching and location-based services.",
-            "Conducted rigorous code reviews and performance profiling to eliminate bottlenecks and ensure code quality standards.",
-            "Architected scalable RESTful APIs that supported rapid user growth and third-party integrations.",
+            "Led technical direction for a HealthTech product, balancing roadmap delivery with platform quality.",
+            "Implemented geospatial capabilities with PostGIS for provider matching and location-aware experiences.",
+            "Ran reviews and performance profiling to remove bottlenecks before they became product pain.",
+            "Architected scalable REST APIs for growth and integrations.",
           ],
         },
         {
@@ -312,10 +365,10 @@ export const content: LocalizedContent = {
           company: "XID - Digital Services",
           period: "June 2021 - December 2021",
           description: [
-            "Contributed to the core booking engine for Palace Resorts, implementing high-availability REST services with Flask.",
-            "Refactored legacy codebases to improve maintainability and performance, reducing technical debt significantly.",
-            "Collaborated with cross-functional teams to design and integrate complex API endpoints for the reservation system.",
-            "Enhanced system stability through rigorous integration testing and error handling improvements.",
+            "Worked on booking engine services for Palace Resorts using Flask and high-availability backend patterns.",
+            "Refactored legacy code to improve maintainability and reduce operational friction.",
+            "Collaborated on complex reservation APIs with cross-functional teams.",
+            "Strengthened platform stability with better integration testing and safer error handling.",
           ],
         },
         {
@@ -323,34 +376,48 @@ export const content: LocalizedContent = {
           company: "Binary Systems",
           period: "August 2020 - July 2021",
           description: [
-            "Developed a custom CRM solution tailored for real estate operations using Django and PostgreSQL, automating key business processes.",
-            "Resolved critical production issues and implemented feature enhancements to improve user workflow and data accuracy.",
-            "Optimized ORM queries to handle complex data relationships efficiently, improving application response times.",
-            "Delivered robust software solutions by strictly adhering to agile methodologies and iterative development cycles.",
+            "Built a custom CRM for real-estate workflows using Django and PostgreSQL.",
+            "Resolved production issues and delivered iterative features tied directly to operator workflows.",
+            "Optimized ORM queries across more complex relational data paths.",
+            "Delivered software under agile cycles without sacrificing engineering fundamentals.",
           ],
         },
       ],
     },
     contact: {
-      title: "Contact Me",
-      nameLabel: "Full Name",
-      emailLabel: "Corporate/Personal Email",
-      typeLabel: "Inquiry Type",
+      title: "Let’s build something that can survive production.",
+      intro:
+        "If you need backend architecture, data-heavy systems, or a senior engineer who can move fast without leaving a mess behind, we should talk.",
+      sideTitle: "What I can help with",
+      sideDescription:
+        "Senior backend work, architecture reviews, cloud delivery, technical leadership, and selective consulting for teams that care about quality.",
+      sideAvailability: "Usually replying within 24 hours for serious inquiries.",
+      sideEmailLabel: "Direct email",
+      sideLocationLabel: "Location",
+      nameLabel: "Full name",
+      emailLabel: "Work or personal email",
+      typeLabel: "Inquiry type",
       subjectLabel: "Subject",
       messageLabel: "Message",
-      sendButton: "Send Message",
+      sendButton: "Send message",
       sending: "Sending...",
-      success: "Message sent successfully!",
-      error: "Error sending message. Please try again.",
+      success: "Message sent successfully.",
+      error: "Could not send the message. Please try again.",
+      selectPlaceholder: "Choose an inquiry type",
+      subjectPlaceholder: "A quick headline helps",
+      messagePlaceholder: "Tell me a bit about the context, constraints, and what you need solved.",
       types: {
-        project: "Project Proposal (Freelance)",
-        job: "Job Opportunity (Full-time)",
-        consultancy: "Consultancy",
+        project: "Project proposal",
+        job: "Full-time opportunity",
+        consultancy: "Consulting / architecture review",
         other: "Other",
       },
     },
     footer: {
-      contact: "Get in Touch",
+      contact: "Get in touch",
+      description: "Backend architecture, cloud delivery, and software that keeps its shape under real-world load.",
+      navigation: "Navigation",
+      signature: "Built with engineering taste and production bias.",
       email: "zfernandez@zozbit.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
@@ -362,71 +429,88 @@ export const content: LocalizedContent = {
     seo: {
       title: "Zozimo Fernández | Ingeniero de Software Senior",
       description:
-        "Ingeniero de Software Senior especializado en sistemas distribuidos, Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables para clientes internacionales.",
+        "Ingeniero de Software Senior especializado en sistemas distribuidos, Python, .NET, arquitectura cloud y ejecución con criterio de producto para equipos internacionales.",
       keywords:
         "Ingeniero de Software, Desarrollador Full-Stack, Python, Django, FastAPI, .NET, C#, AWS, Arquitectura en la Nube, React, TypeScript",
       author: "Zozimo Fernández",
-      ogTitle: "Zozimo Fernández - Portfolio Ingeniero de Software Senior",
+      ogTitle: "Zozimo Fernández, Ingeniero de Software Senior",
       ogDescription:
-        "Ingeniero de Software experimentado especializado en sistemas distribuidos, el ecosistema Python y desarrollo .NET. Experto en construcción de soluciones escalables en la nube.",
+        "Diseño sistemas resilientes, plataformas orientadas a datos y arquitectura cloud que de verdad escalan sin volverse frágiles.",
     },
     nav: {
       home: "Inicio",
-      focus: "Áreas de Enfoque",
+      focus: "Enfoque",
       projects: "Proyectos",
-      personal: "Personal",
-      stack: "Stack Tecnológico",
+      personal: "Labs",
+      stack: "Stack",
       experience: "Experiencia",
       contact: "Contacto",
       menu: "Menú",
     },
     hero: {
-      badge: "Abierto a escuchar propuestas interesantes",
+      badge: "Disponible para trabajo técnico serio",
+      eyebrow: "Portfolio / Ingeniería de software senior",
       name: "Zozimo Fernández",
-      title: "Ingeniero de Software Senior",
+      title: "Construyo sistemas backend que siguen siendo rápidos, limpios y escalables cuando el tráfico aprieta.",
       subtitle:
-        "Ingeniero de Software Senior especializado en sistemas distribuidos, el ecosistema Python (Django, FastAPI, Litestar), .NET (C#) y arquitectura en la nube. Construyendo soluciones limpias y escalables siguiendo principios SOLID para clientes internacionales.",
-      cta1: "Ver Proyectos",
-      cta2: "Perfil GitHub",
+        "Ingeniero de Software Senior enfocado en sistemas distribuidos, Python, .NET, data engineering y arquitectura cloud. Entrego software de producción con fundamentos sólidos, límites claros y muy poca tolerancia al código frágil.",
+      availability: "Disponible para ingeniería senior, arquitectura backend y consultoría de alto impacto.",
+      location: "Desde Villahermosa, México, colaborando con equipos internacionales.",
+      cta1: "Explorar trabajo seleccionado",
+      cta2: "GitHub",
       cta3: "Descargar CV",
       stats: {
-        years: "Años exp.",
-        projects: "Proyectos",
+        years: "Años construyendo",
+        projects: "Engagements entregados",
         industries: "Industrias",
       },
+      commandLabel: "accesos por terminal",
+      terminalHint: "Presiona Ctrl/Cmd + K para abrir el modo terminal",
+    },
+    sectionLabels: {
+      focus: "Dónde genero más leverage",
+      projects: "Trabajo para clientes",
+      personalProjects: "Open source y apuestas personales",
+      techStack: "Herramientas que sí confío en producción",
+      experience: "Trayectoria",
+      contact: "Abramos conversación",
     },
     focus: {
-      title: "Áreas de Enfoque Principales",
+      title: "Sistemas, datos y delivery con criterio de ingeniería.",
+      intro:
+        "Normalmente trabajo donde arquitectura, ejecución y performance importan al mismo tiempo. Mi terreno favorito es convertir requisitos confusos en sistemas estables que el equipo puede extender sin miedo.",
       areas: [
         {
           title: "Sistemas Distribuidos y Arquitectura",
           description:
-            "Experiencia en el diseño de arquitecturas escalables usando Python (Django, FastAPI, Litestar), .NET (C#, ASP.NET Core) y tecnologías modernas para soluciones empresariales robustas.",
+            "Límites de servicios, tolerancia a fallos, mantenibilidad a largo plazo y diseño backend que aguanta tráfico real en lugar de solo sobrevivir al demo.",
         },
         {
           title: "Ingeniería de Datos",
           description:
-            "Diseñando y ejecutando pipelines ETL con Python, PySpark y AWS Glue para procesar grandes volúmenes de datos de fuentes heterogéneas",
+            "Diseño de pipelines y procesos batch con Python, PySpark y AWS Glue para ingesta, transformación y reporting sobre volúmenes altos de datos.",
         },
         {
-          title: "Arquitectura en la Nube",
+          title: "Entrega en la Nube",
           description:
-            "Gestión de infraestructura en AWS (EC2, RDS, Glue) y despliegue con Docker, garantizando escalabilidad y confiabilidad",
+            "Infraestructura en AWS, despliegues con Docker y decisiones operativas pragmáticas que mejoran confiabilidad sin convertir el stack en teatro.",
         },
       ],
     },
     projects: {
-      title: "Proyectos de Clientes",
+      title: "Trabajo seleccionado con clientes",
+      intro:
+        "Una muestra del tipo de sistemas que disfruto construir: operacionalmente exigentes, críticos para negocio y pensados para sostenerse después del primer release.",
       items: [
         {
           title: "Plataforma Advanta Health",
-          category: "Desarrollo .NET",
+          category: ".NET / Plataforma Healthcare",
           description:
-            "Plataforma empresarial de salud con múltiples microservicios construidos en C# y ASP.NET. Implementé UI moderna con Blazor y gestioné infraestructura Windows Server con bases de datos SQL Server.",
+            "Plataforma empresarial de salud compuesta por múltiples servicios en C# y ASP.NET, con interfaces modernas en Blazor e infraestructura Windows respaldada por SQL Server.",
           metrics: [
             { label: "Microservicios", value: "12+" },
-            { label: "Stack Técnico", value: ".NET/C#" },
-            { label: "Infraestructura", value: "Windows Server" },
+            { label: "Stack base", value: ".NET/C#" },
+            { label: "Infra", value: "Windows" },
           ],
           stack: [
             "C#",
@@ -438,42 +522,44 @@ export const content: LocalizedContent = {
         },
         {
           title: "Backend Wag Hotels",
-          category: "Desarrollo Python",
+          category: "Python / Backend de Plataforma",
           description:
-            "Servicios backend escalables para gestión de hoteles de mascotas usando Django. Gestioné infraestructura en la nube AWS y bases de datos MySQL con Docker para despliegue consistente.",
+            "Servicios escalables en Django para operación hotelera, acompañados de infraestructura AWS, manejo de datos en MySQL y delivery con Docker entre entornos.",
           metrics: [
             { label: "Framework", value: "Django" },
-            { label: "Base de Datos", value: "MySQL" },
-            { label: "Nube", value: "AWS" },
+            { label: "Datos", value: "MySQL" },
+            { label: "Cloud", value: "AWS" },
           ],
           stack: ["Python", "Django", "MySQL", "Docker", "AWS"],
         },
         {
           title: "Pipeline de Datos Bob Finance",
-          category: "Ingeniería de Datos",
+          category: "Data Engineering / ETL",
           description:
-            "Pipelines ETL en AWS Glue usando Python y PySpark para ingerir y transformar grandes volúmenes de datos de múltiples formatos (Parquet, CSV) con rendimiento optimizado.",
+            "Pipelines ETL de alto volumen en AWS Glue usando Python y PySpark para procesar fuentes parquet y CSV con transforms optimizados y mejor throughput operativo.",
           metrics: [
-            { label: "Tecnología", value: "AWS Glue" },
-            { label: "Procesamiento", value: "PySpark" },
-            { label: "Formatos de Datos", value: "Parquet/CSV" },
+            { label: "Plataforma", value: "AWS Glue" },
+            { label: "Motor", value: "PySpark" },
+            { label: "Formatos", value: "Parquet/CSV" },
           ],
           stack: ["Python", "PySpark", "AWS Glue", "Parquet", "ETL"],
         },
       ],
     },
     personalProjects: {
-      title: "Proyectos Personales",
+      title: "Open source y apuestas personales",
+      intro:
+        "También me gusta construir herramientas pequeñas y filosas. Casi siempre backend-first, con buen ojo para seguridad y diseñadas para que otras ingenieras quieran usarlas.",
       items: [
         {
           title: "hash-forge",
-          category: "Librería Open Source",
+          category: "Librería Python Open Source",
           description:
-            "Librería Python ligera para hashing y verificación de datos con más de 10 algoritmos seguros (bcrypt, Argon2, PBKDF2, Blake2/3, Scrypt y más). Incluye soporte async/await, patrón builder, operaciones en lote y gestión de configuración.",
+            "Toolkit ligero de hashing en Python con más de diez algoritmos seguros, soporte async, patrón builder, operaciones batch y una ergonomía de configuración bien resuelta.",
           metrics: [
             { label: "Algoritmos", value: "10+" },
-            { label: "Versión", value: "—", live: "pypi_version" as const },
-            { label: "Estrellas", value: "—", live: "github_stars" as const },
+            { label: "Versión", value: "—", live: "pypi_version" },
+            { label: "Estrellas", value: "—", live: "github_stars" },
           ],
           stack: ["Python", "asyncio", "bcrypt", "Argon2", "PBKDF2"],
           liveStats: { pypi: "hash-forge", github: "Zozi96/hash-forge" },
@@ -481,7 +567,9 @@ export const content: LocalizedContent = {
       ],
     },
     techStack: {
-      title: "Stack Tecnológico",
+      title: "Herramientas que sí confío en producción",
+      intro:
+        "No son stickers de logos puestos al azar. Son herramientas a las que recurro cuando la calidad de entrega, el comportamiento en runtime y la mantenibilidad importan de verdad.",
       categories: [
         {
           name: "Lenguajes",
@@ -503,23 +591,25 @@ export const content: LocalizedContent = {
           items: ["PostgreSQL", "MySQL", "SQL Server", "MongoDB", "PostGIS"],
         },
         {
-          name: "Nube y DevOps",
+          name: "Cloud y DevOps",
           items: ["AWS (Glue, EC2, RDS)", "Docker", "Git", "Windows Server"],
         },
       ],
     },
     experience: {
-      title: "Experiencia Profesional",
+      title: "Trayectoria entre plataforma, producto y datos.",
+      intro:
+        "La mayor parte de mi trabajo vive detrás de productos de los que la gente depende. Eso obliga a que las decisiones de arquitectura sean prácticas, medibles y mantenibles por la siguiente ingeniera que toque el sistema.",
       roles: [
         {
           title: "Ingeniero de Software Senior",
           company: "ArkusNexus",
-          period: "Marzo 2023 - Presente",
+          period: "Marzo 2023 – Presente",
           description: [
-            "Lidero el diseño arquitectónico y desarrollo de microservicios distribuidos para Advanta Health, asegurando alta disponibilidad utilizando .NET Core.",
-            "Dirigí la modernización de la plataforma legacy de Wag Hotels (mywag) migrando la infraestructura a una arquitectura cloud basada en Kubernetes, mejorando significativamente la estabilidad del sistema.",
-            "Optimicé el rendimiento crítico del backend mediante la refactorización de consultas complejas de base de datos, reduciendo drásticamente los tiempos de ejecución y la velocidad general de la aplicación.",
-            "Arquitecté e implementé pipelines de ingesta masiva de datos para el proyecto Bob Finance usando AWS Glue y PySpark, procesando eficientemente datasets a gran escala desde Amazon Redshift y Google BigQuery.",
+            "Liderando arquitectura y desarrollo de servicios distribuidos para Advanta Health, con foco en resiliencia y mantenibilidad.",
+            "Modernicé infraestructura legacy para Wag Hotels, ayudando a mover la plataforma hacia una base cloud más escalable.",
+            "Mejoré performance del backend refactorizando consultas costosas y afinando rutas críticas.",
+            "Diseñé pipelines de ingesta a gran escala para Bob Finance con AWS Glue y PySpark sobre fuentes heterogéneas.",
           ],
         },
         {
@@ -527,21 +617,21 @@ export const content: LocalizedContent = {
           company: "Adinfi",
           period: "Abril 2022 - Marzo 2023",
           description: [
-            "Ingenié el backend principal para ADContent, un sistema de gestión de activos digitales, utilizando Django REST Framework para APIs robustas.",
-            "Diseñé una arquitectura de base de datos aislada y de alto rendimiento específicamente para un nuevo portal de procesamiento de facturas, desacoplándola de la aplicación principal para garantizar su escalabilidad.",
-            "Mejoré el rendimiento general del sistema y los tiempos de respuesta implementando estrategias avanzadas de indexación y optimización exhaustiva de consultas en clústeres de alto tráfico.",
-            "Encabecé la iniciativa de contenerización usando Docker, estandarizando entornos de desarrollo y agilizando pipelines de CI/CD.",
+            "Construí el backend principal de ADContent con Django REST Framework, con disciplina de API y estructura mantenible.",
+            "Diseñé una arquitectura de base de datos dedicada para procesamiento de facturas, separando responsabilidades para preservar escalabilidad.",
+            "Mejoré respuesta general del sistema con estrategia de índices y query tuning en entornos de alto tráfico.",
+            "Empujé la adopción de Docker para estandarizar entornos locales y flujos de despliegue.",
           ],
         },
         {
           title: "Ingeniero Python (Líder Técnico)",
           company: "mediQó",
-          period: "Diciembre 2021 – Mayo 2023",
+          period: "Diciembre 2021 - Mayo 2023",
           description: [
-            "Dirigí la estrategia técnica y el ciclo de vida de desarrollo para una plataforma HealthTech, liderando al equipo para entregar funcionalidades críticas.",
-            "Implementé algoritmos geoespaciales complejos usando PostGIS para optimizar la asignación de proveedores y servicios basados en ubicación.",
-            "Realicé revisiones de código rigurosas y perfilado de rendimiento para eliminar cuellos de botella y asegurar estándares de calidad.",
-            "Arquitecté APIs RESTful escalables que soportaron un rápido crecimiento de usuarios e integraciones con terceros.",
+            "Lideré dirección técnica para un producto HealthTech, equilibrando roadmap y calidad de plataforma.",
+            "Implementé capacidades geoespaciales con PostGIS para matching de proveedores y experiencias basadas en ubicación.",
+            "Ejecuté code reviews y perfilado de performance para eliminar cuellos de botella antes de que dolieran en producto.",
+            "Arquitecté APIs REST escalables para crecimiento e integraciones.",
           ],
         },
         {
@@ -549,10 +639,10 @@ export const content: LocalizedContent = {
           company: "XID - Digital Services",
           period: "Junio 2021 - Diciembre 2021",
           description: [
-            "Contribuí al motor de reservas central para Palace Resorts, implementando servicios REST de alta disponibilidad con Flask.",
-            "Refactoricé bases de código heredadas para mejorar la mantenibilidad y el rendimiento, reduciendo significativamente la deuda técnica.",
-            "Colaboré con equipos multifuncionales para diseñar e integrar endpoints de API complejos para el sistema de reservaciones.",
-            "Aumenté la estabilidad del sistema mediante pruebas de integración rigurosas y mejoras en el manejo de errores.",
+            "Trabajé en servicios del booking engine para Palace Resorts usando Flask y patrones backend de alta disponibilidad.",
+            "Refactoricé código legacy para mejorar mantenibilidad y reducir fricción operativa.",
+            "Colaboré en APIs complejas de reservaciones con equipos multifuncionales.",
+            "Fortalecí estabilidad con mejores pruebas de integración y manejo de errores más seguro.",
           ],
         },
         {
@@ -560,34 +650,48 @@ export const content: LocalizedContent = {
           company: "Binary Systems",
           period: "Agosto 2020 - Julio 2021",
           description: [
-            "Desarrollé una solución CRM personalizada para operaciones inmobiliarias usando Django y PostgreSQL, automatizando procesos clave de negocio.",
-            "Resolví incidencias críticas en producción e implementé mejoras funcionales para optimizar el flujo de trabajo de los usuarios.",
-            "Optimicé consultas ORM para manejar relaciones de datos complejas de manera eficiente, mejorando los tiempos de respuesta.",
-            "Entregué soluciones de software robustas adhiriéndome estrictamente a metodologías ágiles y ciclos de desarrollo iterativos.",
+            "Construí un CRM personalizado para flujos inmobiliarios usando Django y PostgreSQL.",
+            "Resolví incidencias en producción y entregué mejoras iterativas atadas al trabajo real de operación.",
+            "Optimicé consultas ORM sobre relaciones de datos más complejas.",
+            "Entregué software bajo ciclos ágiles sin sacrificar fundamentos de ingeniería.",
           ],
         },
       ],
     },
     contact: {
-      title: "Contáctame",
-      nameLabel: "Nombre Completo",
-      emailLabel: "Email Corporativo/Personal",
-      typeLabel: "Tipo de Consulta",
+      title: "Construyamos algo que sí sobreviva producción.",
+      intro:
+        "Si necesitas arquitectura backend, sistemas intensivos en datos o una ingeniera senior que sepa moverse rápido sin dejar un desastre detrás, hablemos.",
+      sideTitle: "En qué puedo ayudar",
+      sideDescription:
+        "Trabajo backend senior, revisiones de arquitectura, entrega cloud, liderazgo técnico y consultoría selectiva para equipos que sí valoran la calidad.",
+      sideAvailability: "Normalmente respondo en menos de 24 horas a consultas serias.",
+      sideEmailLabel: "Email directo",
+      sideLocationLabel: "Ubicación",
+      nameLabel: "Nombre completo",
+      emailLabel: "Email de trabajo o personal",
+      typeLabel: "Tipo de consulta",
       subjectLabel: "Asunto",
       messageLabel: "Mensaje",
-      sendButton: "Enviar Mensaje",
+      sendButton: "Enviar mensaje",
       sending: "Enviando...",
-      success: "¡Mensaje enviado con éxito!",
-      error: "Error al enviar el mensaje. Inténtalo de nuevo.",
+      success: "Mensaje enviado correctamente.",
+      error: "No se pudo enviar el mensaje. Inténtalo de nuevo.",
+      selectPlaceholder: "Elige un tipo de consulta",
+      subjectPlaceholder: "Un encabezado corto ayuda bastante",
+      messagePlaceholder: "Cuéntame un poco del contexto, restricciones y qué necesitas resolver.",
       types: {
-        project: "Propuesta de Proyecto (Freelance)",
-        job: "Oportunidad Laboral (Full-time)",
-        consultancy: "Consultoría",
+        project: "Propuesta de proyecto",
+        job: "Oportunidad full-time",
+        consultancy: "Consultoría / revisión de arquitectura",
         other: "Otro",
       },
     },
     footer: {
       contact: "Contacto",
+      description: "Arquitectura backend, entrega cloud y software que mantiene su forma bajo carga real.",
+      navigation: "Navegación",
+      signature: "Construido con criterio de ingeniería y sesgo a producción.",
       email: "zfernandez@zozbit.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
@@ -596,4 +700,3 @@ export const content: LocalizedContent = {
     },
   },
 };
-

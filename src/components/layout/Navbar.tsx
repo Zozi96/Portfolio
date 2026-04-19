@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { Menu, X, Moon, Sun, Terminal } from "lucide-react";
+import { Moon, Sun, Terminal } from "lucide-react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useLanguage } from "../../context/LanguageContext";
 
 export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const { locale, setLocale, t } = useLanguage();
   const { scrollYProgress } = useScroll();
@@ -25,98 +23,63 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
     { key: "contact", href: "#contact" },
   ];
 
-  const handleLocaleToggle = () => {
-    setLocale(locale === "en" ? "es" : "en");
-  };
-
   return (
-    <nav className="hidden md:block sticky top-0 z-50 backdrop-blur-xl backdrop-saturate-150 bg-white/40 dark:bg-black/40 border-b border-white/50 dark:border-white/10">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <a href="#home" className="flex-shrink-0">
-            <img src="/favicon.png" alt="Zozbit" className="h-8 w-auto" />
+    <nav className="sticky top-0 z-50 hidden border-b border-white/40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 md:block dark:border-white/10 dark:bg-black/40">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 md:px-8 lg:px-12 xl:px-16">
+        <div className="flex h-18 items-center gap-10">
+          <a href="#home" className="flex items-center gap-3 text-zinc-950 dark:text-white">
+            <img src="/favicon.png" alt="Zozbit" className="h-9 w-auto rounded-xl" />
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.26em] text-emerald-600 dark:text-emerald-400">
+                Zozbit
+              </p>
+              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Zozimo Fernández</p>
+            </div>
           </a>
 
-          {/* Nav links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden items-center gap-7 xl:flex">
             {navItems.map((item) => (
               <a
                 key={item.key}
                 href={item.href}
-                className="text-[13px] font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
+                className="text-[13px] font-medium text-zinc-500 transition-colors hover:text-zinc-950 dark:text-zinc-400 dark:hover:text-white"
               >
                 {t(`nav.${item.key}`)}
               </a>
             ))}
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-1">
-            <div className="hidden md:block w-px h-4 bg-zinc-200 dark:bg-zinc-700 mx-1" />
-            <button
-              onClick={onTerminalOpen}
-              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-              aria-label="Open terminal"
-              title="Open terminal (⌘K)"
-            >
-              <Terminal className="w-4 h-4" />
-            </button>
-
-            <button
-              onClick={handleLocaleToggle}
-              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-              aria-label="Toggle language"
-            >
-              <span className="text-xs font-bold tracking-wider">{locale.toUpperCase()}</span>
-            </button>
-
-            <button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? (
-                <Moon className="w-4 h-4" />
-              ) : (
-                <Sun className="w-4 h-4" />
-              )}
-            </button>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? (
-                <X className="w-4 h-4" />
-              ) : (
-                <Menu className="w-4 h-4" />
-              )}
-            </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-3 border-t border-zinc-200/50 dark:border-zinc-800/50">
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="block py-2 text-sm text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
-              >
-                {t(`nav.${item.key}`)}
-              </a>
-            ))}
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={onTerminalOpen}
+            className="rounded-full border border-zinc-200/80 p-2.5 text-zinc-500 transition-colors hover:border-emerald-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-white"
+            aria-label="Open terminal"
+            title="Open terminal (⌘K)"
+          >
+            <Terminal className="h-4 w-4" />
+          </button>
+
+          <button
+            onClick={() => setLocale(locale === "en" ? "es" : "en")}
+            className="rounded-full border border-zinc-200/80 px-3 py-2 text-[11px] font-semibold tracking-[0.18em] text-zinc-500 transition-colors hover:border-emerald-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-white"
+            aria-label="Toggle language"
+          >
+            {locale.toUpperCase()}
+          </button>
+
+          <button
+            onClick={toggleTheme}
+            className="rounded-full border border-zinc-200/80 p-2.5 text-zinc-500 transition-colors hover:border-emerald-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-white"
+            aria-label="Toggle theme"
+          >
+            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </button>
+        </div>
       </div>
 
-      {/* Scroll progress */}
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-[2px] bg-emerald-500 origin-left will-change-transform"
+        className="absolute bottom-0 left-0 right-0 h-px origin-left bg-gradient-to-r from-emerald-500 via-cyan-500 to-transparent"
         style={{ scaleX }}
       />
     </nav>

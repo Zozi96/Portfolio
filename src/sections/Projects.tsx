@@ -8,17 +8,17 @@ const categoryConfig = [
   {
     icon: Code2,
     color: "text-emerald-500",
-    bg: "bg-emerald-500/8 dark:bg-emerald-500/10",
+    bg: "bg-emerald-500/10 dark:bg-emerald-500/12",
   },
   {
     icon: Database,
-    color: "text-blue-500",
-    bg: "bg-blue-500/8 dark:bg-blue-500/10",
+    color: "text-cyan-500",
+    bg: "bg-cyan-500/10 dark:bg-cyan-500/12",
   },
   {
     icon: Zap,
     color: "text-amber-500",
-    bg: "bg-amber-500/8 dark:bg-amber-500/10",
+    bg: "bg-amber-500/10 dark:bg-amber-500/12",
   },
 ];
 
@@ -26,24 +26,40 @@ export function Projects() {
   const { t } = useLanguage();
 
   return (
-    <Section id="projects">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-16"
-      >
-        <span className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3 block">
-          Work
-        </span>
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
-          {t("projects.title")}
-        </h2>
-        <div className="h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
-      </motion.div>
+    <Section id="projects" className="relative">
+      <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-3xl">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400"
+          >
+            {t("sectionLabels.projects")}
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.05 }}
+            className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-zinc-950 md:text-4xl dark:text-white"
+          >
+            {t("projects.title")}
+          </motion.h2>
+        </div>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-300 lg:text-right"
+        >
+          {t("projects.intro")}
+        </motion.p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
         {categoryConfig.map((config, index) => (
           <motion.div
             key={index}
@@ -52,9 +68,10 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{
               duration: 0.8,
-              delay: Math.min(index * 0.1, 0.3),
+              delay: Math.min(index * 0.08, 0.24),
               ease: [0.16, 1, 0.3, 1],
             }}
+            className={index === 0 ? "lg:col-span-12" : "lg:col-span-6"}
           >
             <ProjectCard sectionKey="projects" index={index} config={config} />
           </motion.div>

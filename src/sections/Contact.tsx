@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle, Mail, MapPin } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
 import { Section } from "../components/ui/Section";
@@ -14,11 +14,7 @@ const contactSchema = z.object({
   email: z.email("Invalid email format").min(1, "Required"),
   type: z.string().min(1, "Required"),
   subject: z.string().default(""),
-  message: z
-    .string()
-    .min(1, "Required")
-    .min(20, "Minimum 20 characters")
-    .max(1000, "Maximum 1000 characters"),
+  message: z.string().min(1, "Required").min(20, "Minimum 20 characters").max(1000, "Maximum 1000 characters"),
 });
 
 type FormState = z.infer<typeof contactSchema>;
@@ -64,24 +60,22 @@ export default function Contact() {
     setStatus("sending");
 
     try {
-      // Build email payload using Builder Pattern
       const emailPayload = EmailBuilder.create()
-        .subject(form.subject.trim() || t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`))
+        .subject(form.subject.trim() || t(`contact.types.${form.type as keyof FormState}`))
         .preview(`Mensaje de ${form.fullName}`)
-        .headline(form.subject.trim() || "Nueva Consulta desde Portfolio")
+        .headline(form.subject.trim() || "Nueva consulta desde portfolio")
         .body(
           `Has recibido un nuevo mensaje.\n\n` +
-          `Nombre: ${form.fullName}\n` +
-          `Email: ${form.email}\n` +
-          `Tipo: ${t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`)}\n\n` +
-          `Mensaje:\n${form.message}`
+            `Nombre: ${form.fullName}\n` +
+            `Email: ${form.email}\n` +
+            `Tipo: ${t(`contact.types.${form.type as keyof FormState}`)}\n\n` +
+            `Mensaje:\n${form.message}`,
         )
-        .badge(t(`contact.types.${form.type as keyof typeof INITIAL_STATE}`))
-        .action(`mailto:${form.email}`, `Responder a ${form.fullName.split(' ')[0] || form.fullName}`)
-        .footer("Enviado desde el formulario de contacto de tu portfolio.")
+        .badge(t(`contact.types.${form.type as keyof FormState}`))
+        .action(`mailto:${form.email}`, `Responder a ${form.fullName.split(" ")[0] || form.fullName}`)
+        .footer("Enviado desde el formulario de contacto del portfolio.")
         .build();
 
-      // Execute command using Command Pattern
       const command = new SendEmailCommand(emailService);
       const result = await command.execute({ payload: emailPayload });
 
@@ -101,50 +95,96 @@ export default function Contact() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
     if (errors[name as keyof FormState]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
   };
 
-  const inputClasses = (name: keyof FormState) => `
-    w-full px-4 py-3 rounded-xl border transition-all duration-200 outline-none
-    ${errors[name]
-      ? "border-red-500 bg-red-50/50 dark:bg-red-950/20"
-      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 focus:border-emerald-500 dark:focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
-    }
-    text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500
-  `;
+  const inputClasses = (name: keyof FormState) =>
+    `w-full rounded-2xl border px-4 py-3.5 text-sm leading-6 outline-none transition-all duration-200 ${
+      errors[name]
+        ? "border-red-500 bg-red-50/70 dark:bg-red-950/20"
+        : "border-zinc-200/80 bg-white/80 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 dark:border-zinc-800 dark:bg-zinc-900/80 dark:focus:border-emerald-500"
+    } text-zinc-950 placeholder:text-zinc-400 dark:text-zinc-100 dark:placeholder:text-zinc-500`;
 
   return (
     <Section id="contact" className="relative">
-      <div className="max-w-3xl mx-auto">
-        <motion.div
+      <div className="mb-14 max-w-3xl">
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          transition={{ duration: 0.7 }}
+          className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400"
         >
-          <p className="text-xs font-bold tracking-widest uppercase text-emerald-600 dark:text-emerald-400 mb-3">
-            Let&apos;s Talk
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4">
-            {t("contact.title")}
-          </h2>
-          <div className="h-1.5 w-20 bg-emerald-500 rounded-full mx-auto" />
-        </motion.div>
+          {t("sectionLabels.contact")}
+        </motion.p>
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.05 }}
+          className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-zinc-950 md:text-4xl dark:text-white"
+        >
+          {t("contact.title")}
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mt-5 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300"
+        >
+          {t("contact.intro")}
+        </motion.p>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-[0.82fr_minmax(0,1.18fr)]">
+        <motion.aside
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative overflow-hidden rounded-[2rem] border border-zinc-200/70 bg-zinc-950 p-7 text-white shadow-[0_28px_90px_-50px_rgba(15,23,42,0.85)]"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.28),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.06),transparent_24%)]" />
+          <div className="relative z-10">
+            <p className="text-xs uppercase tracking-[0.28em] text-emerald-300">{t("contact.sideTitle")}</p>
+            <p className="mt-5 text-lg leading-8 text-zinc-100">{t("contact.sideDescription")}</p>
+            <p className="mt-6 rounded-2xl border border-white/10 bg-white/5 px-4 py-4 text-sm leading-7 text-zinc-300">
+              {t("contact.sideAvailability")}
+            </p>
+
+            <div className="mt-8 space-y-4 text-sm text-zinc-300">
+              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
+                <Mail className="mt-0.5 h-4 w-4 text-emerald-300" />
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-500">{t("contact.sideEmailLabel")}</p>
+                  <p className="mt-1 text-zinc-100">zfernandez@zozbit.com</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-4">
+                <MapPin className="mt-0.5 h-4 w-4 text-emerald-300" />
+                <div>
+                  <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-500">{t("contact.sideLocationLabel")}</p>
+                  <p className="mt-1 text-zinc-100">Villahermosa, Tabasco, Mexico</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.aside>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.97 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-white/40 dark:bg-black/40 backdrop-blur-2xl backdrop-saturate-150 border border-white/50 dark:border-white/10 p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.12)]"
+          className="rounded-[2rem] border border-zinc-200/70 bg-white/75 p-7 shadow-[0_24px_80px_-44px_rgba(15,23,42,0.28)] backdrop-blur-2xl dark:border-zinc-800/70 dark:bg-zinc-950/70 dark:shadow-[0_28px_90px_-52px_rgba(0,0,0,0.76)]"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Name */}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+                <label className="ml-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   {t("contact.nameLabel")} <span className="text-emerald-500">*</span>
                 </label>
                 <input
@@ -154,14 +194,13 @@ export default function Contact() {
                   onChange={handleChange}
                   className={inputClasses("fullName")}
                   placeholder="John Doe"
-                  aria-invalid={errors.fullName ? 'true' : 'false'}
+                  aria-invalid={errors.fullName ? "true" : "false"}
                 />
-                {errors.fullName && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.fullName}</p>}
+                {errors.fullName && <p className="ml-1 text-xs text-red-500" aria-live="polite">{errors.fullName}</p>}
               </div>
 
-              {/* Email */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+                <label className="ml-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   {t("contact.emailLabel")} <span className="text-emerald-500">*</span>
                 </label>
                 <input
@@ -171,16 +210,15 @@ export default function Contact() {
                   onChange={handleChange}
                   className={inputClasses("email")}
                   placeholder="john@company.com"
-                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-invalid={errors.email ? "true" : "false"}
                 />
-                {errors.email && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.email}</p>}
+                {errors.email && <p className="ml-1 text-xs text-red-500" aria-live="polite">{errors.email}</p>}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Type */}
+            <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+                <label className="ml-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   {t("contact.typeLabel")} <span className="text-emerald-500">*</span>
                 </label>
                 <select
@@ -188,20 +226,21 @@ export default function Contact() {
                   value={form.type}
                   onChange={handleChange}
                   className={inputClasses("type")}
-                  aria-invalid={errors.type ? 'true' : 'false'}
+                  aria-invalid={errors.type ? "true" : "false"}
                 >
-                  <option value="" disabled>Select an option</option>
+                  <option value="" disabled>
+                    {t("contact.selectPlaceholder")}
+                  </option>
                   <option value="project">{t("contact.types.project")}</option>
                   <option value="job">{t("contact.types.job")}</option>
                   <option value="consultancy">{t("contact.types.consultancy")}</option>
                   <option value="other">{t("contact.types.other")}</option>
                 </select>
-                {errors.type && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.type}</p>}
+                {errors.type && <p className="ml-1 text-xs text-red-500" aria-live="polite">{errors.type}</p>}
               </div>
 
-              {/* Subject */}
               <div className="space-y-2">
-                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+                <label className="ml-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   {t("contact.subjectLabel")}
                 </label>
                 <input
@@ -210,15 +249,14 @@ export default function Contact() {
                   value={form.subject}
                   onChange={handleChange}
                   className={inputClasses("subject")}
-                  placeholder="Quick context..."
+                  placeholder={t("contact.subjectPlaceholder")}
                 />
               </div>
             </div>
 
-            {/* Message */}
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300 ml-1">
+              <div className="flex items-center justify-between">
+                <label className="ml-1 text-sm font-medium text-zinc-700 dark:text-zinc-300">
                   {t("contact.messageLabel")} <span className="text-emerald-500">*</span>
                 </label>
                 <span className={`text-[10px] ${form.message.length > 1000 ? "text-red-500" : "text-zinc-400"}`}>
@@ -229,54 +267,48 @@ export default function Contact() {
                 name="message"
                 value={form.message}
                 onChange={handleChange}
-                rows={5}
+                rows={6}
                 className={`${inputClasses("message")} resize-none`}
-                placeholder="How can I help you?"
-                aria-invalid={errors.message ? 'true' : 'false'}
+                placeholder={t("contact.messagePlaceholder")}
+                aria-invalid={errors.message ? "true" : "false"}
               />
-              {errors.message && <p className="text-xs text-red-500 ml-1" aria-live="polite">{errors.message}</p>}
+              {errors.message && <p className="ml-1 text-xs text-red-500" aria-live="polite">{errors.message}</p>}
             </div>
 
-            {/* Submit Button */}
-            <div className="pt-4">
-              <Button
-                variant="primary"
-                className="w-full sm:w-auto min-w-[200px]"
-                disabled={status === "sending" || status === "success"}
-              >
+            <div className="flex flex-col gap-4 border-t border-zinc-200/70 pt-5 dark:border-zinc-800">
+              <Button variant="primary" className="w-full sm:w-auto sm:min-w-[220px]" disabled={status === "sending" || status === "success"}>
                 {status === "sending" ? (
                   <>
-                    <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
+                    <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                     {t("contact.sending")}
                   </>
                 ) : status === "success" ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 mr-2" />
+                    <CheckCircle2 className="mr-2 h-4 w-4" />
                     {t("contact.success")}
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4 mr-2" />
+                    <Send className="mr-2 h-4 w-4" />
                     {t("contact.sendButton")}
                   </>
                 )}
               </Button>
-            </div>
 
-            {/* Status Messages */}
-            <AnimatePresence>
-              {status === "error" && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="flex items-center gap-2 text-red-500 bg-red-50 dark:bg-red-900/20 p-4 rounded-xl"
-                >
-                  <AlertCircle className="w-5 h-5" />
-                  <p className="text-sm font-medium">{t("contact.error")}</p>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              <AnimatePresence>
+                {status === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="flex items-center gap-2 rounded-2xl bg-red-50 p-4 text-red-500 dark:bg-red-900/20"
+                  >
+                    <AlertCircle className="h-5 w-5" />
+                    <p className="text-sm font-medium">{t("contact.error")}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
           </form>
         </motion.div>
       </div>

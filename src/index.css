@@ -1,97 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
-/* Tailwind CSS v4: Enable class-based dark mode (.dark on <html>) */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ============================================
-   CSS VARIABLES - Semantic Color System
-   ============================================ */
-
 :root {
-  /* Light Mode Variables (default) */
-  --color-background: #fafafa; /* Zinc-50 */
-  --color-surface: #f4f4f5; /* Zinc-100 */
-  --color-card: #ffffff; /* Blanco puro */
-
-  --color-text-primary: #18181b; /* Zinc-900 */
-  --color-text-secondary: #3f3f46; /* Zinc-700 */
-  --color-text-muted: #71717a; /* Zinc-500 */
-  --color-text-disabled: #a1a1aa; /* Zinc-400 */
-
-  --color-border: #e4e4e7; /* Zinc-200 */
-  --color-border-subtle: #f4f4f5; /* Zinc-100 */
-
-  --color-accent-primary: #059669; /* Emerald-600 */
-  --color-accent-hover: #047857; /* Emerald-700 */
-  --color-accent-light: #ecfdf5; /* Emerald-50 */
-  --color-accent-subtle: #a7f3d0; /* Emerald-200 */
-  
-  --color-accent-rgb: 5, 150, 105; /* Emerald-600 RGB */
+  --color-background: #f5f7f5;
+  --color-surface: #edf2ee;
+  --color-card: rgba(255, 255, 255, 0.8);
+  --color-text-primary: #111827;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-text-disabled: #94a3b8;
+  --color-border: rgba(148, 163, 184, 0.22);
+  --color-border-subtle: rgba(255, 255, 255, 0.45);
+  --color-accent-primary: #059669;
+  --color-accent-hover: #047857;
+  --color-accent-light: #ecfdf5;
+  --color-accent-subtle: rgba(16, 185, 129, 0.12);
+  --color-accent-rgb: 5, 150, 105;
 }
 
 .dark {
-  /* Dark Mode Variables */
-  --color-background: #09090b; /* Zinc-950 */
-  --color-surface: #18181b; /* Zinc-900 */
-  --color-card: #27272a; /* Zinc-800 */
-
-  --color-text-primary: #fafafa; /* Zinc-50 */
-  --color-text-secondary: #d4d4d8; /* Zinc-300 */
-  --color-text-muted: #d4d4d8; /* Zinc-300 - Improved contrast for WCAG AA */
-  --color-text-disabled: #71717a; /* Zinc-500 */
-
-  --color-border: #3f3f46; /* Zinc-700 */
-  --color-border-subtle: #27272a; /* Zinc-800 */
-
-  --color-accent-primary: #10b981; /* Emerald-500 */
-  --color-accent-hover: #34d399; /* Emerald-400 */
-  --color-accent-dark: #064e3b; /* Emerald-900 */
-  --color-accent-subtle: #065f46; /* Emerald-800 */
-  
-  --color-accent-rgb: 16, 185, 129; /* Emerald-500 RGB */
-}
-
-/* ============================================
-   GLOBAL STYLES
-   ============================================ */
-
-body {
-  margin: 0;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  background-color: var(--color-background);
-  color: var(--color-text-secondary);
-
-  /* Prevent rubber-band overscroll showing wrong background */
-  overscroll-behavior: none;
-
-  /* Subtle dot pattern */
-  background-image: radial-gradient(
-    circle,
-    rgba(16, 185, 129, 0.05) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
-}
-
-.dark body {
-  background-image: radial-gradient(
-    circle,
-    rgba(16, 185, 129, 0.04) 1px,
-    transparent 1px
-  );
-  background-size: 28px 28px;
+  --color-background: #050816;
+  --color-surface: #0f172a;
+  --color-card: rgba(12, 18, 33, 0.78);
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #dbe4f0;
+  --color-text-muted: #94a3b8;
+  --color-text-disabled: #64748b;
+  --color-border: rgba(71, 85, 105, 0.52);
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-accent-primary: #10b981;
+  --color-accent-hover: #34d399;
+  --color-accent-light: rgba(16, 185, 129, 0.12);
+  --color-accent-subtle: rgba(16, 185, 129, 0.16);
+  --color-accent-rgb: 16, 185, 129;
 }
 
 html {
@@ -99,35 +42,74 @@ html {
   overscroll-behavior: none;
 }
 
-/* Selection styling */
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+  overscroll-behavior: none;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.09), transparent 22%),
+    radial-gradient(circle at 82% 14%, rgba(20, 184, 166, 0.08), transparent 22%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), rgba(255, 255, 255, 0));
+}
+
+.dark body {
+  background-image:
+    radial-gradient(circle at 14% 18%, rgba(16, 185, 129, 0.11), transparent 24%),
+    radial-gradient(circle at 84% 12%, rgba(14, 165, 233, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.45), rgba(5, 8, 22, 0));
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(15, 23, 42, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 42%, transparent 90%);
+  opacity: 0.35;
+  z-index: -1;
+}
+
+.dark body::before {
+  background-image: linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  opacity: 0.22;
+}
+
 ::selection {
   background-color: rgba(16, 185, 129, 0.2);
   color: inherit;
 }
 
-/* Eliminate 300ms tap delay on touch devices */
 button,
 a,
 [role="button"] {
   touch-action: manipulation;
 }
 
-@layer components {
-  .glass-panel {
-    @apply bg-white/5 dark:bg-zinc-900/50 backdrop-blur-md border border-white/10 dark:border-white/5;
-  }
-  
-  .glow-effect {
-    @apply relative overflow-hidden;
-  }
-  
-  .glow-effect::before {
-    content: "";
-    @apply absolute -inset-px rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 opacity-0 transition-opacity duration-500;
-  }
-  
-  .glow-effect:hover::before {
-    @apply opacity-100;
-  }
+#root {
+  min-height: 100vh;
 }
 
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-text-primary);
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: "IBM Plex Mono", monospace;
+  }
+}

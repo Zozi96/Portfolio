@@ -46,13 +46,13 @@ describe('Button Component', () => {
   it('should apply primary variant classes by default', () => {
     const { container } = render(<Button>Primary</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass('bg-black', 'text-white');
+    expect(button).toHaveClass('bg-zinc-950', 'text-white');
   });
 
   it('should apply secondary variant classes', () => {
     const { container } = render(<Button variant="secondary">Secondary</Button>);
     const button = container.querySelector('button');
-    expect(button).toHaveClass('bg-white', 'text-zinc-900');
+    expect(button).toHaveClass('bg-white/80', 'text-zinc-900');
   });
 
   it('should apply custom className', () => {

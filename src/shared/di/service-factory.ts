@@ -24,7 +24,7 @@ export class ServiceFactory {
       emailPath: config.api.emailPath,
     };
 
-    if (config.features.useMockServices) {
+    if (config.features.useMockServices || !emailConfig.apiKey) {
       console.log('🔧 Using MockEmailService');
       return new MockEmailService(emailConfig);
     }

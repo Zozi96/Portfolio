@@ -1,4 +1,4 @@
-import { Github, ArrowRight, Download } from "lucide-react";
+import { Github, ArrowRight, Download, TerminalSquare, MapPin, Sparkles } from "lucide-react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useState, useCallback } from "react";
 import { Section } from "../components/ui/Section";
@@ -13,14 +13,18 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } },
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+  },
 };
 
 const noMotionContainerVariants = { hidden: {}, visible: {} };
@@ -34,21 +38,17 @@ export function Hero() {
   const { generateAndDownload } = usePdfWorker();
 
   const handleScrollToProjects = useCallback(() => {
-    document
-      .getElementById("projects")
-      ?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   const reverseMouseX = useMotionValue(0);
   const reverseMouseY = useMotionValue(0);
 
-  const springConfig = { damping: 50, stiffness: 400 };
+  const springConfig = { damping: 42, stiffness: 280 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
-
   const smoothReverseX = useSpring(reverseMouseX, springConfig);
   const smoothReverseY = useSpring(reverseMouseY, springConfig);
 
@@ -59,12 +59,11 @@ export function Hero() {
       const { innerWidth, innerHeight } = window;
       const x = (e.clientX / innerWidth) * 2 - 1;
       const y = (e.clientY / innerHeight) * 2 - 1;
-      
-      mouseX.set(x * 50);
-      mouseY.set(y * 50);
 
-      reverseMouseX.set(x * -30);
-      reverseMouseY.set(y * -30);
+      mouseX.set(x * 34);
+      mouseY.set(y * 26);
+      reverseMouseX.set(x * -22);
+      reverseMouseY.set(y * -18);
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -83,128 +82,165 @@ export function Hero() {
   return (
     <Section
       id="home"
-      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden py-0"
+      className="relative overflow-hidden py-12 md:py-20 lg:py-24"
+      containerClassName="relative"
     >
-      <div className="absolute inset-0 -z-10">
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          className="hidden md:block absolute top-[-15%] left-[-5%] w-[45%] h-[45%] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-[100px]"
-          style={{ 
-            x: smoothX,
-            y: smoothY,
-          }}
+          className="absolute left-[-10%] top-[-8%] h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.22)_0%,rgba(16,185,129,0.06)_35%,transparent_72%)] blur-3xl"
+          style={{ x: smoothX, y: smoothY }}
         />
         <motion.div
-          className="hidden md:block absolute bottom-[-15%] right-[-5%] w-[40%] h-[40%] bg-emerald-400/8 dark:bg-emerald-400/10 rounded-full blur-[100px]"
-          style={{ 
-            x: smoothReverseX,
-            y: smoothReverseY,
-          }}
+          className="absolute right-[-12%] top-[18%] h-[20rem] w-[20rem] rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.14)_0%,rgba(20,184,166,0.04)_40%,transparent_75%)] blur-3xl"
+          style={{ x: smoothReverseX, y: smoothReverseY }}
         />
-        <motion.div
-          className="hidden md:block absolute top-[40%] right-[20%] w-[25%] h-[25%] bg-teal-500/5 dark:bg-teal-500/8 rounded-full blur-[80px]"
-          style={{ 
-            x: smoothX,
-            y: smoothY,
-          }}
-        />
-        <div className="md:hidden absolute inset-0 opacity-60 dark:opacity-30" style={{ background: 'radial-gradient(circle at 10% 10%, rgba(16, 185, 129, 0.2) 0%, transparent 60%), radial-gradient(circle at 90% 90%, rgba(52, 211, 153, 0.2) 0%, transparent 60%)' }} />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),transparent_24%,transparent_76%,rgba(16,185,129,0.06))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.03),transparent_20%,transparent_75%,rgba(16,185,129,0.08))]" />
+        <div className="absolute inset-0 opacity-[0.13] dark:opacity-[0.09] [background-image:linear-gradient(to_right,rgba(24,24,27,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,24,27,0.18)_1px,transparent_1px)] [background-size:72px_72px]" />
       </div>
 
       <motion.div
         variants={safeContainerVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-5xl mx-auto text-center relative z-10 px-4"
+        className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-end"
       >
-        {/* Status badge */}
-        <motion.div
-          variants={safeItemVariants}
-          className="inline-flex items-center gap-2.5 px-4 py-2 mb-8 rounded-full bg-white/60 dark:bg-zinc-900/60 border border-zinc-200/60 dark:border-zinc-700/40 backdrop-blur-sm"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-          </span>
-          <span className="text-xs font-semibold tracking-wider uppercase text-zinc-600 dark:text-zinc-300">
-            {t("hero.badge")}
-          </span>
-        </motion.div>
-
-        {/* Name */}
-        <motion.h1
-          variants={safeItemVariants}
-          className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white mb-4 leading-[1.1] text-balance"
-        >
-          {t("hero.name")}
-        </motion.h1>
-
-        {/* Title/Role */}
-        <motion.h2
-          variants={safeItemVariants}
-          className="text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight text-emerald-600 dark:text-emerald-400 mb-8 text-balance"
-        >
-          {t("hero.title")}
-        </motion.h2>
-
-        {/* Subtitle */}
-        <motion.p
-          variants={safeItemVariants}
-          className="text-base md:text-lg lg:text-xl text-zinc-600 dark:text-zinc-300 mb-8 max-w-xl mx-auto leading-relaxed text-pretty"
-        >
-          {t("hero.subtitle")}
-        </motion.p>
-
-        {/* Stats row */}
-        <motion.div
-          variants={safeItemVariants}
-          className="flex items-center justify-center gap-8 mb-12"
-        >
-          {[
-            { value: "5+", label: t("hero.stats.years") },
-            { value: "15+", label: t("hero.stats.projects") },
-            { value: "3", label: t("hero.stats.industries") },
-          ].map((stat, i, arr) => (
-            <div key={stat.label} className="flex items-center gap-8">
-              <div className="text-center hover:-translate-y-1 transition-transform duration-300">
-                <div className="text-2xl font-bold text-zinc-900 dark:text-white leading-none">
-                  {stat.value}
-                </div>
-                <div className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 tracking-wide">
-                  {stat.label}
-                </div>
-              </div>
-              {i < arr.length - 1 && (
-                <span className="text-zinc-300 dark:text-zinc-600 text-xl select-none">·</span>
-              )}
-            </div>
-          ))}
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          variants={safeItemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <Button
-            variant="primary"
-            onClick={handleScrollToProjects}
+        <div className="max-w-3xl">
+          <motion.div
+            variants={safeItemVariants}
+            className="mb-6 inline-flex items-center gap-3 rounded-full border border-emerald-500/20 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-700 backdrop-blur-xl dark:bg-zinc-900/70 dark:text-emerald-300"
           >
-            {t("hero.cta1")}
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Button>
-          <Button variant="secondary" href="https://github.com/Zozi96" className="hover:scale-105 transition-transform duration-300 dark:hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-            <Github className="w-4 h-4" />
-            {t("hero.cta2")}
-          </Button>
-          <Button variant="secondary" onClick={handleDownloadCV} disabled={isDownloading} className="hover:scale-105 transition-transform duration-300 dark:hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-            {isDownloading ? (
-              <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-            ) : (
-              <Download className="w-4 h-4" />
-            )}
-            {t("hero.cta3")}
-          </Button>
-        </motion.div>
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_5px_rgba(16,185,129,0.12)]" />
+            {t("hero.badge")}
+          </motion.div>
+
+          <motion.p
+            variants={safeItemVariants}
+            className="mb-4 text-[11px] font-medium uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400"
+          >
+            {t("hero.eyebrow")}
+          </motion.p>
+
+          <motion.h1
+            variants={safeItemVariants}
+            className="max-w-4xl text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-zinc-950 sm:text-5xl md:text-6xl lg:text-[4.6rem] dark:text-white"
+          >
+            {t("hero.title")}
+          </motion.h1>
+
+          <motion.div
+            variants={safeItemVariants}
+            className="mt-7 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300"
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/85 px-3 py-1.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/85">
+              <Sparkles className="h-4 w-4 text-emerald-500" />
+              {t("hero.name")}
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/85 px-3 py-1.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/85">
+              <MapPin className="h-4 w-4 text-emerald-500" />
+              {t("hero.location")}
+            </span>
+          </motion.div>
+
+          <motion.p
+            variants={safeItemVariants}
+            className="mt-8 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg"
+          >
+            {t("hero.subtitle")}
+          </motion.p>
+
+          <motion.p
+            variants={safeItemVariants}
+            className="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 dark:text-zinc-400"
+          >
+            {t("hero.availability")}
+          </motion.p>
+
+          <motion.div
+            variants={safeItemVariants}
+            className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center"
+          >
+            <Button variant="primary" onClick={handleScrollToProjects}>
+              {t("hero.cta1")}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Button>
+            <Button variant="secondary" href="https://github.com/Zozi96">
+              <Github className="h-4 w-4" />
+              {t("hero.cta2")}
+            </Button>
+            <Button variant="secondary" onClick={handleDownloadCV} disabled={isDownloading}>
+              {isDownloading ? (
+                <div className="h-4 w-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
+              {t("hero.cta3")}
+            </Button>
+          </motion.div>
+        </div>
+
+        <motion.aside
+          variants={safeItemVariants}
+          className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/72 p-6 shadow-[0_30px_80px_-40px_rgba(16,24,40,0.45)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.22),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_55%)]" />
+          <div className="relative z-10">
+            <div className="mb-6 flex items-center justify-between border-b border-zinc-200/70 pb-4 dark:border-zinc-800/80">
+              <div>
+                <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
+                  {t("hero.commandLabel")}
+                </p>
+                <p className="mt-2 text-sm font-medium text-zinc-800 dark:text-zinc-100">
+                  {t("hero.terminalHint")}
+                </p>
+              </div>
+              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-3 text-emerald-600 dark:text-emerald-400">
+                <TerminalSquare className="h-5 w-5" />
+              </div>
+            </div>
+
+            <div className="space-y-4 font-mono text-sm text-zinc-700 dark:text-zinc-300">
+              {[
+                "$ role --current",
+                "> Senior Software Engineer / Backend Architect",
+                "$ domains --list",
+                "> distributed-systems, data-platforms, cloud-delivery",
+                "$ stack --core",
+                "> python, .net, aws, docker, typescript",
+              ].map((line, index) => (
+                <div
+                  key={line}
+                  className={`rounded-2xl px-4 py-3 ${
+                    index % 2 === 0
+                      ? "border border-zinc-200/70 bg-zinc-50/70 dark:border-zinc-800 dark:bg-zinc-900/70"
+                      : "text-emerald-700 dark:text-emerald-300"
+                  }`}
+                >
+                  {line}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 grid grid-cols-3 gap-3">
+              {[
+                { value: "5+", label: t("hero.stats.years") },
+                { value: "15+", label: t("hero.stats.projects") },
+                { value: "3", label: t("hero.stats.industries") },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-zinc-200/70 bg-white/75 px-3 py-4 text-center dark:border-zinc-800 dark:bg-zinc-900/80"
+                >
+                  <div className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-white">
+                    {stat.value}
+                  </div>
+                  <div className="mt-1 text-[11px] uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-400">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.aside>
       </motion.div>
     </Section>
   );

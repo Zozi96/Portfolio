@@ -7,7 +7,7 @@ import { z } from 'zod';
 export const envSchema = z.object({
   // API Configuration
   VITE_API_URL: z.string().url('API URL must be a valid URL').default('http://127.0.0.1:8000'),
-  VITE_API_KEY: z.string().min(1, 'API Key is required'),
+  VITE_API_KEY: z.string().optional().default(''),
   VITE_SEND_EMAIL_PATH: z.string().default('/notifications/send-email'),
 
   // Feature Flags
