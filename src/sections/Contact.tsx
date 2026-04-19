@@ -140,7 +140,7 @@ export default function Contact() {
         </motion.p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[0.82fr_minmax(0,1.18fr)]">
+      <div className="grid gap-5 lg:grid-cols-[0.82fr_minmax(0,1.18fr)] lg:gap-6">
         <motion.aside
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

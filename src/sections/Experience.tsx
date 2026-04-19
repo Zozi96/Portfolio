@@ -52,7 +52,7 @@ export function Experience() {
       <div className="relative mx-auto max-w-4xl">
         <div className="absolute left-[1.05rem] top-6 bottom-6 w-px bg-gradient-to-b from-emerald-500/40 via-zinc-300 to-transparent dark:via-zinc-700" />
 
-        <div className="space-y-7">
+        <div className="space-y-6 md:space-y-7">
           {roles.map((roleIndex) => (
             <motion.div
               key={roleIndex}

@@ -24,7 +24,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 hidden border-b border-white/40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 md:block dark:border-white/10 dark:bg-black/40">
+    <nav className="sticky top-0 z-50 hidden border-b border-white/40 bg-white/55 backdrop-blur-2xl backdrop-saturate-150 md:block dark:border-white/10 dark:bg-black/40 supports-[backdrop-filter]:bg-white/55">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 md:px-8 lg:px-12 xl:px-16">
         <div className="flex h-18 items-center gap-10">
           <a href="#home" className="flex items-center gap-3 text-zinc-950 dark:text-white">

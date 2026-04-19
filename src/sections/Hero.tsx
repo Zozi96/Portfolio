@@ -4,10 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Section } from "../components/ui/Section";
 import { Button } from "../components/ui/Button";
 import { useLanguage } from "../context/LanguageContext";
-import { usePdfWorker } from "../hooks/usePdfWorker";
-import { useMotionVariants } from "../utils/motionVariants";
-import { useReducedMotion } from "../hooks/useReducedMotion";
-import type { Language } from "../utils/cvGenerator";
+import { downloadCvFile } from "../lib/cvDownload";
 
 const containerVariants = {
   hidden: {},
@@ -27,15 +24,9 @@ const itemVariants = {
   },
 };
 
-const noMotionContainerVariants = { hidden: {}, visible: {} };
-
 export function Hero() {
   const { t, locale } = useLanguage();
-  const safeItemVariants = useMotionVariants(itemVariants);
-  const safeContainerVariants = useMotionVariants(containerVariants, noMotionContainerVariants);
-  const prefersReduced = useReducedMotion();
   const [isDownloading, setIsDownloading] = useState(false);
-  const { generateAndDownload } = usePdfWorker();
 
   const handleScrollToProjects = useCallback(() => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
@@ -53,7 +44,7 @@ export function Hero() {
   const smoothReverseY = useSpring(reverseMouseY, springConfig);
 
   useEffect(() => {
-    if (!window.matchMedia("(pointer: fine)").matches || prefersReduced) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       const { innerWidth, innerHeight } = window;
@@ -68,21 +59,21 @@ export function Hero() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY, reverseMouseX, reverseMouseY, prefersReduced]);
+  }, [mouseX, mouseY, reverseMouseX, reverseMouseY]);
 
   const handleDownloadCV = async () => {
     setIsDownloading(true);
     try {
-      await generateAndDownload(locale as Language);
+      downloadCvFile(locale);
     } finally {
-      setIsDownloading(false);
+      window.setTimeout(() => setIsDownloading(false), 500);
     }
   };
 
   return (
     <Section
       id="home"
-      className="relative overflow-hidden py-12 md:py-20 lg:py-24"
+      className="relative overflow-hidden py-10 md:py-18 lg:py-22"
       containerClassName="relative"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
@@ -99,37 +90,37 @@ export function Hero() {
       </div>
 
       <motion.div
-        variants={safeContainerVariants}
+        variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-end"
+        className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-end xl:gap-12"
       >
         <div className="max-w-3xl">
           <motion.div
-            variants={safeItemVariants}
-            className="mb-6 inline-flex items-center gap-3 rounded-full border border-emerald-500/20 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-700 backdrop-blur-xl dark:bg-zinc-900/70 dark:text-emerald-300"
+            variants={itemVariants}
+            className="mb-5 inline-flex items-center gap-3 rounded-full border border-emerald-500/20 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-700 backdrop-blur-xl dark:bg-zinc-900/70 dark:text-emerald-300"
           >
             <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_5px_rgba(16,185,129,0.12)]" />
             {t("hero.badge")}
           </motion.div>
 
           <motion.p
-            variants={safeItemVariants}
+            variants={itemVariants}
             className="mb-4 text-[11px] font-medium uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400"
           >
             {t("hero.eyebrow")}
           </motion.p>
 
           <motion.h1
-            variants={safeItemVariants}
-            className="max-w-4xl text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-zinc-950 sm:text-5xl md:text-6xl lg:text-[4.6rem] dark:text-white"
+            variants={itemVariants}
+            className="max-w-4xl text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-zinc-950 sm:text-5xl md:text-6xl lg:text-[4.45rem] dark:text-white"
           >
             {t("hero.title")}
           </motion.h1>
 
           <motion.div
-            variants={safeItemVariants}
-            className="mt-7 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300"
+            variants={itemVariants}
+            className="mt-6 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300"
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/85 px-3 py-1.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/85">
               <Sparkles className="h-4 w-4 text-emerald-500" />
@@ -142,22 +133,22 @@ export function Hero() {
           </motion.div>
 
           <motion.p
-            variants={safeItemVariants}
-            className="mt-8 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg"
+            variants={itemVariants}
+            className="mt-7 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg"
           >
             {t("hero.subtitle")}
           </motion.p>
 
           <motion.p
-            variants={safeItemVariants}
-            className="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 dark:text-zinc-400"
+            variants={itemVariants}
+            className="mt-4 max-w-2xl text-sm leading-7 text-zinc-500 dark:text-zinc-400"
           >
             {t("hero.availability")}
           </motion.p>
 
           <motion.div
-            variants={safeItemVariants}
-            className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center"
+            variants={itemVariants}
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center"
           >
             <Button variant="primary" onClick={handleScrollToProjects}>
               {t("hero.cta1")}
@@ -179,12 +170,12 @@ export function Hero() {
         </div>
 
         <motion.aside
-          variants={safeItemVariants}
-          className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/72 p-6 shadow-[0_30px_80px_-40px_rgba(16,24,40,0.45)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70"
+          variants={itemVariants}
+          className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/72 p-5 shadow-[0_30px_80px_-40px_rgba(16,24,40,0.45)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 md:p-6"
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.22),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_55%)]" />
           <div className="relative z-10">
-            <div className="mb-6 flex items-center justify-between border-b border-zinc-200/70 pb-4 dark:border-zinc-800/80">
+            <div className="mb-5 flex items-center justify-between border-b border-zinc-200/70 pb-4 dark:border-zinc-800/80">
               <div>
                 <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
                   {t("hero.commandLabel")}
@@ -198,7 +189,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="space-y-4 font-mono text-sm text-zinc-700 dark:text-zinc-300">
+            <div className="space-y-3 font-mono text-sm text-zinc-700 dark:text-zinc-300">
               {[
                 "$ role --current",
                 "> Senior Software Engineer / Backend Architect",
@@ -220,7 +211,7 @@ export function Hero() {
               ))}
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-3">
+            <div className="mt-6 grid grid-cols-3 gap-3">
               {[
                 { value: "5+", label: t("hero.stats.years") },
                 { value: "15+", label: t("hero.stats.projects") },

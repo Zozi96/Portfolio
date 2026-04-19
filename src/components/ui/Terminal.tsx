@@ -2,8 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { X, Terminal as TerminalIcon } from "lucide-react";
 import { useLanguage } from "../../context/LanguageContext";
 import { useTheme } from "../../context/ThemeContext";
-import { usePdfWorker } from "../../hooks/usePdfWorker";
-import type { Language } from "../../utils/cvGenerator";
+import { downloadCvFile } from "../../lib/cvDownload";
 
 interface TerminalLine {
   type: "command" | "output" | "error";
@@ -49,7 +48,6 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   const historyEndRef = useRef<HTMLDivElement>(null);
   const { t, locale } = useLanguage();
   const { theme, setTheme, toggleTheme } = useTheme();
-  const { generateAndDownload } = usePdfWorker();
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
@@ -298,23 +296,22 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
         }
         setHistory((prev) => [
           ...prev,
-          { type: "output", content: "⏳ Generating CV in background…" },
+          { type: "output", content: "⏳ Downloading CV…" },
         ]);
-        generateAndDownload(locale as Language)
-          .then(() => {
-            setHistory((prev) => [
-              ...prev,
-              { type: "output", content: "✅ CV downloaded successfully." },
-              { type: "output", content: "" },
-            ]);
-          })
-          .catch((err: unknown) => {
-            setHistory((prev) => [
-              ...prev,
-              { type: "error", content: `Failed to generate CV: ${String(err)}` },
-              { type: "output", content: "" },
-            ]);
-          });
+        try {
+          downloadCvFile(locale);
+          setHistory((prev) => [
+            ...prev,
+            { type: "output", content: "✅ CV downloaded successfully." },
+            { type: "output", content: "" },
+          ]);
+        } catch (err: unknown) {
+          setHistory((prev) => [
+            ...prev,
+            { type: "error", content: `Failed to download CV: ${String(err)}` },
+            { type: "output", content: "" },
+          ]);
+        }
         break;
       }
 
