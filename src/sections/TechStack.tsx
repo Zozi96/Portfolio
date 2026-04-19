@@ -7,10 +7,10 @@ import { useLanguage } from "../context/LanguageContext";
 const categoryIcons = [Code2, Server, Database, Cloud];
 
 const categoryColors = [
-  { icon: "text-emerald-500", bg: "bg-emerald-500/10 dark:bg-emerald-500/15" },
-  { icon: "text-cyan-500", bg: "bg-cyan-500/10 dark:bg-cyan-500/15" },
-  { icon: "text-violet-500", bg: "bg-violet-500/10 dark:bg-violet-500/15" },
-  { icon: "text-amber-500", bg: "bg-amber-500/10 dark:bg-amber-500/15" },
+  { icon: "text-teal-600 dark:text-teal-300", bg: "bg-teal-500/10 dark:bg-teal-500/15" },
+  { icon: "text-cyan-600 dark:text-cyan-300", bg: "bg-cyan-500/10 dark:bg-cyan-500/15" },
+  { icon: "text-violet-600 dark:text-violet-300", bg: "bg-violet-500/10 dark:bg-violet-500/15" },
+  { icon: "text-amber-600 dark:text-amber-300", bg: "bg-amber-500/10 dark:bg-amber-500/15" },
 ];
 
 export function TechStack() {
@@ -18,14 +18,14 @@ export function TechStack() {
 
   return (
     <Section id="stack" className="relative">
-      <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mb-14 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-end">
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400"
+            className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700 dark:text-teal-300"
           >
             {t("sectionLabels.techStack")}
           </motion.p>
@@ -44,7 +44,7 @@ export function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-300 lg:text-right"
+          className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-300 lg:justify-self-end lg:text-right"
         >
           {t("techStack.intro")}
         </motion.p>
@@ -67,10 +67,10 @@ export function TechStack() {
                 delay: catIndex * 0.08,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="rounded-[1.75rem] border border-zinc-200/70 bg-white/75 p-6 shadow-[0_22px_70px_-40px_rgba(15,23,42,0.28)] backdrop-blur-xl dark:border-zinc-800/70 dark:bg-zinc-950/70 dark:shadow-[0_28px_80px_-52px_rgba(0,0,0,0.72)]"
+              className="rounded-[1.85rem] border border-zinc-300/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,248,238,0.44))] p-6 shadow-[0_24px_80px_-46px_rgba(33,24,11,0.36)] backdrop-blur-xl dark:border-zinc-800/70 dark:bg-[linear-gradient(180deg,rgba(9,16,28,0.82),rgba(7,12,20,0.64))] dark:shadow-[0_30px_90px_-54px_rgba(0,0,0,0.76)]"
             >
               <div className="mb-6 flex items-center gap-3">
-                <div className={`rounded-2xl p-3 ${categoryColors[catIndex].bg} ${categoryColors[catIndex].icon}`}>
+                <div className={`rounded-2xl border border-white/40 p-3 ${categoryColors[catIndex].bg} ${categoryColors[catIndex].icon}`}>
                   <CategoryIcon className="h-5 w-5" />
                 </div>
                 <h3 className="text-lg font-semibold tracking-[-0.03em] text-zinc-950 dark:text-white">

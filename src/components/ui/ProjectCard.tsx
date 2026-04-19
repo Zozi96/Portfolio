@@ -44,21 +44,21 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
 
   return (
     <SpotlightCard
-      className={`h-full overflow-hidden p-0 ${isFeatured ? "lg:min-h-[30rem]" : ""}`}
+      className={`h-full overflow-hidden p-0 ${isFeatured ? "lg:min-h-[32rem]" : ""}`}
       spotlightColor={
-        config.color.includes("emerald")
-          ? "rgba(16, 185, 129, 0.16)"
-          : config.color.includes("blue") || config.color.includes("cyan")
+        config.color.includes("teal")
+          ? "rgba(45, 212, 191, 0.16)"
+          : config.color.includes("cyan")
             ? "rgba(34, 211, 238, 0.14)"
             : config.color.includes("amber")
               ? "rgba(245, 158, 11, 0.16)"
-              : "rgba(16, 185, 129, 0.16)"
+              : "rgba(45, 212, 191, 0.16)"
       }
     >
       <div className="flex h-full flex-col">
-        <div className="relative overflow-hidden border-b border-zinc-200/70 px-6 py-6 dark:border-zinc-800/70">
+        <div className="relative overflow-hidden border-b border-zinc-300/50 px-6 py-6 dark:border-zinc-800/70">
           <div className={`absolute inset-0 ${config.bg}`} />
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.38),transparent_45%,rgba(24,24,27,0.04))] dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_48%,rgba(16,185,129,0.06))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.38),transparent_45%,rgba(209,168,112,0.08))] dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_48%,rgba(45,212,191,0.06))]" />
           <div className="relative z-10 flex items-start justify-between gap-4">
             <div>
               <p className={`text-[11px] font-semibold uppercase tracking-[0.26em] ${config.color}`}>
@@ -68,20 +68,20 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
                 {t(`${sectionKey}.items.${index}.title`)}
               </h3>
             </div>
-            <div className={`rounded-2xl border border-white/40 p-3 ${config.bg} ${config.color}`}>
+            <div className={`rounded-2xl border border-white/35 p-3 ${config.bg} ${config.color}`}>
               <Icon className="h-5 w-5" />
             </div>
           </div>
         </div>
 
         <div className="flex flex-1 flex-col px-6 py-6">
-          <p className="text-sm leading-7 text-zinc-600 dark:text-zinc-300">
+          <p className="text-sm leading-7 text-zinc-700 dark:text-zinc-300">
             {t(`${sectionKey}.items.${index}.description`)}
           </p>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 rounded-[1.5rem] border border-zinc-200/70 bg-zinc-50/75 p-3 dark:border-zinc-800 dark:bg-zinc-900/80">
+          <div className="mt-6 grid grid-cols-3 gap-3 rounded-[1.5rem] border border-zinc-300/45 bg-white/42 p-3 dark:border-zinc-800 dark:bg-zinc-900/72">
             {[0, 1, 2].map((metricIndex) => (
-              <div key={metricIndex} className="rounded-2xl bg-white/80 px-3 py-3 text-center dark:bg-zinc-950/70">
+              <div key={metricIndex} className="rounded-2xl bg-white/72 px-3 py-3 text-center dark:bg-zinc-950/70">
                 <div className="text-base font-semibold tracking-tight text-zinc-950 dark:text-white">
                   {resolveMetricValue(metricIndex)}
                 </div>

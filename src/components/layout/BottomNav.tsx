@@ -18,7 +18,7 @@ const LOCALE_FLIP_PERSPECTIVE = 200;
 const SCROLL_THRESHOLD = 2;
 
 const menuItemClass =
-  "flex items-center gap-3 px-3 py-2 rounded-xl text-zinc-600 dark:text-zinc-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-zinc-100/80 dark:hover:bg-zinc-800/80 active:scale-95 transition-all touch-manipulation";
+  "flex items-center gap-3 rounded-xl px-3 py-2 text-zinc-700 transition-all hover:bg-white/55 hover:text-teal-700 active:scale-95 dark:text-zinc-300 dark:hover:bg-zinc-900/62 dark:hover:text-teal-300 touch-manipulation";
 
 export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   const { t, locale, setLocale } = useLanguage();
@@ -40,14 +40,13 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   });
 
   return (
-    <nav
-      className="fixed bottom-4 left-4 z-50 md:hidden flex flex-col-reverse items-start gap-3"
-      aria-label="Mobile navigation"
-    >
-      {/* FAB Toggle Button */}
+    <nav className="fixed bottom-4 left-4 z-50 flex flex-col-reverse items-start gap-3 md:hidden" aria-label="Mobile navigation">
       <button
-        onClick={() => { vibrate(10); setIsOpen((prev) => !prev); }}
-        className="w-14 h-14 rounded-full bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md backdrop-saturate-150 border border-white/60 dark:border-white/10 shadow-[0_4px_16px_0_rgba(0,0,0,0.12)] flex items-center justify-center text-zinc-600 dark:text-zinc-300 active:scale-90 transition-transform touch-manipulation"
+        onClick={() => {
+          vibrate(10);
+          setIsOpen((prev) => !prev);
+        }}
+        className="flex h-14 w-14 items-center justify-center rounded-full border border-zinc-300/50 bg-[rgba(255,248,238,0.72)] text-zinc-700 shadow-[0_10px_30px_-18px_rgba(33,24,11,0.45)] backdrop-blur-md backdrop-saturate-150 transition-transform active:scale-90 dark:border-white/10 dark:bg-[rgba(7,12,20,0.68)] dark:text-zinc-300"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
@@ -59,12 +58,11 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
             exit={prefersReduced ? undefined : { rotate: 90, opacity: 0 }}
             transition={{ duration: 0.15 }}
           >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </motion.span>
         </AnimatePresence>
       </button>
 
-      {/* Speed Dial Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -72,41 +70,47 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReduced ? undefined : { opacity: 0, y: 20, scale: 0.9 }}
             transition={prefersReduced ? { duration: 0 } : menuTransition}
-            className="flex flex-col gap-1 p-2 rounded-2xl bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md backdrop-saturate-150 border border-white/60 dark:border-white/10 shadow-[0_4px_16px_0_rgba(0,0,0,0.12)]"
+            className="flex flex-col gap-1 rounded-[1.6rem] border border-zinc-300/45 bg-[rgba(255,248,238,0.78)] p-2 shadow-[0_12px_36px_-20px_rgba(33,24,11,0.45)] backdrop-blur-md backdrop-saturate-150 dark:border-white/10 dark:bg-[rgba(7,12,20,0.76)]"
             role="menu"
           >
-            {/* Nav Items */}
             {navItems.map(({ icon: Icon, labelKey, href }) => (
               <a
                 key={labelKey}
                 href={href}
-                onClick={() => { vibrate(10); setIsOpen(false); }}
+                onClick={() => {
+                  vibrate(10);
+                  setIsOpen(false);
+                }}
                 className={menuItemClass}
                 role="menuitem"
                 aria-label={t(`nav.${labelKey}`)}
               >
-                <Icon className="w-4 h-4 shrink-0" />
+                <Icon className="h-4 w-4 shrink-0" />
                 <span className="text-sm font-medium">{t(`nav.${labelKey}`)}</span>
               </a>
             ))}
 
-            {/* Divider */}
-            <div className="h-px bg-zinc-200 dark:bg-zinc-700/60 my-1 mx-1" />
+            <div className="mx-1 my-1 h-px bg-zinc-300/55 dark:bg-zinc-700/60" />
 
-            {/* Terminal */}
             <button
-              onClick={() => { vibrate(10); setIsOpen(false); onTerminalOpen(); }}
+              onClick={() => {
+                vibrate(10);
+                setIsOpen(false);
+                onTerminalOpen();
+              }}
               className={menuItemClass}
               role="menuitem"
               aria-label="Open terminal"
             >
-              <Terminal className="w-4 h-4 shrink-0" />
+              <Terminal className="h-4 w-4 shrink-0" />
               <span className="text-sm font-medium">Terminal</span>
             </button>
 
-            {/* Language Toggle */}
             <button
-              onClick={() => { vibrate(10); handleLocaleToggle(); }}
+              onClick={() => {
+                vibrate(10);
+                handleLocaleToggle();
+              }}
               className={menuItemClass}
               role="menuitem"
               aria-label="Toggle language"
@@ -118,20 +122,20 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
                   animate={{ rotateY: 0, opacity: 1 }}
                   exit={prefersReduced ? undefined : { rotateY: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="text-[11px] font-bold tracking-wider inline-block min-w-4 text-center shrink-0"
+                  className="inline-block min-w-4 shrink-0 text-center text-[11px] font-bold tracking-wider"
                   style={{ perspective: LOCALE_FLIP_PERSPECTIVE }}
                 >
                   {locale.toUpperCase()}
                 </motion.span>
               </AnimatePresence>
-              <span className="text-sm font-medium">
-                {locale === "en" ? "Español" : "English"}
-              </span>
+              <span className="text-sm font-medium">{locale === "en" ? "Español" : "English"}</span>
             </button>
 
-            {/* Theme Toggle */}
             <button
-              onClick={() => { vibrate(10); toggleTheme(); }}
+              onClick={() => {
+                vibrate(10);
+                toggleTheme();
+              }}
               className={menuItemClass}
               role="menuitem"
               aria-label="Toggle theme"
@@ -145,12 +149,10 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
                   transition={{ duration: 0.2 }}
                   className="shrink-0"
                 >
-                  {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+                  {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
                 </motion.span>
               </AnimatePresence>
-              <span className="text-sm font-medium">
-                {theme === "light" ? "Dark mode" : "Light mode"}
-              </span>
+              <span className="text-sm font-medium">{theme === "light" ? "Dark mode" : "Light mode"}</span>
             </button>
           </motion.div>
         )}

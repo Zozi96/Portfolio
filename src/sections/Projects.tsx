@@ -7,17 +7,17 @@ import { useLanguage } from "../context/LanguageContext";
 const categoryConfig = [
   {
     icon: Code2,
-    color: "text-emerald-500",
-    bg: "bg-emerald-500/10 dark:bg-emerald-500/12",
+    color: "text-teal-600 dark:text-teal-300",
+    bg: "bg-teal-500/10 dark:bg-teal-500/12",
   },
   {
     icon: Database,
-    color: "text-cyan-500",
+    color: "text-cyan-600 dark:text-cyan-300",
     bg: "bg-cyan-500/10 dark:bg-cyan-500/12",
   },
   {
     icon: Zap,
-    color: "text-amber-500",
+    color: "text-amber-600 dark:text-amber-300",
     bg: "bg-amber-500/10 dark:bg-amber-500/12",
   },
 ];
@@ -27,14 +27,14 @@ export function Projects() {
 
   return (
     <Section id="projects" className="relative">
-      <div className="mb-14 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mb-14 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-end">
         <div className="max-w-3xl">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400"
+            className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700 dark:text-teal-300"
           >
             {t("sectionLabels.projects")}
           </motion.p>
@@ -53,7 +53,7 @@ export function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-300 lg:text-right"
+          className="max-w-2xl text-sm leading-7 text-zinc-600 dark:text-zinc-300 lg:justify-self-end lg:text-right"
         >
           {t("projects.intro")}
         </motion.p>

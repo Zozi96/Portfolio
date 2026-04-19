@@ -12,17 +12,17 @@ const iconMap = {
 
 const colorMap = {
   0: {
-    icon: "text-emerald-500",
-    border: "border-emerald-500/20",
-    bg: "bg-emerald-500/10 dark:bg-emerald-500/15",
+    icon: "text-teal-600 dark:text-teal-300",
+    border: "border-teal-500/20",
+    bg: "bg-teal-500/10 dark:bg-teal-500/15",
   },
   1: {
-    icon: "text-cyan-500",
+    icon: "text-cyan-600 dark:text-cyan-300",
     border: "border-cyan-500/20",
     bg: "bg-cyan-500/10 dark:bg-cyan-500/15",
   },
   2: {
-    icon: "text-amber-500",
+    icon: "text-amber-600 dark:text-amber-300",
     border: "border-amber-500/20",
     bg: "bg-amber-500/10 dark:bg-amber-500/15",
   },
@@ -33,31 +33,33 @@ export function FocusAreas() {
 
   return (
     <Section id="focus" className="relative">
-      <div className="mb-14 max-w-3xl">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-xs font-semibold uppercase tracking-[0.28em] text-emerald-600 dark:text-emerald-400"
-        >
-          {t("sectionLabels.focus")}
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.05 }}
-          className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-zinc-950 md:text-4xl dark:text-white"
-        >
-          {t("focus.title")}
-        </motion.h2>
+      <div className="mb-14 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-end">
+        <div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="text-xs font-semibold uppercase tracking-[0.28em] text-teal-700 dark:text-teal-300"
+          >
+            {t("sectionLabels.focus")}
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.05 }}
+            className="mt-4 max-w-3xl text-3xl font-semibold tracking-[-0.04em] text-zinc-950 md:text-4xl dark:text-white"
+          >
+            {t("focus.title")}
+          </motion.h2>
+        </div>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="mt-5 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300"
+          className="max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 lg:justify-self-end"
         >
           {t("focus.intro")}
         </motion.p>

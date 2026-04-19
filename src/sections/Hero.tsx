@@ -20,7 +20,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
+    transition: { duration: 0.85, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] },
   },
 };
 
@@ -73,75 +73,83 @@ export function Hero() {
   return (
     <Section
       id="home"
-      className="relative overflow-hidden py-10 md:py-18 lg:py-22"
+      className="relative overflow-hidden py-10 md:py-18 lg:py-24"
       containerClassName="relative"
     >
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          className="absolute left-[-10%] top-[-8%] h-[24rem] w-[24rem] rounded-full bg-[radial-gradient(circle,rgba(16,185,129,0.22)_0%,rgba(16,185,129,0.06)_35%,transparent_72%)] blur-3xl"
+          className="absolute left-[-8%] top-[-12%] h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle,rgba(245,158,11,0.14)_0%,rgba(245,158,11,0.03)_42%,transparent_74%)] blur-3xl"
           style={{ x: smoothX, y: smoothY }}
         />
         <motion.div
-          className="absolute right-[-12%] top-[18%] h-[20rem] w-[20rem] rounded-full bg-[radial-gradient(circle,rgba(20,184,166,0.14)_0%,rgba(20,184,166,0.04)_40%,transparent_75%)] blur-3xl"
+          className="absolute right-[-10%] top-[10%] h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,rgba(45,212,191,0.18)_0%,rgba(45,212,191,0.04)_40%,transparent_74%)] blur-3xl"
           style={{ x: smoothReverseX, y: smoothReverseY }}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),transparent_24%,transparent_76%,rgba(16,185,129,0.06))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.03),transparent_20%,transparent_75%,rgba(16,185,129,0.08))]" />
-        <div className="absolute inset-0 opacity-[0.13] dark:opacity-[0.09] [background-image:linear-gradient(to_right,rgba(24,24,27,0.18)_1px,transparent_1px),linear-gradient(to_bottom,rgba(24,24,27,0.18)_1px,transparent_1px)] [background-size:72px_72px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_20%,transparent_72%,rgba(15,118,110,0.06))] dark:bg-[linear-gradient(180deg,rgba(255,255,255,0.04),transparent_18%,transparent_72%,rgba(45,212,191,0.08))]" />
+        <div className="absolute inset-x-0 top-10 h-px bg-gradient-to-r from-transparent via-zinc-400/30 to-transparent dark:via-zinc-500/20" />
       </div>
 
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)] lg:items-end xl:gap-12"
+        className="grid gap-10 lg:grid-cols-[minmax(0,1.18fr)_minmax(320px,0.82fr)] lg:items-end xl:gap-14"
       >
-        <div className="max-w-3xl">
+        <div className="max-w-4xl">
           <motion.div
             variants={itemVariants}
-            className="mb-5 inline-flex items-center gap-3 rounded-full border border-emerald-500/20 bg-white/70 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-emerald-700 backdrop-blur-xl dark:bg-zinc-900/70 dark:text-emerald-300"
+            className="mb-5 inline-flex items-center gap-3 rounded-full border border-zinc-300/45 bg-white/55 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.28em] text-teal-800 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/55 dark:text-teal-300"
           >
-            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-[0_0_0_5px_rgba(16,185,129,0.12)]" />
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-teal-500 shadow-[0_0_0_5px_rgba(45,212,191,0.12)]" />
             {t("hero.badge")}
           </motion.div>
 
-          <motion.p
+          <motion.div
             variants={itemVariants}
-            className="mb-4 text-[11px] font-medium uppercase tracking-[0.32em] text-zinc-500 dark:text-zinc-400"
+            className="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.34em] text-zinc-500 dark:text-zinc-400"
           >
-            {t("hero.eyebrow")}
-          </motion.p>
+            <span>{t("hero.eyebrow")}</span>
+            <span className="h-px w-14 bg-gradient-to-r from-teal-500/70 to-transparent" />
+          </motion.div>
 
           <motion.h1
             variants={itemVariants}
-            className="max-w-4xl text-4xl font-semibold leading-[0.96] tracking-[-0.05em] text-zinc-950 sm:text-5xl md:text-6xl lg:text-[4.45rem] dark:text-white"
+            className="max-w-5xl text-[3.4rem] font-semibold leading-[0.9] tracking-[-0.055em] text-zinc-950 sm:text-[4.2rem] md:text-[5rem] lg:text-[5.75rem] dark:text-[#f8f3eb]"
           >
             {t("hero.title")}
           </motion.h1>
 
           <motion.div
             variants={itemVariants}
-            className="mt-6 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300"
+            className="mt-7 flex flex-wrap items-center gap-3 text-sm text-zinc-600 dark:text-zinc-300"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/85 px-3 py-1.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/85">
-              <Sparkles className="h-4 w-4 text-emerald-500" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-300/50 bg-white/55 px-3 py-1.5 backdrop-blur dark:border-white/10 dark:bg-zinc-900/55">
+              <Sparkles className="h-4 w-4 text-amber-500" />
               {t("hero.name")}
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200/80 bg-white/85 px-3 py-1.5 backdrop-blur dark:border-zinc-800 dark:bg-zinc-900/85">
-              <MapPin className="h-4 w-4 text-emerald-500" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-zinc-300/50 bg-white/55 px-3 py-1.5 backdrop-blur dark:border-white/10 dark:bg-zinc-900/55">
+              <MapPin className="h-4 w-4 text-teal-500" />
               {t("hero.location")}
             </span>
           </motion.div>
 
-          <motion.p
-            variants={itemVariants}
-            className="mt-7 max-w-2xl text-base leading-8 text-zinc-600 dark:text-zinc-300 md:text-lg"
-          >
-            {t("hero.subtitle")}
-          </motion.p>
+          <motion.div variants={itemVariants} className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1fr)_14rem] lg:items-start">
+            <p className="max-w-2xl text-base leading-8 text-zinc-700 dark:text-zinc-300 md:text-lg">
+              {t("hero.subtitle")}
+            </p>
+            <div className="rounded-[1.75rem] border border-zinc-300/45 bg-white/50 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/45">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500 dark:text-zinc-400">
+                selected profile
+              </p>
+              <p className="mt-4 text-sm leading-7 text-zinc-700 dark:text-zinc-300">
+                Backend architecture, distributed systems, data-heavy products, and cloud delivery with production bias.
+              </p>
+            </div>
+          </motion.div>
 
           <motion.p
             variants={itemVariants}
-            className="mt-4 max-w-2xl text-sm leading-7 text-zinc-500 dark:text-zinc-400"
+            className="mt-5 max-w-2xl text-sm leading-7 text-zinc-500 dark:text-zinc-400"
           >
             {t("hero.availability")}
           </motion.p>
@@ -171,11 +179,11 @@ export function Hero() {
 
         <motion.aside
           variants={itemVariants}
-          className="relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/72 p-5 shadow-[0_30px_80px_-40px_rgba(16,24,40,0.45)] backdrop-blur-2xl dark:border-white/10 dark:bg-zinc-950/70 md:p-6"
+          className="relative overflow-hidden rounded-[2rem] border border-zinc-300/45 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(255,248,238,0.52))] p-5 shadow-[0_30px_90px_-50px_rgba(33,24,11,0.5)] backdrop-blur-2xl dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(9,16,28,0.82),rgba(7,12,20,0.64))] md:p-6"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.18),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.22),transparent_38%),linear-gradient(135deg,rgba(255,255,255,0.06),transparent_55%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.25),transparent_55%)] dark:bg-[radial-gradient(circle_at_top_right,rgba(45,212,191,0.14),transparent_36%),linear-gradient(135deg,rgba(255,255,255,0.05),transparent_55%)]" />
           <div className="relative z-10">
-            <div className="mb-5 flex items-center justify-between border-b border-zinc-200/70 pb-4 dark:border-zinc-800/80">
+            <div className="mb-5 flex items-center justify-between border-b border-zinc-300/55 pb-4 dark:border-zinc-800/80">
               <div>
                 <p className="text-xs uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400">
                   {t("hero.commandLabel")}
@@ -184,7 +192,7 @@ export function Hero() {
                   {t("hero.terminalHint")}
                 </p>
               </div>
-              <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-3 text-emerald-600 dark:text-emerald-400">
+              <div className="rounded-2xl border border-teal-500/20 bg-teal-500/10 p-3 text-teal-700 dark:text-teal-300">
                 <TerminalSquare className="h-5 w-5" />
               </div>
             </div>
@@ -202,8 +210,8 @@ export function Hero() {
                   key={line}
                   className={`rounded-2xl px-4 py-3 ${
                     index % 2 === 0
-                      ? "border border-zinc-200/70 bg-zinc-50/70 dark:border-zinc-800 dark:bg-zinc-900/70"
-                      : "text-emerald-700 dark:text-emerald-300"
+                      ? "border border-zinc-300/55 bg-white/55 dark:border-zinc-800 dark:bg-zinc-900/60"
+                      : "text-teal-800 dark:text-teal-300"
                   }`}
                 >
                   {line}
@@ -219,7 +227,7 @@ export function Hero() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-zinc-200/70 bg-white/75 px-3 py-4 text-center dark:border-zinc-800 dark:bg-zinc-900/80"
+                  className="rounded-2xl border border-zinc-300/55 bg-white/52 px-3 py-4 text-center dark:border-zinc-800 dark:bg-zinc-900/72"
                 >
                   <div className="text-2xl font-semibold tracking-tight text-zinc-950 dark:text-white">
                     {stat.value}
