@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
-import type { Language } from "../utils/cvGenerator";
+
+type Language = "en" | "es";
 
 type WorkerResponse =
   | { type: "success"; buffer: ArrayBuffer; fileName: string }
@@ -17,10 +18,9 @@ export function usePdfWorker() {
   const generateAndDownload = useCallback((language: Language): Promise<void> => {
     return new Promise((resolve, reject) => {
       if (!workerRef.current) {
-        workerRef.current = new Worker(
-          new URL("../workers/pdf.worker.ts", import.meta.url),
-          { type: "module" }
-        );
+        workerRef.current = new Worker(new URL("../workers/pdf.worker.ts", import.meta.url), {
+          type: "module",
+        });
       }
 
       const worker = workerRef.current;

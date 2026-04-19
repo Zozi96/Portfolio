@@ -3,7 +3,12 @@ if (typeof window === "undefined") {
   self.window = self;
 }
 
-import type { Language, CVResult } from "../utils/cvGenerator";
+type Language = "en" | "es";
+
+interface CVResult {
+  buffer: ArrayBuffer;
+  fileName: string;
+}
 
 interface WorkerRequest {
   language: Language;
