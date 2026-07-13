@@ -11,7 +11,6 @@ import { BottomNav } from "./components/layout/BottomNav";
 import Hero from "./sections/Hero";
 import FocusAreas from "./sections/FocusAreas";
 import Footer from "./components/layout/Footer";
-import { Terminal } from "./components/ui/Terminal";
 import { usePreloadSection } from "./hooks/usePreloadSection";
 import { useDocumentMeta } from "./hooks/useDocumentMeta";
 
@@ -20,6 +19,9 @@ const PersonalProjects = lazy(() => import("./sections/PersonalProjects"));
 const TechStack = lazy(() => import("./sections/TechStack"));
 const Experience = lazy(() => import("./sections/Experience"));
 const Contact = lazy(() => import("./sections/Contact"));
+const Terminal = lazy(() =>
+  import("./components/ui/Terminal").then((m) => ({ default: m.Terminal })),
+);
 
 setTranslations(content);
 
@@ -34,6 +36,12 @@ function SectionLoader() {
 function AppContent() {
   const { t } = useLanguage();
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
+  const [hasOpenedTerminal, setHasOpenedTerminal] = useState(false);
+
+  const openTerminal = useCallback(() => {
+    setIsTerminalOpen(true);
+    setHasOpenedTerminal(true);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -48,6 +56,7 @@ function AppContent() {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setIsTerminalOpen((prev) => !prev);
+        setHasOpenedTerminal(true);
       }
     };
 
@@ -84,7 +93,7 @@ function AppContent() {
     <>
       <SkipLink />
       <div className="min-h-screen">
-        <Navbar onTerminalOpen={() => setIsTerminalOpen(true)} />
+        <Navbar onTerminalOpen={openTerminal} />
         <main id="main-content" className="pb-24 md:pb-0" tabIndex={-1}>
           <Hero />
           <FocusAreas />
@@ -112,8 +121,12 @@ function AppContent() {
         <Footer />
       </div>
 
-      <BottomNav onTerminalOpen={() => setIsTerminalOpen(true)} />
-      <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+      <BottomNav onTerminalOpen={openTerminal} />
+      {hasOpenedTerminal && (
+        <Suspense fallback={null}>
+          <Terminal isOpen={isTerminalOpen} onClose={() => setIsTerminalOpen(false)} />
+        </Suspense>
+      )}
     </>
   );
 }

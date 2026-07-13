@@ -20,9 +20,6 @@ export default defineConfig({
           if (id.includes("node_modules/@sentry/browser/")) {
             return "sentry";
           }
-          if (id.includes("node_modules/@react-pdf/renderer/") || id.includes("src/components/cv/") || id.includes("src/utils/cvGenerator")) {
-            return "pdf-vendor";
-          }
         },
       },
     },
