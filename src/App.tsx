@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState, useEffect, useCallback } from "react";
+import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "./context/ThemeContext";
 import { LanguageProvider, useLanguage } from "./context/LanguageContext";
 import { ServiceProvider } from "./shared/context/ServiceContext";
@@ -133,15 +134,17 @@ function AppContent() {
 
 function App() {
   return (
-    <ErrorBoundary>
-      <ThemeProvider>
-        <LanguageProvider>
-          <ServiceProvider>
-            <AppContent />
-          </ServiceProvider>
-        </LanguageProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
+    <MotionConfig reducedMotion="user">
+      <ErrorBoundary>
+        <ThemeProvider>
+          <LanguageProvider>
+            <ServiceProvider>
+              <AppContent />
+            </ServiceProvider>
+          </LanguageProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
+    </MotionConfig>
   );
 }
 

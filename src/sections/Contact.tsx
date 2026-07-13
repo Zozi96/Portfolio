@@ -102,7 +102,7 @@ export default function Contact() {
   };
 
   const inputClasses = (name: keyof FormState) =>
-    `w-full rounded-[1.35rem] border px-4 py-3.5 text-sm leading-6 outline-none transition-all duration-200 ${
+    `w-full rounded-card border px-4 py-3.5 text-sm leading-6 outline-none transition-all duration-200 ${
       errors[name]
         ? "border-red-500 bg-red-50/70 dark:bg-red-950/20"
         : "border-zinc-300/45 bg-white/55 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-800 dark:bg-zinc-900/58 dark:focus:border-teal-400"

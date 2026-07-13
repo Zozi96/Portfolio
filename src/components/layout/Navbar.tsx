@@ -53,7 +53,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
         <div className="flex items-center gap-2">
           <button
             onClick={onTerminalOpen}
-            className="rounded-full border border-zinc-300/50 bg-white/45 p-2.5 text-zinc-600 transition-colors hover:border-teal-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:bg-zinc-900/40 dark:text-zinc-400 dark:hover:border-teal-500/30 dark:hover:text-white"
+            className="focus-ring rounded-full border border-zinc-300/50 bg-white/45 p-2.5 text-zinc-600 transition-colors hover:border-teal-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:bg-zinc-900/40 dark:text-zinc-400 dark:hover:border-teal-500/30 dark:hover:text-white"
             aria-label="Open terminal"
             title="Open terminal (⌘K)"
           >
@@ -70,7 +70,7 @@ export function Navbar({ onTerminalOpen }: { onTerminalOpen: () => void }) {
 
           <button
             onClick={toggleTheme}
-            className="rounded-full border border-zinc-300/50 bg-white/45 p-2.5 text-zinc-600 transition-colors hover:border-teal-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:bg-zinc-900/40 dark:text-zinc-400 dark:hover:border-teal-500/30 dark:hover:text-white"
+            className="focus-ring rounded-full border border-zinc-300/50 bg-white/45 p-2.5 text-zinc-600 transition-colors hover:border-teal-500/30 hover:text-zinc-950 dark:border-zinc-700/70 dark:bg-zinc-900/40 dark:text-zinc-400 dark:hover:border-teal-500/30 dark:hover:text-white"
             aria-label="Toggle theme"
           >
             {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}

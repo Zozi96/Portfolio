@@ -79,13 +79,13 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
             {t(`${sectionKey}.items.${index}.description`)}
           </p>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 rounded-[1.5rem] border border-zinc-300/45 bg-white/42 p-3 dark:border-zinc-800 dark:bg-zinc-900/72">
+          <div className="mt-6 grid grid-cols-3 gap-3 rounded-card border border-zinc-300/45 bg-white/42 p-3 dark:border-zinc-800 dark:bg-zinc-900/72">
             {[0, 1, 2].map((metricIndex) => (
               <div key={metricIndex} className="rounded-2xl bg-white/72 px-3 py-3 text-center dark:bg-zinc-950/70">
                 <div className="text-base font-semibold tracking-tight text-zinc-950 dark:text-white">
                   {resolveMetricValue(metricIndex)}
                 </div>
-                <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
+                <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">
                   {t(`${sectionKey}.items.${index}.metrics.${metricIndex}.label`)}
                 </div>
               </div>
@@ -101,7 +101,7 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
             })}
           </div>
 
-          <div className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+          <div className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-text-muted">
             <span>{sectionKey === "projects" ? "Production delivery" : "Open source signal"}</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
           </div>

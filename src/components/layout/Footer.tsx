@@ -34,7 +34,7 @@ export function Footer() {
                 href={`https://${t("footer.github")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-2xl border border-zinc-300/50 bg-white/55 p-3 text-zinc-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-500/30 hover:text-teal-700 dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-300 dark:hover:border-teal-500/30 dark:hover:text-teal-300"
+                className="focus-ring rounded-2xl border border-zinc-300/50 bg-white/55 p-3 text-zinc-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-500/30 hover:text-teal-700 dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-300 dark:hover:border-teal-500/30 dark:hover:text-teal-300"
                 aria-label="GitHub"
               >
                 <Github className="h-5 w-5" />
@@ -43,7 +43,7 @@ export function Footer() {
                 href={`https://${t("footer.linkedin")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="rounded-2xl border border-zinc-300/50 bg-white/55 p-3 text-zinc-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-500/30 hover:text-teal-700 dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-300 dark:hover:border-teal-500/30 dark:hover:text-teal-300"
+                className="focus-ring rounded-2xl border border-zinc-300/50 bg-white/55 p-3 text-zinc-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-500/30 hover:text-teal-700 dark:border-zinc-700/80 dark:bg-zinc-900/55 dark:text-zinc-300 dark:hover:border-teal-500/30 dark:hover:text-teal-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
@@ -52,7 +52,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.28em] text-zinc-500 dark:text-zinc-400">
+            <h4 className="text-xs font-semibold uppercase tracking-[0.28em] text-text-muted">
               {t("footer.navigation")}
             </h4>
             <ul className="mt-5 space-y-3">
@@ -77,7 +77,7 @@ export function Footer() {
                 {t("footer.signature")}
               </p>
             </div>
-            <div className="mt-auto text-xs text-zinc-500 dark:text-zinc-500">
+            <div className="mt-auto text-xs text-text-muted">
               <p>© {currentYear} • {t("footer.rights")}</p>
             </div>
           </div>

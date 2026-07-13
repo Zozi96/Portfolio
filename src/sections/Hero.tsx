@@ -106,7 +106,7 @@ export function Hero() {
 
           <motion.div
             variants={itemVariants}
-            className="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.34em] text-zinc-500 dark:text-zinc-400"
+            className="mb-6 flex items-center gap-3 text-[11px] uppercase tracking-[0.34em] text-text-muted"
           >
             <span>{t("hero.eyebrow")}</span>
             <span className="h-px w-14 bg-gradient-to-r from-teal-500/70 to-transparent" />
@@ -114,7 +114,7 @@ export function Hero() {
 
           <motion.h1
             variants={itemVariants}
-            className="max-w-5xl text-[3.4rem] font-semibold leading-[0.9] tracking-[-0.055em] text-zinc-950 sm:text-[4.2rem] md:text-[5rem] lg:text-[5.75rem] dark:text-[#f8f3eb]"
+            className="max-w-5xl text-[3.4rem] font-semibold leading-[0.9] tracking-[-0.055em] text-zinc-950 sm:text-[4.2rem] md:text-[5rem] lg:text-[5.75rem] dark:text-text-primary"
           >
             {t("hero.title")}
           </motion.h1>
@@ -137,8 +137,8 @@ export function Hero() {
             <p className="max-w-2xl text-base leading-8 text-zinc-700 dark:text-zinc-300 md:text-lg">
               {t("hero.subtitle")}
             </p>
-            <div className="rounded-[1.75rem] border border-zinc-300/45 bg-white/50 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/45">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-zinc-500 dark:text-zinc-400">
+            <div className="rounded-card border border-zinc-300/45 bg-white/50 p-5 backdrop-blur-xl dark:border-white/10 dark:bg-zinc-900/45">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-text-muted">
                 selected profile
               </p>
               <p className="mt-4 text-sm leading-7 text-zinc-700 dark:text-zinc-300">

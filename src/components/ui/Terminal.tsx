@@ -414,7 +414,7 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="focus-ring inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
             aria-label="Close terminal"
           >
             <X className="w-4 h-4" />

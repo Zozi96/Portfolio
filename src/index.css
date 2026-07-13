@@ -2,6 +2,23 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme inline {
+  --color-background: var(--color-background);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-disabled: var(--color-text-disabled);
+  --color-accent-primary: var(--color-accent-primary);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-light: var(--color-accent-light);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-border: var(--color-border);
+}
+
+@theme {
+  --radius-card: 1.5rem;
+}
+
 :root {
   --color-background: #f2efe8;
   --color-surface: #ece7dd;
@@ -139,5 +156,12 @@ a,
   pre,
   .font-mono {
     font-family: "IBM Plex Mono", monospace;
+  }
+}
+
+@utility focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
   }
 }
