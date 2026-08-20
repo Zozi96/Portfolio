@@ -11,6 +11,7 @@ export interface DocumentMetaOptions {
   twitterCard?: string;
   twitterTitle?: string;
   twitterDescription?: string;
+  canonical?: string;
 }
 
 function setMeta(name: string, content: string, attr: "name" | "property" = "name") {
@@ -21,6 +22,16 @@ function setMeta(name: string, content: string, attr: "name" | "property" = "nam
     document.head.appendChild(el);
   }
   el.content = content;
+}
+
+function setCanonical(href: string) {
+  let el = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", "canonical");
+    document.head.appendChild(el);
+  }
+  el.href = href;
 }
 
 /**
@@ -40,6 +51,7 @@ export function useDocumentMeta(options: DocumentMetaOptions) {
     if (options.twitterCard) setMeta("twitter:card", options.twitterCard);
     if (options.twitterTitle) setMeta("twitter:title", options.twitterTitle);
     if (options.twitterDescription) setMeta("twitter:description", options.twitterDescription);
+    if (options.canonical) setCanonical(options.canonical);
   }, [
     options.title,
     options.description,
@@ -51,5 +63,6 @@ export function useDocumentMeta(options: DocumentMetaOptions) {
     options.twitterCard,
     options.twitterTitle,
     options.twitterDescription,
+    options.canonical,
   ]);
 }

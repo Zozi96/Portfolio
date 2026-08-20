@@ -35,7 +35,7 @@ function SectionLoader() {
 }
 
 function AppContent() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [hasOpenedTerminal, setHasOpenedTerminal] = useState(false);
 
@@ -76,6 +76,10 @@ function AppContent() {
     twitterCard: "summary_large_image",
     twitterTitle: t("seo.ogTitle"),
     twitterDescription: t("seo.ogDescription"),
+    canonical:
+      locale === "es"
+        ? "https://portfolio.zozbit.com/?lang=es"
+        : "https://portfolio.zozbit.com/",
   });
 
   const preloadProjects = useCallback(() => import("./sections/Projects"), []);

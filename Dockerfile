@@ -38,7 +38,7 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY nginx-security-headers.conf /etc/nginx/conf.d/nginx-security-headers.conf
+COPY nginx-security-headers.inc /etc/nginx/conf.d/nginx-security-headers.inc
 
 # Expose port
 EXPOSE 3000
