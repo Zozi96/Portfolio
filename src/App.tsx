@@ -29,7 +29,7 @@ setTranslations(content);
 function SectionLoader() {
   return (
     <div className="flex items-center justify-center py-12">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-zinc-200 dark:border-zinc-700 border-t-emerald-500"></div>
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-border border-t-accent-primary"></div>
     </div>
   );
 }

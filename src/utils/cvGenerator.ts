@@ -1,6 +1,6 @@
 import { pdf } from "@react-pdf/renderer";
 import React from "react";
-import { CVDocument } from "../components/cv/CVDocument";
+import { ATSDocument } from "../components/cv/ATSDocument";
 import { content } from "../data/content";
 
 export type Language = "en" | "es";
@@ -23,7 +23,7 @@ export async function generateCV({ language }: CVGeneratorOptions): Promise<CVRe
   
   // Create the PDF blob
   const blob = await pdf(
-    React.createElement(CVDocument, { data, language })
+    React.createElement(ATSDocument, { data, language })
   ).toBlob();
 
   // Convert blob to ArrayBuffer for transferability between worker and main thread

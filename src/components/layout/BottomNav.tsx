@@ -18,7 +18,7 @@ const LOCALE_FLIP_PERSPECTIVE = 200;
 const SCROLL_THRESHOLD = 2;
 
 const menuItemClass =
-  "focus-ring flex min-h-11 items-center gap-3 rounded-xl px-3 py-3 text-zinc-700 transition-all hover:bg-white/55 hover:text-teal-700 active:scale-95 dark:text-zinc-300 dark:hover:bg-zinc-900/62 dark:hover:text-teal-300 touch-manipulation";
+  "focus-ring flex min-h-11 items-center gap-3 rounded-xl px-3 py-3 text-text-secondary transition-all hover:bg-accent-soft hover:text-accent-primary active:scale-95 touch-manipulation";
 
 export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
   const { t, locale, setLocale } = useLanguage();
@@ -46,7 +46,7 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
           vibrate(10);
           setIsOpen((prev) => !prev);
         }}
-        className="focus-ring flex h-14 w-14 items-center justify-center rounded-full border border-zinc-300/50 bg-[rgba(255,248,238,0.72)] text-zinc-700 shadow-[0_10px_30px_-18px_rgba(33,24,11,0.45)] backdrop-blur-md backdrop-saturate-150 transition-transform active:scale-90 dark:border-white/10 dark:bg-[rgba(7,12,20,0.68)] dark:text-zinc-300"
+        className="focus-ring flex h-14 w-14 items-center justify-center rounded-full border border-border bg-surface/90 text-text-secondary shadow-card backdrop-blur-md transition-transform active:scale-90"
         aria-label={isOpen ? "Close menu" : "Open menu"}
         aria-expanded={isOpen}
       >
@@ -70,7 +70,7 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={prefersReduced ? undefined : { opacity: 0, y: 20, scale: 0.9 }}
             transition={prefersReduced ? { duration: 0 } : menuTransition}
-            className="flex flex-col gap-1 rounded-card border border-zinc-300/45 bg-[rgba(255,248,238,0.78)] p-2 shadow-[0_12px_36px_-20px_rgba(33,24,11,0.45)] backdrop-blur-md backdrop-saturate-150 dark:border-white/10 dark:bg-[rgba(7,12,20,0.76)]"
+            className="flex flex-col gap-1 rounded-card border border-border bg-surface/95 p-2 shadow-card backdrop-blur-md"
             role="menu"
           >
             {navItems.map(({ icon: Icon, labelKey, href }) => (
@@ -90,7 +90,7 @@ export function BottomNav({ onTerminalOpen }: { onTerminalOpen: () => void }) {
               </a>
             ))}
 
-            <div className="mx-1 my-1 h-px bg-zinc-300/55 dark:bg-zinc-700/60" />
+            <div className="mx-1 my-1 h-px bg-border" />
 
             <button
               onClick={() => {

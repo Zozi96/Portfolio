@@ -1,5 +1,4 @@
 import { type ElementType } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { SpotlightCard } from "./SpotlightCard";
 import { Badge } from "./Badge";
 import { useLanguage } from "../../context/LanguageContext";
@@ -23,7 +22,6 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
   const projectData = content[locale][sectionKey].items[index];
   const stats = useProjectStats(projectData?.liveStats?.pypi, projectData?.liveStats?.github);
   const Icon = config.icon;
-  const isFeatured = sectionKey === "projects" && index === 0;
 
   const resolveMetricValue = (metricIndex: number): string => {
     const metric = projectData?.metrics[metricIndex];
@@ -43,68 +41,46 @@ export function ProjectCard({ sectionKey, index, config }: ProjectCardProps) {
   };
 
   return (
-    <SpotlightCard
-      className={`h-full overflow-hidden p-0 ${isFeatured ? "lg:min-h-[32rem]" : ""}`}
-      spotlightColor={
-        config.color.includes("teal")
-          ? "rgba(45, 212, 191, 0.16)"
-          : config.color.includes("cyan")
-            ? "rgba(34, 211, 238, 0.14)"
-            : config.color.includes("amber")
-              ? "rgba(245, 158, 11, 0.16)"
-              : "rgba(45, 212, 191, 0.16)"
-      }
-    >
+    <SpotlightCard className="h-full p-7">
       <div className="flex h-full flex-col">
-        <div className="relative overflow-hidden border-b border-zinc-300/50 px-6 py-6 dark:border-zinc-800/70">
-          <div className={`absolute inset-0 ${config.bg}`} />
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.38),transparent_45%,rgba(209,168,112,0.08))] dark:bg-[linear-gradient(135deg,rgba(255,255,255,0.06),transparent_48%,rgba(45,212,191,0.06))]" />
-          <div className="relative z-10 flex items-start justify-between gap-4">
-            <div>
-              <p className={`text-[11px] font-semibold uppercase tracking-[0.26em] ${config.color}`}>
-                {t(`${sectionKey}.items.${index}.category`)}
-              </p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-[-0.04em] text-zinc-950 dark:text-white">
-                {t(`${sectionKey}.items.${index}.title`)}
-              </h3>
-            </div>
-            <div className={`rounded-2xl border border-white/35 p-3 ${config.bg} ${config.color}`}>
-              <Icon className="h-5 w-5" />
-            </div>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="text-xl font-semibold">
+              {t(`${sectionKey}.items.${index}.title`)}
+            </h3>
+            <p className="mt-1 text-[13.5px] font-semibold text-accent-primary">
+              {t(`${sectionKey}.items.${index}.category`)}
+            </p>
           </div>
+          <span className="rounded-[10px] bg-accent-soft p-2.5 text-accent-primary">
+            <Icon className="h-5 w-5" />
+          </span>
         </div>
 
-        <div className="flex flex-1 flex-col px-6 py-6">
-          <p className="text-sm leading-7 text-zinc-700 dark:text-zinc-300">
-            {t(`${sectionKey}.items.${index}.description`)}
-          </p>
+        <p className="mt-3 text-[15px] leading-7 text-text-secondary">
+          {t(`${sectionKey}.items.${index}.description`)}
+        </p>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 rounded-card border border-zinc-300/45 bg-white/42 p-3 dark:border-zinc-800 dark:bg-zinc-900/72">
-            {[0, 1, 2].map((metricIndex) => (
-              <div key={metricIndex} className="rounded-2xl bg-white/72 px-3 py-3 text-center dark:bg-zinc-950/70">
-                <div className="text-base font-semibold tracking-tight text-zinc-950 dark:text-white">
-                  {resolveMetricValue(metricIndex)}
-                </div>
-                <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-text-muted">
-                  {t(`${sectionKey}.items.${index}.metrics.${metricIndex}.label`)}
-                </div>
+        <div className="mt-5 grid grid-cols-3 gap-3 border-t border-border pt-4">
+          {[0, 1, 2].map((metricIndex) => (
+            <div key={metricIndex}>
+              <div className="text-[15px] font-semibold text-text-primary">
+                {resolveMetricValue(metricIndex)}
               </div>
-            ))}
-          </div>
+              <div className="mt-0.5 text-xs text-text-muted">
+                {t(`${sectionKey}.items.${index}.metrics.${metricIndex}.label`)}
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
-            {[0, 1, 2, 3, 4].map((stackIndex) => {
-              const tech = t(`${sectionKey}.items.${index}.stack.${stackIndex}`);
-              return tech && tech !== `${sectionKey}.items.${index}.stack.${stackIndex}` ? (
-                <Badge key={stackIndex}>{tech}</Badge>
-              ) : null;
-            })}
-          </div>
-
-          <div className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.22em] text-text-muted">
-            <span>{sectionKey === "projects" ? "Production delivery" : "Open source signal"}</span>
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </div>
+        <div className="mt-auto flex flex-wrap gap-2 pt-5">
+          {[0, 1, 2, 3, 4].map((stackIndex) => {
+            const tech = t(`${sectionKey}.items.${index}.stack.${stackIndex}`);
+            return tech && tech !== `${sectionKey}.items.${index}.stack.${stackIndex}` ? (
+              <Badge key={stackIndex}>{tech}</Badge>
+            ) : null;
+          })}
         </div>
       </div>
     </SpotlightCard>

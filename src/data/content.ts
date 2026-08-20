@@ -33,6 +33,11 @@ interface TechStackCategory {
   items: string[];
 }
 
+interface EducationItem {
+  degree: string;
+  institution: string;
+}
+
 export interface Content {
   [key: string]: unknown;
   seo: {
@@ -58,7 +63,19 @@ export interface Content {
     eyebrow: string;
     name: string;
     title: string;
+    titleAccent: string;
     subtitle: string;
+    card: {
+      title: string;
+      statusLabel: string;
+      statusValue: string;
+      roleLabel: string;
+      roleValue: string;
+      locationLabel: string;
+      locationValue: string;
+      emailLabel: string;
+      downloadCv: string;
+    };
     availability: string;
     location: string;
     cta1: string;
@@ -105,6 +122,10 @@ export interface Content {
     intro: string;
     roles: ExperienceRole[];
   };
+  education: {
+    title: string;
+    items: EducationItem[];
+  };
   contact: {
     title: string;
     intro: string;
@@ -137,6 +158,7 @@ export interface Content {
     description: string;
     navigation: string;
     signature: string;
+    illustratedCv: string;
     email: string;
     github: string;
     linkedin: string;
@@ -174,12 +196,24 @@ export const content: LocalizedContent = {
       menu: "Menu",
     },
     hero: {
-      badge: "Open for sharp engineering work",
+      badge: "Open to senior backend roles",
       eyebrow: "Portfolio / Senior software engineering",
       name: "Zozimo Fernández",
-      title: "I build backend systems that stay fast, clean, and scalable under pressure.",
+      title: "Backend systems engineered to survive production.",
+      titleAccent: "survive production",
+      card: {
+        title: "Availability",
+        statusLabel: "Status",
+        statusValue: "Available",
+        roleLabel: "Role",
+        roleValue: "Senior Software Engineer",
+        locationLabel: "Location",
+        locationValue: "Villahermosa, MX · Remote",
+        emailLabel: "Email",
+        downloadCv: "Download CV (PDF)",
+      },
       subtitle:
-        "Senior Software Engineer focused on distributed systems, Python, .NET, data engineering, and cloud architecture. I ship production-grade systems with strong fundamentals, clean boundaries, and zero patience for brittle software.",
+        "Senior Software Engineer focused on distributed systems, Python, .NET, data engineering, and cloud architecture. I ship production-grade systems with strong fundamentals and clean boundaries.",
       availability: "Available for senior engineering, backend architecture, and high-leverage consulting.",
       location: "Based in Villahermosa, Mexico, collaborating with international teams.",
       cta1: "Explore selected work",
@@ -195,9 +229,9 @@ export const content: LocalizedContent = {
     },
     sectionLabels: {
       focus: "Where I create leverage",
-      projects: "Selected client work",
-      personalProjects: "Open source and personal bets",
-      techStack: "Tools I trust in production",
+      projects: "Client work",
+      personalProjects: "Open source",
+      techStack: "Tech stack",
       experience: "Career timeline",
       contact: "Start a conversation",
     },
@@ -295,7 +329,7 @@ export const content: LocalizedContent = {
     techStack: {
       title: "Tools I trust in production",
       intro:
-        "These are not random logo stickers. They are the tools I reach for when delivery quality, runtime behavior, and maintainability actually matter.",
+        "The tools I reach for when delivery quality, runtime behavior, and maintainability matter.",
       categories: [
         {
           name: "Languages",
@@ -384,10 +418,19 @@ export const content: LocalizedContent = {
         },
       ],
     },
+    education: {
+      title: "Education",
+      items: [
+        {
+          degree: "B.Eng. in Computer Systems Engineering",
+          institution: "Instituto Tecnológico de Villahermosa",
+        },
+      ],
+    },
     contact: {
       title: "Let’s build something that can survive production.",
       intro:
-        "If you need backend architecture, data-heavy systems, or a senior engineer who can move fast without leaving a mess behind, we should talk.",
+        "If you need backend architecture, data-heavy systems, or a senior engineer who moves fast and keeps the system clean, let's talk.",
       sideTitle: "What I can help with",
       sideDescription:
         "Senior backend work, architecture reviews, cloud delivery, technical leadership, and selective consulting for teams that care about quality.",
@@ -417,8 +460,9 @@ export const content: LocalizedContent = {
       contact: "Get in touch",
       description: "Backend architecture, cloud delivery, and software that keeps its shape under real-world load.",
       navigation: "Navigation",
-      signature: "Built with engineering taste and production bias.",
-      email: "zfernandez@zozbit.com",
+      signature: "Drafted, built, and shipped by Zozimo Fernández.",
+      illustratedCv: "Detailed CV (PDF)",
+      email: "zozi.fer96@gmail.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
       portfolio: "portfolio.zozbit.com",
@@ -448,12 +492,24 @@ export const content: LocalizedContent = {
       menu: "Menú",
     },
     hero: {
-      badge: "Disponible para trabajo técnico serio",
+      badge: "Abierto a roles backend senior",
       eyebrow: "Portfolio / Ingeniería de software senior",
       name: "Zozimo Fernández",
-      title: "Construyo sistemas backend que siguen siendo rápidos, limpios y escalables cuando el tráfico aprieta.",
+      title: "Sistemas backend diseñados para sobrevivir producción.",
+      titleAccent: "sobrevivir producción",
+      card: {
+        title: "Disponibilidad",
+        statusLabel: "Estado",
+        statusValue: "Disponible",
+        roleLabel: "Rol",
+        roleValue: "Ingeniero de Software Senior",
+        locationLabel: "Ubicación",
+        locationValue: "Villahermosa, MX · Remoto",
+        emailLabel: "Email",
+        downloadCv: "Descargar CV (PDF)",
+      },
       subtitle:
-        "Ingeniero de Software Senior enfocado en sistemas distribuidos, Python, .NET, data engineering y arquitectura cloud. Entrego software de producción con fundamentos sólidos, límites claros y muy poca tolerancia al código frágil.",
+        "Ingeniero de Software Senior enfocado en sistemas distribuidos, Python, .NET, data engineering y arquitectura cloud. Entrego software de producción con fundamentos sólidos y límites claros.",
       availability: "Disponible para ingeniería senior, arquitectura backend y consultoría de alto impacto.",
       location: "Desde Villahermosa, México, colaborando con equipos internacionales.",
       cta1: "Explorar trabajo seleccionado",
@@ -469,9 +525,9 @@ export const content: LocalizedContent = {
     },
     sectionLabels: {
       focus: "Dónde genero más leverage",
-      projects: "Trabajo para clientes",
-      personalProjects: "Open source y apuestas personales",
-      techStack: "Herramientas que sí confío en producción",
+      projects: "Trabajo con clientes",
+      personalProjects: "Open source",
+      techStack: "Stack técnico",
       experience: "Trayectoria",
       contact: "Abramos conversación",
     },
@@ -549,7 +605,7 @@ export const content: LocalizedContent = {
     personalProjects: {
       title: "Open source y apuestas personales",
       intro:
-        "También me gusta construir herramientas pequeñas y filosas. Casi siempre backend-first, con buen ojo para seguridad y diseñadas para que otras ingenieras quieran usarlas.",
+        "También me gusta construir herramientas pequeñas y filosas. Casi siempre backend-first, con buen ojo para seguridad y diseñadas para que otros ingenieros quieran usarlas.",
       items: [
         {
           title: "hash-forge",
@@ -569,7 +625,7 @@ export const content: LocalizedContent = {
     techStack: {
       title: "Herramientas que sí confío en producción",
       intro:
-        "No son stickers de logos puestos al azar. Son herramientas a las que recurro cuando la calidad de entrega, el comportamiento en runtime y la mantenibilidad importan de verdad.",
+        "Las herramientas a las que recurro cuando la calidad de entrega, el comportamiento en runtime y la mantenibilidad importan.",
       categories: [
         {
           name: "Lenguajes",
@@ -599,7 +655,7 @@ export const content: LocalizedContent = {
     experience: {
       title: "Trayectoria entre plataforma, producto y datos.",
       intro:
-        "La mayor parte de mi trabajo vive detrás de productos de los que la gente depende. Eso obliga a que las decisiones de arquitectura sean prácticas, medibles y mantenibles por la siguiente ingeniera que toque el sistema.",
+        "La mayor parte de mi trabajo vive detrás de productos de los que la gente depende. Eso obliga a que las decisiones de arquitectura sean prácticas, medibles y mantenibles por el siguiente ingeniero que toque el sistema.",
       roles: [
         {
           title: "Ingeniero de Software Senior",
@@ -658,10 +714,19 @@ export const content: LocalizedContent = {
         },
       ],
     },
+    education: {
+      title: "Educación",
+      items: [
+        {
+          degree: "Ingeniería en Sistemas Computacionales",
+          institution: "Instituto Tecnológico de Villahermosa",
+        },
+      ],
+    },
     contact: {
       title: "Construyamos algo que sí sobreviva producción.",
       intro:
-        "Si necesitas arquitectura backend, sistemas intensivos en datos o una ingeniera senior que sepa moverse rápido sin dejar un desastre detrás, hablemos.",
+        "Si necesitas arquitectura backend, sistemas intensivos en datos o un ingeniero senior que se mueva rápido y mantenga el sistema limpio, hablemos.",
       sideTitle: "En qué puedo ayudar",
       sideDescription:
         "Trabajo backend senior, revisiones de arquitectura, entrega cloud, liderazgo técnico y consultoría selectiva para equipos que sí valoran la calidad.",
@@ -691,8 +756,9 @@ export const content: LocalizedContent = {
       contact: "Contacto",
       description: "Arquitectura backend, entrega cloud y software que mantiene su forma bajo carga real.",
       navigation: "Navegación",
-      signature: "Construido con criterio de ingeniería y sesgo a producción.",
-      email: "zfernandez@zozbit.com",
+      signature: "Trazado, construido y publicado por Zozimo Fernández.",
+      illustratedCv: "CV detallado (PDF)",
+      email: "zozi.fer96@gmail.com",
       github: "github.com/Zozi96",
       linkedin: "linkedin.com/in/zozi",
       portfolio: "portfolio.zozbit.com",

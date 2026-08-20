@@ -19,8 +19,9 @@ function getInitialTheme(): Theme {
   if (stored && (stored === 'light' || stored === 'dark')) {
     return stored;
   }
-  
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+  // Light is the default look; users can opt into dark via the toggle.
+  return 'light';
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -42,7 +43,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       'meta[name="theme-color"]:not([media])'
     );
     if (themeColorMeta) {
-      themeColorMeta.content = theme === 'dark' ? '#09090b' : '#fafafa';
+      themeColorMeta.content = theme === 'dark' ? '#12161E' : '#FBFBF9';
     }
 
     // Only persist when the user has explicitly set a preference; do not

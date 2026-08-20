@@ -19,8 +19,25 @@ const downloadableCvFiles: Record<Language, DownloadableCvFile> = {
   },
 };
 
+const styledCvFiles: Record<Language, DownloadableCvFile> = {
+  en: {
+    language: "en",
+    href: "/cv/zozimo-fernandez-cv-en-styled.pdf",
+    filename: "Zozimo_Fernandez_CV_EN_Styled.pdf",
+  },
+  es: {
+    language: "es",
+    href: "/cv/zozimo-fernandez-cv-es-styled.pdf",
+    filename: "Zozimo_Fernandez_CV_ES_Styled.pdf",
+  },
+};
+
 export function getCvFile(language: Language): DownloadableCvFile {
   return downloadableCvFiles[language] ?? downloadableCvFiles.en;
+}
+
+export function getStyledCvFile(language: Language): DownloadableCvFile {
+  return styledCvFiles[language] ?? styledCvFiles.en;
 }
 
 export function downloadCvFile(language: Language): void {

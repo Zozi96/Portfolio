@@ -402,12 +402,12 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md">
       <div
-        className="w-full max-w-3xl h-[85vh] sm:h-[600px] max-h-[85vh] sm:max-h-none bg-zinc-950/40 backdrop-blur-3xl backdrop-saturate-200 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] border border-white/10 flex flex-col overflow-hidden"
+        className="w-full max-w-3xl h-[85vh] sm:h-[600px] max-h-[85vh] sm:max-h-none bg-[#12161E] rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.4)] border border-white/10 flex flex-col overflow-hidden"
         onKeyDown={handleKeyDown}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800 bg-zinc-900/50">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 bg-[#1A2029]">
           <div className="flex items-center gap-2">
-            <TerminalIcon className="w-4 h-4 text-emerald-400" />
+            <TerminalIcon className="w-4 h-4 text-[#7C93FF]" />
             <span className="text-sm font-mono text-zinc-300">
               zozbit@portfolio:~
             </span>
@@ -427,7 +427,7 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
               key={i}
               className={
                 line.type === "command"
-                  ? "text-emerald-400 mb-1"
+                  ? "text-[#7C93FF] mb-1"
                   : line.type === "error"
                   ? "text-red-400 mb-1"
                   : "text-zinc-300 mb-0.5"
@@ -439,9 +439,9 @@ export function Terminal({ isOpen, onClose }: TerminalProps) {
           <div ref={historyEndRef} />
         </div>
 
-        <form onSubmit={handleSubmit} className="border-t border-zinc-800 p-4">
+        <form onSubmit={handleSubmit} className="border-t border-white/10 p-4">
           <div className="flex items-center gap-2">
-            <span className="text-emerald-400 font-mono text-sm">$</span>
+            <span className="text-[#7C93FF] font-mono text-sm">$</span>
             <input
               ref={inputRef}
               type="text"
