@@ -58,16 +58,19 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     return rawTranslations ? flattenObject(rawTranslations) : {};
   }, [rawTranslations]);
 
-  const setLocale = (newLocale: Locale) => {
-    setLocaleState(newLocale);
-  };
-
   const t = useCallback((key: string): string => {
     return flattenedTranslations[key] || key;
   }, [flattenedTranslations]);
 
+  // Stable context value: consumers only re-render when locale (and thus t)
+  // actually changes, even if the provider re-renders for other reasons.
+  const value = useMemo(
+    () => ({ locale, setLocale: setLocaleState, t }),
+    [locale, t]
+  );
+
   return (
-    <LanguageContext.Provider value={{ locale, setLocale, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

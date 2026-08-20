@@ -38,7 +38,7 @@ export default function Contact() {
     const result = contactSchema.safeParse(form);
     if (!result.success) {
       const fieldErrors: Partial<Record<keyof FormState, string>> = {};
-      const flattenedErrors = result.error.flatten().fieldErrors;
+      const flattenedErrors = z.flattenError(result.error).fieldErrors;
 
       Object.entries(flattenedErrors).forEach(([key, messages]) => {
         if (messages && messages.length > 0) {

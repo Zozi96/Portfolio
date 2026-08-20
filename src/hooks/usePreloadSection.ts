@@ -1,5 +1,24 @@
 import { useEffect, useRef } from "react";
 
+interface NetworkInformationLike {
+  saveData?: boolean;
+  effectiveType?: string;
+}
+
+/**
+ * Idle preloading is only worthwhile when bandwidth is plentiful; on metered
+ * or slow connections we let the IntersectionObserver drive preloading so the
+ * initial chunks don't compete with above-the-fold assets.
+ */
+function hasFastConnection(): boolean {
+  const connection = (navigator as Navigator & { connection?: NetworkInformationLike })
+    .connection;
+  if (!connection) return true; // Unknown connection — assume it's fine.
+  if (connection.saveData) return false;
+  const { effectiveType } = connection;
+  return effectiveType === undefined || effectiveType === "4g";
+}
+
 /**
  * Proactively preloads a lazy-loaded module before it enters the viewport,
  * eliminating the loading flash caused by basic React Suspense.
@@ -24,29 +43,42 @@ export function usePreloadSection<T extends HTMLElement = HTMLDivElement>(
       void importFn();
     };
 
-    // Attempt to preload during idle time
-    if ('requestIdleCallback' in window) {
-      (window as unknown as { requestIdleCallback: (fn: () => void, options?: { timeout: number }) => void }).requestIdleCallback(doPreload, { timeout: 2000 });
-    } else {
-      setTimeout(doPreload, 1000);
+    // Opportunistic idle preload, but only on fast, unmetered connections.
+    let idleId: number | undefined;
+    let timeoutId: number | undefined;
+    if (hasFastConnection()) {
+      if ("requestIdleCallback" in window) {
+        idleId = window.requestIdleCallback(doPreload, { timeout: 2000 });
+      } else {
+        timeoutId = setTimeout(doPreload, 1000) as unknown as number;
+      }
     }
 
-    // Fallback: IntersectionObserver with large margin
+    // Primary trigger: IntersectionObserver with large margin.
     const element = ref.current;
-    if (!element) return;
+    let observer: IntersectionObserver | undefined;
+    if (element) {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && !preloaded.current) {
+            doPreload();
+            observer?.disconnect();
+          }
+        },
+        { rootMargin }
+      );
+      observer.observe(element);
+    }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !preloaded.current) {
-          doPreload();
-          observer.disconnect();
-        }
-      },
-      { rootMargin }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
+    return () => {
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+      }
+      observer?.disconnect();
+    };
   }, [importFn, rootMargin]);
 
   return ref;
