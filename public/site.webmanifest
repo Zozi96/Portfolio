@@ -1,0 +1,15 @@
+{
+  "name": "Zozimo Fernández | Senior Software Engineer",
+  "short_name": "Zozimo Fernández",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#FBFBF9",
+  "background_color": "#FBFBF9",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

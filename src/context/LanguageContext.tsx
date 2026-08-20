@@ -14,12 +14,18 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 function getInitialLocale(): Locale {
   if (typeof window === 'undefined') return 'en';
-  
+
+  const params = new URLSearchParams(window.location.search);
+  const fromQuery = params.get('lang');
+  if (fromQuery === 'en' || fromQuery === 'es') {
+    return fromQuery;
+  }
+
   const stored = localStorage.getItem('locale') as Locale | null;
   if (stored && (stored === 'en' || stored === 'es')) {
     return stored;
   }
-  
+
   return 'en';
 }
 
